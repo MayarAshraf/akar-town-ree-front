@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akar Town — Premium Real Estate</title>
+    <meta name="description" content="Premium developments redefining modern living across Egypt's most sought-after locations.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <!-- Colour tokens -->
+    <link rel="stylesheet" href="css/colors.css">
+
+    <style>
+    /* ==========================================================
+       BASE TOKENS
+    ========================================================== */
+    :root {
+        --ff-display: 'Cormorant Garamond', Georgia, serif;
+        --ff-body:    'DM Sans', system-ui, sans-serif;
+        --ff-data:    'IBM Plex Mono', ui-monospace, monospace;
+
+        --text-xs:      0.75rem;
+        --text-sm:      0.875rem;
+        --text-base:    1rem;
+        --text-lg:      1.25rem;
+        --text-display: clamp(2.75rem, 1.8rem + 4.6vw, 6rem);
+
+        --ease-expo:   cubic-bezier(0.16, 1, 0.30, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --dur-ui:      320ms;
+        --dur-scene:   720ms;
+
+        --container: 1320px;
+        --gutter:    clamp(1rem, 4vw, 2.5rem);
+        --hh: 72px;
+
+        --sp1: 0.5rem;  --sp2: 0.75rem; --sp3: 1rem;
+        --sp4: 1.5rem;  --sp5: 2rem;    --sp6: 3rem;
+        --sp7: 4.5rem;
+    }
+
+    /* ==========================================================
+       RESET
+    ========================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    /* Fixed architectural photo — all glass sections blur over this */
+    #page-bg {
+        position: fixed; inset: 0; z-index: -1;
+        background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=90') center/cover no-repeat;
+    }
+    #page-bg::after {
+        content: ''; position: absolute; inset: 0;
+        background: rgba(35,31,32,0.30);
+    }
+    body {
+        background: transparent;
+        color: var(--n-950);
+        font-family: var(--ff-body);
+        font-size: 1rem;
+        line-height: 1.65;
+        overflow-x: hidden;
+        cursor: none;
+        -webkit-font-smoothing: antialiased;
+    }
+    a      { text-decoration: none; color: inherit; }
+    img    { display: block; max-width: 100%; }
+    button { border: none; background: none; cursor: none; font-family: inherit; }
+
+    /* ==========================================================
+       CUSTOM CURSOR
+    ========================================================== */
+    #c-dot {
+        position: fixed; z-index: 9999;
+        width: 7px; height: 7px;
+        background: var(--sig-500);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition: width .2s var(--ease-spring), height .2s var(--ease-spring);
+    }
+    #c-ring {
+        position: fixed; z-index: 9998;
+        width: 32px; height: 32px;
+        border: 1.5px solid rgba(255,255,255,0.28);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition: width .3s var(--ease-spring), height .3s var(--ease-spring), border-color .3s;
+    }
+    body.ch #c-dot  { width: 11px; height: 11px; }
+    body.ch #c-ring { width: 52px; height: 52px; border-color: rgba(255,0,0,0.4); }
+
+    /* ==========================================================
+       SHARED LAYOUT
+    ========================================================== */
+    .section { padding: clamp(3rem, 8vw, 7rem) 0; }
+    .container {
+        width: 100%;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+    }
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: var(--sp2);
+        font-size: var(--text-xs); font-weight: 500;
+        letter-spacing: 0.24em; text-transform: uppercase;
+        color: var(--n-600);
+        margin-bottom: var(--sp3);
+    }
+    .eyebrow-dot { width: 5px; height: 5px; background: var(--sig-500); border-radius: 50%; flex-shrink: 0; }
+    .section-h {
+        font-family: var(--ff-display);
+        font-weight: 300; line-height: 1.05;
+        letter-spacing: -0.02em; color: var(--n-950);
+    }
+    .section-h--lg { font-size: clamp(2.2rem, 1.4rem + 3.5vw, 4rem); }
+    .section-h--md { font-size: clamp(1.75rem, 1.2rem + 2.5vw, 3rem); }
+
+    /* Scroll reveal */
+    .reveal {
+        opacity: 0; transform: translateY(28px);
+        transition: opacity 0.72s var(--ease-expo), transform 0.72s var(--ease-expo);
+    }
+    .reveal.is-revealed { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.10s; }
+    .reveal-d2 { transition-delay: 0.20s; }
+    .reveal-d3 { transition-delay: 0.30s; }
+    .reveal-d4 { transition-delay: 0.40s; }
+    .reveal-d5 { transition-delay: 0.50s; }
+
+    /* ==========================================================
+       BUTTONS
+    ========================================================== */
+    .btn {
+        display: inline-flex; align-items: center; gap: var(--sp2);
+        font-family: var(--ff-body);
+        font-size: var(--text-sm); font-weight: 500;
+        letter-spacing: 0.03em;
+        padding: 10px 22px; border-radius: 100px;
+        white-space: nowrap; cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        border: none;
+    }
+    .btn-ghost {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.20);
+        color: rgba(255,255,255,0.75);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.35); color: #fff; }
+    .btn-accent {
+        background: var(--accent-fill);
+        color: var(--n-0);
+        box-shadow: 0 2px 14px rgba(211,2,1,0.30);
+    }
+    .btn-accent:hover { background: var(--accent-fill-hover); transform: translateY(-1px); box-shadow: 0 5px 20px rgba(211,2,1,0.42); }
+    .btn-accent:active { transform: translateY(0); }
+    .btn-outline {
+        background: transparent;
+        border: 1px solid var(--n-200);
+        color: var(--n-700);
+    }
+    .btn-outline:hover { background: var(--n-0); border-color: var(--n-300); color: var(--n-950); }
+
+    /* ==========================================================
+       MOBILE OVERLAY
+    ========================================================== */
+    .mob {
+        position: fixed; inset: 0; z-index: 990;
+        background: rgba(35,31,32,0.97);
+        backdrop-filter: blur(28px);
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: var(--sp2);
+        transform: translateY(-100%);
+        transition: transform .65s var(--ease-expo);
+    }
+    .mob.open { transform: translateY(0); }
+    .mob a {
+        font-family: var(--ff-display);
+        font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 300;
+        color: rgba(255,255,255,0.35); letter-spacing: -0.01em;
+        padding: var(--sp1) var(--sp6);
+        transition: color var(--dur-ui);
+    }
+    .mob a:hover { color: var(--n-0); }
+    .mob-x {
+        position: absolute; top: var(--sp4); right: var(--sp5);
+        font-size: 1.4rem; color: rgba(255,255,255,0.30);
+        padding: var(--sp2); transition: color var(--dur-ui); cursor: none;
+    }
+    .mob-x:hover { color: var(--n-0); }
+
+    /* ==========================================================
+       SITE HEADER
+    ========================================================== */
+    .site-header {
+        position: fixed; inset: 0 0 auto 0;
+        z-index: 1000; height: var(--hh);
+        padding: 0 var(--sp7);
+        display: flex; align-items: center; justify-content: space-between; gap: var(--sp5);
+        color: var(--n-0);
+        transition: height var(--dur-ui) var(--ease-expo), background var(--dur-scene) var(--ease-expo), box-shadow var(--dur-scene);
+    }
+    .site-header.scrolled {
+        height: 60px;
+        background: rgba(35,31,32,0.80);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.07), 0 4px 28px rgba(0,0,0,0.35);
+    }
+    .logo { display: flex; align-items: center; gap: var(--sp2); flex-shrink: 0; cursor: none; }
+    .logo-icon { width: 38px; height: 38px; flex-shrink: 0; }
+    .logo-words { line-height: 1; }
+    .logo-name { display: block; font-family: var(--ff-display); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.09em; color: var(--n-0); }
+    .logo-sub  { display: block; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-top: 4px; }
+    .main-nav  { display: flex; align-items: center; gap: 2px; }
+    .main-nav a { font-size: var(--text-sm); font-weight: 400; color: rgba(255,255,255,0.52); padding: 8px 14px; border-radius: 100px; transition: color var(--dur-ui), background var(--dur-ui); }
+    .main-nav a:hover  { color: var(--n-0); background: rgba(255,255,255,0.07); }
+    .main-nav a.active { color: var(--n-0); }
+    .hdr-right  { display: flex; align-items: center; gap: var(--sp2); flex-shrink: 0; }
+    .hamburger  { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 28px; height: 28px; cursor: none; flex-shrink: 0; }
+    .hamburger span { display: block; width: 100%; height: 1.5px; background: var(--n-0); border-radius: 1px; transition: all .38s var(--ease-expo); transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ==========================================================
+       HERO
+    ========================================================== */
+    .hero {
+        position: relative; width: 100%; height: 100vh; min-height: 640px;
+        display: flex; flex-direction: column; align-items: center;
+        overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-photo {
+        position: absolute; inset: 0;
+        background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=90') center/cover no-repeat;
+        filter: blur(5px);
+        transform: scale(1.04);
+    }
+    .hero-scrim {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(35,31,32,0.55) 0%, rgba(35,31,32,0.22) 38%, rgba(35,31,32,0.68) 100%);
+    }
+    .hero-inner {
+        position: relative; z-index: 2; width: 100%; height: 100%;
+        padding: var(--hh) 0 0;
+        display: flex; flex-direction: column; align-items: center;
+    }
+    .hero-kicker {
+        display: inline-flex; align-items: center; gap: var(--sp2);
+        font-size: var(--text-xs); font-weight: 500;
+        letter-spacing: 0.24em; text-transform: uppercase;
+        color: var(--n-500); margin-bottom: var(--sp4); opacity: 0;
+    }
+    .kicker-dot {
+        width: 6px; height: 6px; background: var(--sig-500); border-radius: 50%; flex-shrink: 0;
+        animation: blink 2.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(255,0,0,0.55); }
+        50%       { box-shadow: 0 0 0 5px rgba(255,0,0,0); }
+    }
+    .hero-h1 {
+        font-family: var(--ff-display);
+        font-size: var(--text-display); font-weight: 300;
+        line-height: 0.92; letter-spacing: -0.025em;
+        color: var(--n-0); text-align: center;
+        max-width: 820px; margin-bottom: var(--sp4); opacity: 0;
+    }
+    .hero-h1 em      { font-style: italic; color: var(--n-400); }
+    .hero-h1 .hl-red { font-style: italic; color: var(--sig-500); }
+    .hero-lead {
+        font-size: var(--text-lg); font-weight: 300; line-height: 1.75;
+        color: var(--n-500); text-align: center;
+        max-width: 440px; margin: 0 auto var(--sp7); opacity: 0;
+    }
+    /* ── Coverflow fan slider ── */
+    .hero-stage {
+        position: relative; width: 100%; opacity: 0;
+        flex: 1; display: flex; flex-direction: column; min-height: 0;
+    }
+    .swiper.hero-swiper { width: 100%; flex: 1; min-height: 0; padding-bottom: 72px; }
+
+    /* Opacity lives on the SLIDE so Swiper's class additions hit directly */
+    .swiper-slide {
+        width: clamp(260px, 24vw, 380px);
+        height: clamp(420px, calc(100vh - 230px), 860px);
+        cursor: none;
+        opacity: 0.45;
+        transition: opacity 0.7s var(--ease-expo);
+    }
+    .swiper-slide-active { opacity: 1; }
+    .swiper-slide-prev,
+    .swiper-slide-next   { opacity: 0.72; }
+
+    /* Inner wrapper: only for border-radius clip + shadow — NO own transform */
+    .hs-inner {
+        width: 100%; height: 100%;
+        border-radius: 18px; overflow: hidden; position: relative;
+        transition: box-shadow 0.7s var(--ease-expo);
+    }
+    .swiper-slide-active .hs-inner {
+        box-shadow: 0 32px 64px rgba(35,31,32,0.60);
+    }
+
+    /* Photo */
+    .hs-photo {
+        position: absolute; inset: 0;
+        background-size: cover; background-position: center;
+        transition: transform 1.2s var(--ease-expo);
+    }
+    .swiper-slide-active .hs-photo { transform: scale(1.04); }
+    .cp1 { background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85'); }
+    .cp2 { background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=85'); }
+    .cp3 { background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=85'); }
+    .cp4 { background-image: url('https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=85'); }
+    .cp5 { background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85'); }
+    .cp6 { background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=85'); }
+
+    /* Scrims */
+    .hs-scrim-top {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(35,31,32,0.45) 0%, transparent 28%);
+    }
+    .hs-scrim-bot {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 30%, rgba(35,31,32,0.65) 62%, rgba(35,31,32,0.97) 100%);
+    }
+    /* Content */
+    .hs-body {
+        position: absolute; inset: 0; padding: 16px 18px 20px;
+        display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .hs-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .hs-badge {
+        font-size: 9px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase;
+        padding: 4px 11px; border-radius: 100px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.80);
+    }
+    .hs-badge--sale   { background: rgba(255,0,0,0.18); border-color: rgba(255,0,0,0.35); color: var(--sig-200); }
+    .hs-badge--launch { background: rgba(0,200,100,0.14); border-color: rgba(0,200,100,0.30); color: #88ffcc; }
+    .hs-badge--ready  { background: rgba(27,108,54,0.16); border-color: rgba(27,108,54,0.32); color: #90e8a8; }
+    /* Decorative number */
+    .hs-num {
+        font-family: var(--ff-data); font-variant-numeric: tabular-nums;
+        font-size: 5rem; font-weight: 500; line-height: 1;
+        color: rgba(255,255,255,0.07); user-select: none; letter-spacing: -0.02em;
+        transition: color 0.5s ease;
+    }
+    .swiper-slide-active .hs-num { color: rgba(255,255,255,0.12); }
+    /* Bottom content */
+    .hs-cat {
+        font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+        color: rgba(255,255,255,0.38); margin-bottom: 5px; transition: color 0.5s ease;
+    }
+    .swiper-slide-active .hs-cat { color: var(--n-400); }
+    .hs-title {
+        font-family: var(--ff-display); font-size: 1.75rem; font-weight: 500;
+        color: var(--n-0); line-height: 1.05; margin-bottom: 6px;
+    }
+    .hs-loc { display: flex; align-items: center; gap: 4px; font-size: 11px; color: rgba(255,255,255,0.45); }
+    .swiper-slide-active .hs-loc { color: var(--n-500); }
+    .hs-loc svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+    /* ── Custom hero navigation ── */
+    .hero-nav {
+        position: absolute; bottom: 0; left: 50%;
+        transform: translateX(-50%);
+        display: flex; align-items: center; gap: var(--sp4);
+        z-index: 10; height: 60px;
+    }
+    .hn-btn {
+        width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+        background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.55); cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+    }
+    .hn-btn svg { width: 16px; height: 16px; }
+    .hn-btn:hover { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--n-0); transform: scale(1.08); }
+    .hn-counter {
+        display: flex; align-items: center; gap: 5px;
+        font-family: var(--ff-data); font-variant-numeric: tabular-nums;
+        font-size: var(--text-sm);
+    }
+    #hn-curr { color: var(--n-0); font-weight: 500; }
+    .hn-sep  { color: rgba(255,255,255,0.16); }
+    .hn-tot  { color: rgba(255,255,255,0.28); }
+    .hn-progress { width: 96px; height: 2px; background: rgba(255,255,255,0.10); border-radius: 1px; overflow: hidden; }
+    #hn-bar  { height: 100%; background: var(--sig-500); border-radius: 1px; transition: width 0.6s var(--ease-expo); }
+
+    .hero-info { width: 100%; max-width: 960px; padding: 0 var(--sp5) var(--sp5); opacity: 0; flex-shrink: 0; }
+    .info-glass {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+        border: 1px solid rgba(255,255,255,0.10); border-radius: 16px;
+        padding: 20px 36px; display: flex; align-items: center;
+        box-shadow: 0 24px 48px rgba(35,31,32,0.35);
+    }
+    .ic { flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 0 28px; transition: opacity var(--dur-ui) var(--ease-expo), transform var(--dur-ui) var(--ease-expo); }
+    .ic:first-child { padding-left: 4px; }
+    .ic-cta { flex: none; padding-right: 4px; display: flex; justify-content: flex-end; align-items: center; }
+    .isep { width: 1px; height: 36px; flex-shrink: 0; background: rgba(255,255,255,0.10); }
+    .il { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; color: var(--n-500); }
+    .iv { font-family: var(--ff-data); font-variant-numeric: tabular-nums; font-size: 1.35rem; font-weight: 400; color: var(--n-0); line-height: 1; }
+    .iv sub { font-size: 0.65rem; color: var(--n-600); vertical-align: baseline; margin-left: 3px; }
+    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; flex-direction: column; align-items: center; gap: var(--sp2); }
+    .sh-track { width: 1px; height: 52px; background: rgba(255,255,255,0.14); position: relative; overflow: hidden; }
+    .sh-run { position: absolute; top: 0; left: 0; right: 0; height: 22px; background: linear-gradient(180deg, var(--sig-500), transparent); animation: shrun 2.2s ease-in-out infinite; }
+    @keyframes shrun { 0% { top: -22px; opacity: 0; } 15% { opacity: 1; } 80% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    .sh-label { font-size: var(--text-xs); letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.20); }
+
+    /* ==========================================================
+       STATS BAR
+    ========================================================== */
+    .section--stats {
+        background: rgba(255,255,255,0.62);
+        backdrop-filter: blur(38px) saturate(160%) brightness(1.05);
+        -webkit-backdrop-filter: blur(38px) saturate(160%) brightness(1.05);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 1px 0 rgba(35,31,32,0.08);
+        padding: 0;
+    }
+    .stats-grid { display: flex; align-items: stretch; }
+    .stat-item { flex: 1; text-align: center; padding: var(--sp5) var(--sp4); position: relative; }
+    .stat-item + .stat-item::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 40px; background: rgba(35,31,32,0.10); }
+    .stat-num { display: block; font-family: var(--ff-data); font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem); font-weight: 500; color: var(--n-950); line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+    .stat-num span { color: var(--sig-500); }
+    .stat-label { font-size: var(--text-xs); letter-spacing: 0.18em; text-transform: uppercase; color: var(--n-700); font-weight: 400; }
+
+    /* ==========================================================
+       ABOUT
+    ========================================================== */
+    .section--about {
+        background: rgba(255,255,255,0.58);
+        backdrop-filter: blur(40px) saturate(162%) brightness(1.06);
+        -webkit-backdrop-filter: blur(40px) saturate(162%) brightness(1.06);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.68), inset 0 0 0 1px rgba(255,255,255,0.22);
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp7); align-items: center; }
+    .about-p { font-size: var(--text-base); line-height: 1.75; color: var(--n-800); margin-bottom: var(--sp5); max-width: 520px; }
+    .about-feats { display: flex; flex-direction: column; gap: var(--sp4); margin-bottom: var(--sp6); }
+    .about-feat { display: flex; align-items: flex-start; gap: var(--sp3); }
+    .af-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.72); backdrop-filter: blur(12px); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.55); }
+    .af-icon svg { width: 16px; height: 16px; color: var(--sig-600); }
+    .af-title { font-size: var(--text-sm); font-weight: 600; color: var(--n-950); margin-bottom: 3px; }
+    .af-desc  { font-size: var(--text-sm); color: var(--n-800); line-height: 1.55; }
+    .about-visual { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; }
+    .about-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-scene) var(--ease-expo); }
+    .about-visual:hover img { transform: scale(1.03); }
+    .about-badge { position: absolute; bottom: 28px; left: 28px; background: rgba(255,255,255,0.82); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 14px; padding: 18px 24px; box-shadow: 0 12px 40px rgba(35,31,32,0.18), inset 0 1px 0 rgba(255,255,255,0.90); border: 1px solid rgba(255,255,255,0.55); }
+    .ab-num   { font-family: var(--ff-data); font-size: 2rem; font-weight: 500; color: var(--n-950); line-height: 1; margin-bottom: 4px; }
+    .ab-num span { color: var(--sig-500); }
+    .ab-label { font-size: var(--text-xs); letter-spacing: 0.16em; text-transform: uppercase; color: var(--n-600); }
+
+    /* ==========================================================
+       FEATURED PROJECTS
+    ========================================================== */
+    .section--projects {
+        background: rgba(255,255,255,0.55);
+        backdrop-filter: blur(36px) saturate(158%) brightness(1.04);
+        -webkit-backdrop-filter: blur(36px) saturate(158%) brightness(1.04);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 0 0 1px rgba(255,255,255,0.20);
+    }
+    .projects-header { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp4); margin-bottom: var(--sp6); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp4); }
+    .project-card { background: rgba(255,255,255,0.72); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.50); box-shadow: 0 8px 32px rgba(35,31,32,0.08), inset 0 1px 0 rgba(255,255,255,0.85); transition: transform var(--dur-ui) var(--ease-expo), box-shadow var(--dur-ui) var(--ease-expo); cursor: none; }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(35,31,32,0.14), inset 0 1px 0 rgba(255,255,255,0.85); }
+    .pc-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+    .pc-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-scene) var(--ease-expo); }
+    .project-card:hover .pc-photo img { transform: scale(1.06); }
+    .pc-badge { position: absolute; top: 14px; left: 14px; font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; background: rgba(255,255,255,0.82); backdrop-filter: blur(10px); color: var(--n-950); border: 1px solid rgba(255,255,255,0.55); }
+    .pc-badge--off   { background: rgba(255,0,0,0.12); color: var(--sig-700); border: 1px solid rgba(255,0,0,0.22); }
+    .pc-badge--ready { background: rgba(27,108,54,0.12); color: var(--success-text); border: 1px solid rgba(27,108,54,0.22); }
+    .pc-body  { padding: 22px 22px 24px; }
+    .pc-cat   { font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--n-600); margin-bottom: 6px; }
+    .pc-title { font-family: var(--ff-display); font-size: 1.5rem; font-weight: 500; color: var(--n-950); line-height: 1.1; margin-bottom: 8px; }
+    .pc-loc   { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--n-600); margin-bottom: 14px; }
+    .pc-loc svg { width: 11px; height: 11px; flex-shrink: 0; color: var(--sig-500); }
+    .pc-specs { display: flex; gap: var(--sp3); padding-top: 14px; border-top: 1px solid rgba(35,31,32,0.10); }
+    .pc-spec  { display: flex; flex-direction: column; gap: 2px; }
+    .ps-val   { font-family: var(--ff-data); font-size: var(--text-sm); font-weight: 500; color: var(--n-950); }
+    .ps-lbl   { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--n-600); }
+
+    /* ==========================================================
+       FEATURED UNITS — dark section
+    ========================================================== */
+    .section--units {
+        background: rgba(35,31,32,0.74);
+        backdrop-filter: blur(42px) saturate(145%) brightness(0.88);
+        -webkit-backdrop-filter: blur(42px) saturate(145%) brightness(0.88);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+        position: relative; overflow: hidden;
+    }
+    .units-blobs { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; contain: paint; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; animation: blobdrift linear infinite; }
+    .blob-1 { width: 500px; height: 500px; background: var(--n-800); top: -15%; left: -10%; animation-duration: 38s; }
+    .blob-2 { width: 380px; height: 380px; background: rgba(255,0,0,0.07); top: 20%; right: -8%; animation-duration: 44s; animation-delay: -14s; }
+    .blob-3 { width: 340px; height: 340px; background: var(--n-700); bottom: -10%; left: 30%; animation-duration: 32s; animation-delay: -8s; }
+    @keyframes blobdrift {
+        0%   { transform: translate(0,0) scale(1); }
+        33%  { transform: translate(40px,-30px) scale(1.05); }
+        66%  { transform: translate(-25px,45px) scale(0.95); }
+        100% { transform: translate(0,0) scale(1); }
+    }
+    .units-inner { position: relative; z-index: 1; }
+    .units-header { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp4); margin-bottom: var(--sp6); }
+    .units-header .eyebrow { color: var(--n-500); }
+    .units-header .section-h { color: var(--n-0); }
+    .filter-chips { display: flex; gap: var(--sp2); flex-wrap: wrap; margin-bottom: var(--sp5); }
+    .chip { font-family: var(--ff-body); font-size: var(--text-sm); font-weight: 400; padding: 7px 18px; border-radius: 100px; border: 1px solid var(--n-800); background: transparent; color: var(--n-500); cursor: none; transition: all var(--dur-ui) var(--ease-expo); }
+    .chip:hover { border-color: var(--n-600); color: var(--n-300); }
+    .chip.active { background: var(--sig-500); border-color: var(--sig-500); color: var(--n-0); box-shadow: 0 4px 16px rgba(255,0,0,0.28); }
+    .units-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp4); }
+    .unit-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: transform var(--dur-ui) var(--ease-expo), background var(--dur-ui); cursor: none; }
+    .unit-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.07); }
+    .uc-photo { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+    .uc-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-scene) var(--ease-expo); }
+    .unit-card:hover .uc-photo img { transform: scale(1.06); }
+    .uc-status { position: absolute; top: 12px; right: 12px; font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.80); backdrop-filter: blur(8px); }
+    .uc-status--delivery { background: rgba(255,0,0,0.15); border-color: rgba(255,0,0,0.30); color: var(--sig-300); }
+    .uc-body  { padding: 20px; }
+    .uc-type  { font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--n-600); margin-bottom: 5px; }
+    .uc-name  { font-family: var(--ff-display); font-size: 1.4rem; font-weight: 500; color: var(--n-0); line-height: 1.1; margin-bottom: 14px; }
+    .uc-specs { display: flex; gap: var(--sp3); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .us { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--n-500); }
+    .us svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .uc-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .uc-price { font-family: var(--ff-data); font-size: 1.15rem; font-weight: 500; color: var(--n-0); line-height: 1; font-variant-numeric: tabular-nums; }
+    .uc-price small { font-size: 0.6rem; color: var(--n-600); margin-left: 3px; }
+    .uc-arrow { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--n-300); transition: all var(--dur-ui) var(--ease-expo); flex-shrink: 0; }
+    .unit-card:hover .uc-arrow { background: var(--sig-500); border-color: var(--sig-500); color: var(--n-0); }
+
+    /* ==========================================================
+       TESTIMONIALS
+    ========================================================== */
+    .section--testimonials {
+        background: rgba(255,255,255,0.60);
+        backdrop-filter: blur(38px) saturate(160%) brightness(1.05);
+        -webkit-backdrop-filter: blur(38px) saturate(160%) brightness(1.05);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.70), inset 0 0 0 1px rgba(255,255,255,0.22);
+    }
+    .testi-header { text-align: center; margin-bottom: var(--sp7); }
+    .testi-header .eyebrow { justify-content: center; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp4); }
+    .testi-card { background: rgba(255,255,255,0.70); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.50); box-shadow: 0 8px 32px rgba(35,31,32,0.06), inset 0 1px 0 rgba(255,255,255,0.80); transition: transform var(--dur-ui) var(--ease-expo), box-shadow var(--dur-ui) var(--ease-expo); }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(35,31,32,0.10), inset 0 1px 0 rgba(255,255,255,0.80); }
+    .testi-stars { display: flex; gap: 3px; margin-bottom: var(--sp3); }
+    .testi-stars svg { width: 14px; height: 14px; fill: var(--warning-text); }
+    .testi-quote { font-size: var(--text-base); line-height: 1.7; color: var(--n-800); margin-bottom: var(--sp4); font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: var(--sp3); padding-top: 18px; border-top: 1px solid rgba(35,31,32,0.08); }
+    .ta-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--n-200); overflow: hidden; flex-shrink: 0; }
+    .ta-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .ta-name { font-size: var(--text-sm); font-weight: 600; color: var(--n-950); }
+    .ta-role { font-size: var(--text-xs); color: var(--n-600); margin-top: 2px; }
+
+    /* ==========================================================
+       CONTACT CTA — dark section
+    ========================================================== */
+    .section--contact {
+        background: rgba(35,31,32,0.72);
+        backdrop-filter: blur(40px) saturate(142%) brightness(0.86);
+        -webkit-backdrop-filter: blur(40px) saturate(142%) brightness(0.86);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+        position: relative; overflow: hidden;
+    }
+    .contact-blobs { position: absolute; inset: 0; z-index: 0; overflow: hidden; contain: paint; pointer-events: none; }
+    .contact-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.45; animation: blobdrift linear infinite; }
+    .cb-1 { width: 600px; height: 600px; background: var(--n-800); top: -20%; right: -10%; animation-duration: 42s; }
+    .cb-2 { width: 350px; height: 350px; background: rgba(255,0,0,0.06); bottom: -15%; left: -5%; animation-duration: 36s; animation-delay: -18s; }
+    .contact-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp7); align-items: start; }
+    .contact-left .eyebrow { color: var(--n-500); }
+    .contact-left .section-h { color: var(--n-0); margin-bottom: var(--sp4); }
+    .contact-left > p { color: var(--n-600); font-size: var(--text-base); line-height: 1.7; margin-bottom: var(--sp5); }
+    .contact-btns { display: flex; gap: var(--sp3); flex-wrap: wrap; margin-bottom: var(--sp5); }
+    .contact-info { display: flex; flex-direction: column; gap: var(--sp3); }
+    .ci-row { display: flex; align-items: center; gap: var(--sp3); }
+    .ci-row svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .ci-row span { font-size: var(--text-sm); color: var(--n-500); }
+    .contact-form { display: flex; flex-direction: column; gap: var(--sp3); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp3); }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--n-600); }
+    .form-input, .form-select, .form-textarea {
+        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
+        padding: 12px 16px; font-family: var(--ff-body); font-size: var(--text-sm); color: var(--n-0);
+        outline: none; transition: border-color var(--dur-ui), background var(--dur-ui); width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--n-700); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(255,255,255,0.30); background: rgba(255,255,255,0.08); }
+    .form-select { appearance: none; cursor: none; color: var(--n-700); }
+    .form-select option { background: var(--n-900); color: var(--n-0); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .btn-submit { background: var(--accent-fill); color: var(--n-0); border-radius: 100px; padding: 14px 32px; font-family: var(--ff-body); font-size: var(--text-sm); font-weight: 500; letter-spacing: 0.03em; cursor: none; transition: all var(--dur-ui) var(--ease-expo); align-self: flex-start; box-shadow: 0 2px 14px rgba(211,2,1,0.30); }
+    .btn-submit:hover { background: var(--accent-fill-hover); transform: translateY(-1px); box-shadow: 0 5px 20px rgba(211,2,1,0.42); }
+
+    /* ==========================================================
+       FOOTER
+    ========================================================== */
+    .site-footer {
+        background: rgba(35,31,32,0.88);
+        backdrop-filter: blur(40px) saturate(130%);
+        -webkit-backdrop-filter: blur(40px) saturate(130%);
+        color: var(--n-0);
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-main { padding: var(--sp7) 0 var(--sp6); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--sp6); }
+    .footer-brand .logo { margin-bottom: var(--sp4); }
+    .footer-brand > p { font-size: var(--text-sm); color: var(--n-700); line-height: 1.7; max-width: 280px; margin-bottom: var(--sp4); }
+    .footer-social { display: flex; gap: var(--sp2); }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; color: var(--n-500); transition: all var(--dur-ui) var(--ease-expo); }
+    .social-link:hover { background: rgba(255,255,255,0.10); color: var(--n-0); }
+    .social-link svg { width: 15px; height: 15px; }
+    .footer-col h4 { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; color: var(--n-300); margin-bottom: var(--sp4); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--sp2); }
+    .footer-col a { font-size: var(--text-sm); color: var(--n-700); transition: color var(--dur-ui); }
+    .footer-col a:hover { color: var(--n-0); }
+    .footer-bottom { padding: var(--sp4) 0; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; gap: var(--sp4); }
+    .footer-copy { font-size: var(--text-xs); color: var(--n-700); }
+    .footer-legal { display: flex; gap: var(--sp4); }
+    .footer-legal a { font-size: var(--text-xs); color: var(--n-700); transition: color var(--dur-ui); }
+    .footer-legal a:hover { color: var(--n-400); }
+
+    /* ==========================================================
+       RESPONSIVE
+    ========================================================== */
+    @media (max-width: 1100px) { .site-header { padding: 0 var(--sp6); } }
+    @media (max-width: 1024px) {
+        .main-nav, .btn-ghost { display: none; }
+        .hamburger { display: flex; }
+        .projects-grid  { grid-template-columns: repeat(2, 1fr); }
+        .units-grid     { grid-template-columns: repeat(2, 1fr); }
+        .testi-grid     { grid-template-columns: repeat(2, 1fr); }
+        .contact-inner  { grid-template-columns: 1fr; gap: var(--sp6); }
+        .footer-main    { grid-template-columns: 1fr 1fr 1fr; }
+        .footer-brand   { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+        :root { --hh: 58px; }
+        .site-header { padding: 0 var(--sp4); }
+        .swiper-slide { width: 220px; }
+        .hs-num { font-size: 4rem; }
+        .hs-title { font-size: 1.45rem; }
+        .hero-nav { gap: var(--sp3); }
+        .hn-progress { width: 60px; }
+        .info-glass   { flex-wrap: wrap; padding: 16px 20px; }
+        .isep         { display: none; }
+        .ic           { flex: none; width: 50%; padding: var(--sp2) var(--sp3); }
+        .ic-cta       { width: 100%; justify-content: center; padding: var(--sp3) var(--sp3) var(--sp2); }
+        .stats-grid   { flex-direction: column; }
+        .stat-item + .stat-item::before { display: none; }
+        .stat-item    { border-bottom: 1px solid rgba(35,31,32,0.10); }
+        .about-grid   { grid-template-columns: 1fr; }
+        .about-visual { aspect-ratio: 16/10; }
+        .projects-header { flex-direction: column; align-items: flex-start; }
+        .projects-grid   { grid-template-columns: 1fr; }
+        .units-grid      { grid-template-columns: 1fr; }
+        .testi-grid      { grid-template-columns: 1fr; }
+        .footer-main     { grid-template-columns: 1fr 1fr; }
+        .footer-brand    { grid-column: 1 / -1; }
+        .footer-bottom   { flex-direction: column; gap: var(--sp2); text-align: center; }
+        .footer-legal    { flex-wrap: wrap; justify-content: center; }
+        .form-row        { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+        .swiper-slide { width: 185px; }
+        .hs-num { font-size: 3rem; }
+        .hs-title { font-size: 1.25rem; }
+        .hn-progress { display: none; }
+        .footer-main { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .sh-run, .blob, .contact-blob, .kicker-dot { animation: none; }
+        .reveal { opacity: 1; transform: none; transition: none; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- PAGE BACKGROUND — fixed architectural photo all sections blur over -->
+<div id="page-bg" aria-hidden="true"></div>
+
+<!-- CURSOR -->
+<div id="c-dot"  aria-hidden="true"></div>
+<div id="c-ring" aria-hidden="true"></div>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
+    <a href="index.html"      onclick="closeMob()">Home</a>
+    <a href="properties.html" onclick="closeMob()">Properties</a>
+    <a href="projects.html"   onclick="closeMob()">Projects</a>
+    <a href="about.html"      onclick="closeMob()">About</a>
+    <a href="blog.html"       onclick="closeMob()">Blog</a>
+    <a href="contact.html"    onclick="closeMob()">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHdr">
+    <a href="index.html" class="logo" aria-label="Akar Town">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="1.5,38 11,5 16,5 16,38 12.5,38 12.5,25 5,25"   fill="currentColor"/>
+            <polygon points="11,5 16,5 16,38 12.5,38 12.5,19"                fill="currentColor"/>
+            <polygon points="4.5,23 13.5,23 11.5,17 2.5,17"                  fill="#FF0000"/>
+            <rect    x="18.5" y="5" width="3.5" height="33"                  fill="currentColor"/>
+            <polygon points="22,21 35,5 39,5 26,21"                           fill="currentColor"/>
+            <polygon points="22,21 39,38 35,38 22,23"                         fill="currentColor"/>
+        </svg>
+        <div class="logo-words">
+            <span class="logo-name">Akar Town</span>
+            <span class="logo-sub">Premium Real Estate</span>
+        </div>
+    </a>
+    <nav class="main-nav" aria-label="Primary navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="properties.html">Properties</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="hdr-right">
+        <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
+        <a href="properties.html"   class="btn btn-accent">Find Property</a>
+        <button class="hamburger" id="hbgBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mob">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main id="main">
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Featured Properties">
+    <div class="hero-bg" aria-hidden="true">
+        <div class="hero-photo"></div>
+        <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-inner">
+        <div class="hero-stage" id="heroStage">
+            <div class="swiper hero-swiper" id="heroSwiper">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp1"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge hs-badge--sale">For Sale</span>
+                                    <span class="hs-num" aria-hidden="true">01</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Luxury Apartments</p>
+                                    <h2 class="hs-title">The Residences</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        New Cairo, Cairo
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp2"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge hs-badge--launch">New Launch</span>
+                                    <span class="hs-num" aria-hidden="true">02</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Mixed-Use Tower</p>
+                                    <h2 class="hs-title">Crystal Tower</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        6th of October, Giza
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp3"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge hs-badge--ready">Ready</span>
+                                    <span class="hs-num" aria-hidden="true">03</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Luxury Villas</p>
+                                    <h2 class="hs-title">Palm Gardens</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        North Coast, Alexandria
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp4"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge hs-badge--launch">New Launch</span>
+                                    <span class="hs-num" aria-hidden="true">04</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Waterfront Residences</p>
+                                    <h2 class="hs-title">Marina Heights</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        New Alamein, Matrouh
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp5"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge">Off-Plan</span>
+                                    <span class="hs-num" aria-hidden="true">05</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Premium Villas</p>
+                                    <h2 class="hs-title">The Grand Villas</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        Sheikh Zayed, Giza
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="hs-inner">
+                            <div class="hs-photo cp6"></div>
+                            <div class="hs-scrim-top"></div>
+                            <div class="hs-scrim-bot"></div>
+                            <div class="hs-body">
+                                <div class="hs-top">
+                                    <span class="hs-badge hs-badge--sale">For Sale</span>
+                                    <span class="hs-num" aria-hidden="true">06</span>
+                                </div>
+                                <div class="hs-foot">
+                                    <p class="hs-cat">Coastal Chalets</p>
+                                    <h2 class="hs-title">Azure Bay</h2>
+                                    <p class="hs-loc">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        Sidi Abdel Rahman, North Coast
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Custom navigation: arrows + counter + progress -->
+            <div class="hero-nav" id="heroNav" aria-label="Slider navigation">
+                <button class="hn-btn" id="hsPrev" aria-label="Previous property">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                </button>
+                <div class="hn-counter" aria-live="polite">
+                    <span id="hn-curr">01</span>
+                    <span class="hn-sep">/</span>
+                    <span class="hn-tot">06</span>
+                </div>
+                <div class="hn-progress" aria-hidden="true">
+                    <div id="hn-bar" style="width:16.67%"></div>
+                </div>
+                <button class="hn-btn" id="hsNext" aria-label="Next property">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="hero-info" id="heroInfo">
+            <div class="info-glass" role="region" aria-live="polite" aria-label="Selected property details">
+                <div class="ic" id="ic-price">
+                    <span class="il">Starting From</span>
+                    <span class="iv" id="v-price">4,200,000<sub>EGP</sub></span>
+                </div>
+                <div class="isep" aria-hidden="true"></div>
+                <div class="ic" id="ic-area">
+                    <span class="il">Area Range</span>
+                    <span class="iv" id="v-area">120–320<sub>m²</sub></span>
+                </div>
+                <div class="isep" aria-hidden="true"></div>
+                <div class="ic" id="ic-units">
+                    <span class="il">Total Units</span>
+                    <span class="iv" id="v-units">248<sub>units</sub></span>
+                </div>
+                <div class="isep" aria-hidden="true"></div>
+                <div class="ic ic-cta">
+                    <a href="project-detail.html" class="btn btn-accent" id="info-btn">Explore →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+        <div class="sh-track"><div class="sh-run"></div></div>
+        <span class="sh-label">Scroll</span>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════════════════ -->
+<section class="section section--stats" aria-label="Company statistics">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <span class="stat-num">120<span>+</span></span>
+                <span class="stat-label">Projects Delivered</span>
+            </div>
+            <div class="stat-item reveal reveal-d1">
+                <span class="stat-num">4,800<span>+</span></span>
+                <span class="stat-label">Units Sold</span>
+            </div>
+            <div class="stat-item reveal reveal-d2">
+                <span class="stat-num">18<span>+</span></span>
+                <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-item reveal reveal-d3">
+                <span class="stat-num">98<span>%</span></span>
+                <span class="stat-label">On-Time Delivery</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════════ -->
+<section class="section section--about" id="about" aria-labelledby="aboutH">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p class="eyebrow"><span class="eyebrow-dot"></span>Who We Are</p>
+                <h2 class="section-h section-h--lg" id="aboutH">
+                    Building the<br>
+                    <em>Future of Living</em>
+                </h2>
+                <p class="about-p">
+                    Akar Town is Egypt's premier real estate developer, delivering landmark residential
+                    and mixed-use projects that set new standards for design, quality, and lifestyle.
+                    From New Cairo to the North Coast, we craft spaces where life truly flourishes.
+                </p>
+                <div class="about-feats">
+                    <div class="about-feat">
+                        <div class="af-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                        </div>
+                        <div>
+                            <p class="af-title">Premium Locations</p>
+                            <p class="af-desc">Strategically selected sites across Egypt's most desirable neighbourhoods and coastal destinations.</p>
+                        </div>
+                    </div>
+                    <div class="about-feat">
+                        <div class="af-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div>
+                            <p class="af-title">On-Time Delivery</p>
+                            <p class="af-desc">98% of our projects delivered on schedule — because your plans matter as much as ours.</p>
+                        </div>
+                    </div>
+                    <div class="about-feat">
+                        <div class="af-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <div>
+                            <p class="af-title">Award-Winning Design</p>
+                            <p class="af-desc">Internationally recognised architecture blending contemporary aesthetics with cultural heritage.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html" class="btn btn-outline">Learn Our Story →</a>
+            </div>
+            <div class="about-visual reveal reveal-d2">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=90" alt="Akar Town luxury development" loading="lazy">
+                <div class="about-badge">
+                    <p class="ab-num">18<span>+</span></p>
+                    <p class="ab-label">Years in Real Estate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FEATURED PROJECTS
+══════════════════════════════════════════════════ -->
+<section class="section section--projects" id="projects" aria-labelledby="projectsH">
+    <div class="container">
+        <div class="projects-header">
+            <div class="reveal">
+                <p class="eyebrow"><span class="eyebrow-dot"></span>Our Portfolio</p>
+                <h2 class="section-h section-h--lg" id="projectsH">Featured<br>Projects</h2>
+            </div>
+            <a href="projects.html" class="btn btn-outline reveal reveal-d2">View All Projects →</a>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card reveal reveal-d1">
+                <div class="pc-photo">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85" alt="The Residences" loading="lazy">
+                    <span class="pc-badge pc-badge--off">Off-Plan</span>
+                </div>
+                <div class="pc-body">
+                    <p class="pc-cat">Luxury Apartments</p>
+                    <h3 class="pc-title">The Residences</h3>
+                    <p class="pc-loc">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        New Cairo, Cairo
+                    </p>
+                    <div class="pc-specs">
+                        <div class="pc-spec"><span class="ps-val">4.2M</span><span class="ps-lbl">from EGP</span></div>
+                        <div class="pc-spec"><span class="ps-val">120–320</span><span class="ps-lbl">m²</span></div>
+                        <div class="pc-spec"><span class="ps-val">248</span><span class="ps-lbl">Units</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-d2">
+                <div class="pc-photo">
+                    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=85" alt="Crystal Tower" loading="lazy">
+                    <span class="pc-badge">New Launch</span>
+                </div>
+                <div class="pc-body">
+                    <p class="pc-cat">Mixed-Use Tower</p>
+                    <h3 class="pc-title">Crystal Tower</h3>
+                    <p class="pc-loc">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        6th of October, Giza
+                    </p>
+                    <div class="pc-specs">
+                        <div class="pc-spec"><span class="ps-val">8.5M</span><span class="ps-lbl">from EGP</span></div>
+                        <div class="pc-spec"><span class="ps-val">85–450</span><span class="ps-lbl">m²</span></div>
+                        <div class="pc-spec"><span class="ps-val">180</span><span class="ps-lbl">Units</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-d3">
+                <div class="pc-photo">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=85" alt="Palm Gardens" loading="lazy">
+                    <span class="pc-badge pc-badge--ready">Ready</span>
+                </div>
+                <div class="pc-body">
+                    <p class="pc-cat">Luxury Villas</p>
+                    <h3 class="pc-title">Palm Gardens</h3>
+                    <p class="pc-loc">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        North Coast, Alexandria
+                    </p>
+                    <div class="pc-specs">
+                        <div class="pc-spec"><span class="ps-val">12M</span><span class="ps-lbl">from EGP</span></div>
+                        <div class="pc-spec"><span class="ps-val">350–600</span><span class="ps-lbl">m²</span></div>
+                        <div class="pc-spec"><span class="ps-val">64</span><span class="ps-lbl">Villas</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FEATURED UNITS — dark
+══════════════════════════════════════════════════ -->
+<section class="section section--units" id="properties" aria-labelledby="unitsH">
+    <div class="units-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="container units-inner">
+        <div class="units-header">
+            <div class="reveal">
+                <p class="eyebrow"><span class="eyebrow-dot"></span>Available Now</p>
+                <h2 class="section-h section-h--lg" id="unitsH">Featured<br>Properties</h2>
+            </div>
+            <a href="properties.html" class="btn btn-ghost reveal reveal-d2">Browse All →</a>
+        </div>
+        <div class="filter-chips reveal" role="group" aria-label="Filter by property type">
+            <button class="chip active" data-filter="all">All Types</button>
+            <button class="chip" data-filter="apartment">Apartments</button>
+            <button class="chip" data-filter="villa">Villas</button>
+            <button class="chip" data-filter="duplex">Duplexes</button>
+            <button class="chip" data-filter="studio">Studios</button>
+        </div>
+        <div class="units-grid">
+
+            <div class="unit-card reveal reveal-d1">
+                <div class="uc-photo">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=85" alt="Penthouse Unit 2404" loading="lazy">
+                    <span class="uc-status uc-status--delivery">Delivery 2026</span>
+                </div>
+                <div class="uc-body">
+                    <p class="uc-type">Penthouse</p>
+                    <h3 class="uc-name">The Residences — 2404</h3>
+                    <div class="uc-specs">
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>3 Beds</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h7m9 0h-5"/><path d="M4 12V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>2 Baths</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>240 m²</div>
+                    </div>
+                    <div class="uc-bottom">
+                        <div class="uc-price">6,200,000<small>EGP</small></div>
+                        <a href="property-detail.html" class="uc-arrow" aria-label="View property">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-card reveal reveal-d2">
+                <div class="uc-photo">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85" alt="Villa 12 Palm Gardens" loading="lazy">
+                    <span class="uc-status">Ready to Move</span>
+                </div>
+                <div class="uc-body">
+                    <p class="uc-type">Villa</p>
+                    <h3 class="uc-name">Palm Gardens — Villa 12</h3>
+                    <div class="uc-specs">
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>5 Beds</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h7m9 0h-5"/><path d="M4 12V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>4 Baths</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>520 m²</div>
+                    </div>
+                    <div class="uc-bottom">
+                        <div class="uc-price">14,500,000<small>EGP</small></div>
+                        <a href="property-detail.html" class="uc-arrow" aria-label="View property">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-card reveal reveal-d3">
+                <div class="uc-photo">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=85" alt="Studio 801 Crystal Tower" loading="lazy">
+                    <span class="uc-status uc-status--delivery">Delivery 2027</span>
+                </div>
+                <div class="uc-body">
+                    <p class="uc-type">Studio</p>
+                    <h3 class="uc-name">Crystal Tower — Studio 801</h3>
+                    <div class="uc-specs">
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Studio</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h7m9 0h-5"/><path d="M4 12V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>1 Bath</div>
+                        <div class="us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>85 m²</div>
+                    </div>
+                    <div class="uc-bottom">
+                        <div class="uc-price">2,100,000<small>EGP</small></div>
+                        <a href="property-detail.html" class="uc-arrow" aria-label="View property">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════════ -->
+<section class="section section--testimonials" aria-labelledby="testiH">
+    <div class="container">
+        <div class="testi-header reveal">
+            <p class="eyebrow"><span class="eyebrow-dot"></span>Client Stories</p>
+            <h2 class="section-h section-h--lg" id="testiH">What Our<br>Clients Say</h2>
+        </div>
+        <div class="testi-grid">
+
+            <div class="testi-card reveal reveal-d1">
+                <div class="testi-stars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testi-quote">"Akar Town delivered our dream home on time and beyond expectations. The quality of construction and the attention to detail is unlike anything we've seen in Cairo."</p>
+                <div class="testi-author">
+                    <div class="ta-avatar"><img src="https://i.pravatar.cc/80?img=12" alt="" loading="lazy" aria-hidden="true"></div>
+                    <div>
+                        <p class="ta-name">Ahmed Hassan</p>
+                        <p class="ta-role">Purchased at The Residences</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card reveal reveal-d2">
+                <div class="testi-stars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testi-quote">"The investment return on our Palm Gardens villa has been exceptional. Akar Town understands the market and builds in the right locations every time."</p>
+                <div class="testi-author">
+                    <div class="ta-avatar"><img src="https://i.pravatar.cc/80?img=47" alt="" loading="lazy" aria-hidden="true"></div>
+                    <div>
+                        <p class="ta-name">Sara El-Sayed</p>
+                        <p class="ta-role">Investor, Palm Gardens</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card reveal reveal-d3">
+                <div class="testi-stars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testi-quote">"From initial consultation to handover, the Akar Town team was professional and transparent. We felt supported every step of the way."</p>
+                <div class="testi-author">
+                    <div class="ta-avatar"><img src="https://i.pravatar.cc/80?img=33" alt="" loading="lazy" aria-hidden="true"></div>
+                    <div>
+                        <p class="ta-name">Khalid Mansour</p>
+                        <p class="ta-role">Purchased at Crystal Tower</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CONTACT CTA — dark
+══════════════════════════════════════════════════ -->
+<section class="section section--contact" id="contact" aria-labelledby="contactH">
+    <div class="contact-blobs" aria-hidden="true">
+        <div class="contact-blob cb-1"></div>
+        <div class="contact-blob cb-2"></div>
+    </div>
+    <div class="container">
+        <div class="contact-inner">
+
+            <div class="contact-left reveal">
+                <p class="eyebrow"><span class="eyebrow-dot"></span>Get in Touch</p>
+                <h2 class="section-h section-h--lg" id="contactH">
+                    Start Your<br>
+                    <em style="color: var(--sig-300);">Property Journey</em>
+                </h2>
+                <p>Our expert advisors are ready to help you find the perfect property — whether you're buying, investing, or just exploring what's possible.</p>
+                <div class="contact-btns">
+                    <a href="tel:+201234567890" class="btn btn-accent">Call Now</a>
+                    <a href="https://wa.me/201234567890" class="btn btn-ghost">WhatsApp</a>
+                </div>
+                <div class="contact-info">
+                    <div class="ci-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--sig-300)" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.25h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.76-.76a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16z"/></svg>
+                        <span>+20 123 456 7890</span>
+                    </div>
+                    <div class="ci-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--sig-300)" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span>info@akartown.com</span>
+                    </div>
+                    <div class="ci-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--sig-300)" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>New Cairo, Cairo, Egypt</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal reveal-d2">
+                <form class="contact-form" novalidate aria-label="Property enquiry form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="cf-name">Full Name</label>
+                            <input class="form-input" type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cf-phone">Phone</label>
+                            <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="+20 1XX XXX XXXX" autocomplete="tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cf-email">Email</label>
+                        <input class="form-input" type="email" id="cf-email" name="email" placeholder="you@example.com" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cf-interest">I'm Interested In</label>
+                        <select class="form-select" id="cf-interest" name="interest">
+                            <option value="" disabled selected>Select property type</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="villa">Villa</option>
+                            <option value="studio">Studio</option>
+                            <option value="duplex">Duplex</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cf-msg">Message</label>
+                        <textarea class="form-textarea" id="cf-msg" name="message" placeholder="Tell us about your requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Enquiry →</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="index.html" class="logo" aria-label="Akar Town home">
+                    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <polygon points="1.5,38 11,5 16,5 16,38 12.5,38 12.5,25 5,25"   fill="currentColor"/>
+                        <polygon points="11,5 16,5 16,38 12.5,38 12.5,19"                fill="currentColor"/>
+                        <polygon points="4.5,23 13.5,23 11.5,17 2.5,17"                  fill="#FF0000"/>
+                        <rect    x="18.5" y="5" width="3.5" height="33"                  fill="currentColor"/>
+                        <polygon points="22,21 35,5 39,5 26,21"                           fill="currentColor"/>
+                        <polygon points="22,21 39,38 35,38 22,23"                         fill="currentColor"/>
+                    </svg>
+                    <div class="logo-words">
+                        <span class="logo-name">Akar Town</span>
+                        <span class="logo-sub">Premium Real Estate</span>
+                    </div>
+                </a>
+                <p>Egypt's premier real estate developer, delivering landmark residential and mixed-use projects since 2006.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="#231F20"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog & News</a></li>
+                    <li><a href="contact.html">Careers</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Properties</h4>
+                <ul>
+                    <li><a href="properties.html">All Properties</a></li>
+                    <li><a href="properties.html">Apartments</a></li>
+                    <li><a href="properties.html">Villas</a></li>
+                    <li><a href="properties.html">Duplexes</a></li>
+                    <li><a href="properties.html">Off-Plan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Locations</h4>
+                <ul>
+                    <li><a href="properties.html">New Cairo</a></li>
+                    <li><a href="properties.html">6th of October</a></li>
+                    <li><a href="properties.html">North Coast</a></li>
+                    <li><a href="properties.html">Maadi</a></li>
+                    <li><a href="properties.html">Zamalek</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Akar Town Real Estate. All rights reserved.</p>
+            <nav class="footer-legal" aria-label="Legal links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Cookie Policy</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script>
+/* ── Cursor ── */
+(function () {
+    const dot = document.getElementById('c-dot');
+    const ring = document.getElementById('c-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function tick() {
+        rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a, button, .swiper-slide').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+    });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+}());
+
+/* ── Header scroll ── */
+(function () {
+    const hdr = document.getElementById('siteHdr');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => { hdr.classList.toggle('scrolled', window.scrollY > 24); ticking = false; });
+            ticking = true;
+        }
+    }, { passive: true });
+}());
+
+/* ── Mobile menu ── */
+const hbgBtn = document.getElementById('hbgBtn');
+const mobEl  = document.getElementById('mob');
+const mobX   = document.getElementById('mobX');
+function openMob()  { hbgBtn.classList.add('open'); mobEl.classList.add('open'); mobEl.setAttribute('aria-hidden', 'false'); hbgBtn.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+function closeMob() { hbgBtn.classList.remove('open'); mobEl.classList.remove('open'); mobEl.setAttribute('aria-hidden', 'true'); hbgBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+hbgBtn.addEventListener('click', () => hbgBtn.classList.contains('open') ? closeMob() : openMob());
+mobX.addEventListener('click', closeMob);
+mobEl.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+
+/* ── Property data ── */
+const PROPS = [
+    { price: '4,200,000',  pu: 'EGP', area: '120–320', au: 'm²', units: '248', uu: 'units',  href: 'project-detail.html', name: 'The Residences' },
+    { price: '8,500,000',  pu: 'EGP', area: '85–450',  au: 'm²', units: '180', uu: 'units',  href: 'project-detail.html', name: 'Crystal Tower'  },
+    { price: '12,000,000', pu: 'EGP', area: '350–600', au: 'm²', units: '64',  uu: 'villas', href: 'project-detail.html', name: 'Palm Gardens'   },
+    { price: '6,800,000',  pu: 'EGP', area: '95–280',  au: 'm²', units: '312', uu: 'units',  href: 'project-detail.html', name: 'Marina Heights' },
+    { price: '18,000,000', pu: 'EGP', area: '450–900', au: 'm²', units: '48',  uu: 'villas', href: 'project-detail.html', name: 'The Grand Villas'},
+    { price: '3,500,000',  pu: 'EGP', area: '65–180',  au: 'm²', units: '520', uu: 'units',  href: 'project-detail.html', name: 'Azure Bay'      },
+];
+function updateInfo(idx) {
+    const d = PROPS[idx % PROPS.length];
+    const cells = ['ic-price', 'ic-area', 'ic-units'].map(id => document.getElementById(id));
+    cells.forEach(c => { c.style.opacity = '0'; c.style.transform = 'translateY(7px)'; });
+    setTimeout(() => {
+        document.getElementById('v-price').innerHTML = `${d.price}<sub>${d.pu}</sub>`;
+        document.getElementById('v-area').innerHTML  = `${d.area}<sub>${d.au}</sub>`;
+        document.getElementById('v-units').innerHTML = `${d.units}<sub>${d.uu}</sub>`;
+        document.getElementById('info-btn').textContent = `Explore ${d.name} →`;
+        document.getElementById('info-btn').href = d.href;
+        cells.forEach((c, i) => setTimeout(() => {
+            c.style.transition = 'opacity .36s ease, transform .36s ease';
+            c.style.opacity = '1'; c.style.transform = 'translateY(0)';
+        }, i * 65));
+    }, 200);
+}
+
+/* ── Swiper — coverflow fan ── */
+const heroSwiper = new Swiper('#heroSwiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    loop: true,
+    speed: 820,
+    autoplay: { delay: 2800, disableOnInteraction: false, pauseOnMouseEnter: true },
+    coverflowEffect: {
+        rotate: 24,
+        stretch: 0,
+        depth: 110,
+        modifier: 1,
+        slideShadows: false
+    },
+    on: {
+        slideChange() {
+            updateInfo(this.realIndex);
+            updateNav(this.realIndex);
+        }
+    }
+});
+
+/* Custom prev / next */
+document.getElementById('hsPrev').addEventListener('click', () => heroSwiper.slidePrev());
+document.getElementById('hsNext').addEventListener('click', () => heroSwiper.slideNext());
+
+function updateNav(idx) {
+    const total = PROPS.length;
+    document.getElementById('hn-curr').textContent = String(idx + 1).padStart(2, '0');
+    document.getElementById('hn-bar').style.width = ((idx + 1) / total * 100) + '%';
+}
+
+/* ── GSAP hero entrance ── */
+window.addEventListener('load', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        ['#heroKicker','#heroH','#heroLead','#heroStage','#heroNav','#heroInfo'].forEach(s => {
+            const el = document.querySelector(s);
+            if (el) { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+        return;
+    }
+    gsap.set('#heroStage', { opacity: 0, y: 40 });
+    gsap.set('#heroNav',   { opacity: 0, y: 14 });
+    gsap.set('#heroInfo',  { opacity: 0, y: 20 });
+    gsap.timeline({ defaults: { ease: 'expo.out' } })
+        .to('#heroStage', { opacity: 1, y: 0, duration: 1.10 }, 0.18)
+        .to('#heroNav',   { opacity: 1, y: 0, duration: 0.70 }, 0.72)
+        .to('#heroInfo',  { opacity: 1, y: 0, duration: 0.88 }, 0.90);
+});
+
+/* ── Scroll reveal (IntersectionObserver) ── */
+(function () {
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('is-revealed'); obs.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}());
+
+/* ── Filter chips ── */
+document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+    });
+});
+
+/* ── Blob pause off-screen / hidden ── */
+(function () {
+    const blobObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            e.target.querySelectorAll('.blob, .contact-blob').forEach(b => {
+                b.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+            });
+        });
+    }, { threshold: 0 });
+    document.querySelectorAll('.section--units, .section--contact').forEach(s => blobObs.observe(s));
+    document.addEventListener('visibilitychange', () => {
+        document.querySelectorAll('.blob, .contact-blob').forEach(b => {
+            b.style.animationPlayState = document.hidden ? 'paused' : 'running';
+        });
+    });
+}());
+</script>
+
+</body>
+</html>

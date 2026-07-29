@@ -1,0 +1,118 @@
+/*
+ * Akar Town — Colour System
+ * Source: vectorstock_14081703.svg (measured, not estimated)
+ * WCAG 2.1 ratios verified. See docs/design-system.md §2.
+ * ─────────────────────────────────────────────────────────
+ * Usage:
+ *   - Primitives (--n-*, --sig-*): never used directly in components.
+ *   - Semantic layer (--text, --surface, --border, --accent-fill):
+ *     read by all components.
+ *   - .on-ink: section context class on dark grounds (hero,
+ *     featured-units, get-in-touch). Remaps the semantic layer.
+ *     Components need no variant class.
+ */
+
+/* ── Neutral ramp — OKLab-interpolated from logo gradient ── */
+:root {
+    --n-0:   #FFFFFF;   /* exact — gradient stop 1          */
+    --n-50:  #F7F7F7;   /* derived                          */
+    --n-100: #EDEDED;   /* derived                          */
+    --n-200: #D9D9D9;   /* derived                          */
+    --n-300: #C4C4C4;   /* exact — gradient stop .59        */
+    --n-400: #ACACAC;   /* derived                          */
+    --n-500: #939393;   /* exact — gradient stop .19        */
+    --n-600: #808080;   /* exact — gradient stop 0 (gray)   */
+    --n-700: #656263;   /* derived                          */
+    --n-800: #4C494A;   /* derived                          */
+    --n-900: #353233;   /* derived                          */
+    --n-950: #231F20;   /* exact — monogram fill            */
+}
+
+/* ── Signal ramp — hue locked to 29.23°, #FF0000 held exact at 500 ── */
+:root {
+    --sig-100: #FFE0DA;
+    --sig-200: #FEC2B8;
+    --sig-300: #FF9687;  /* red text on ink — 7.73:1 PASS   */
+    --sig-400: #FE6654;  /* hover state on ink               */
+    --sig-500: #FF0000;  /* exact — the detached slab.       */
+                         /* SHAPES ONLY. 4.00:1 on white     */
+                         /* fails AA for body text.          */
+    --sig-600: #D30201;  /* filled controls on light 5.56:1 */
+                         /* passes AA at any text size.      */
+    --sig-700: #AD0000;  /* fill hover                       */
+    --sig-800: #860000;
+    --sig-900: #620000;
+}
+
+/* ── Status colours — chroma 0.115, brand accent chroma 0.258 ── */
+:root {
+    --success-text:  #1B6C36;  /* 6.47:1 on white */
+    --success-glyph: #8BD19A;
+    --success-tint:  #E3F6E6;
+    --success-edge:  #BCE3C3;
+
+    --info-text:     #165E98;  /* 6.80:1 on white */
+    --info-glyph:    #86C4FE;
+    --info-tint:     #E5F2FF;
+    --info-edge:     #B9DCFE;
+
+    --warning-text:  #785302;  /* 6.92:1 on white */
+    --warning-glyph: #E3B56D;
+    --warning-tint:  #FCEEDA;
+    --warning-edge:  #EED3AC;
+
+    --danger-text:   #903C39;  /* 7.26:1 on white — hue 25°, distinct from brand */
+    --danger-glyph:  #FAA39C;
+    --danger-tint:   #FFEBE9;
+    --danger-edge:   #FDC9C4;
+}
+
+/* ── Design-system aliases (consumed by components) ── */
+:root {
+    --ink:         var(--n-950);
+    --ink-soft:    var(--n-900);
+    --ink-mute:    var(--n-500);
+    --silver:      var(--n-300);
+    --mist:        var(--n-100);  /* page ground, cool */
+    --paper:       var(--n-0);
+    --signal:      var(--sig-500);  /* graphic use only */
+
+    /* Accent fill — use this for ALL filled interactive controls.
+       White on it = 5.56:1, passes AA at any size. */
+    --accent-fill:       var(--sig-600);   /* #D30201 */
+    --accent-fill-hover: var(--sig-700);   /* #AD0000 */
+
+    /* Hero-CTA-only: keep #FF0000, but label MUST be ≥18.66px bold
+       (3:1 large-text bar: white/#FF0000 = 4.00:1). */
+    --accent-hero: var(--sig-500);  /* #FF0000 */
+}
+
+/* ── Semantic layer — light ground (default) ── */
+:root {
+    --text:      var(--n-950);   /* 16.30:1 on white — body, headings   */
+    --text-2:    var(--n-700);   /*  6.03:1 — lightest usable body text  */
+    --text-3:    var(--n-500);   /*  3.07:1 — decorative / disabled only */
+    --surface:   var(--n-0);
+    --surface-2: var(--n-50);
+    --border:    var(--n-200);   /*  borders, decorative lines           */
+    --border-2:  var(--n-100);
+}
+
+/* ── .on-ink — dark section context ────────────────────────────────────
+   Apply to: .hero, .section--featured-units, .section--contact
+   Components read --text / --surface / --border, not primitives.
+   Same component, no variant class needed.
+─────────────────────────────────────────────────────────────────────── */
+.on-ink {
+    --text:      var(--n-0);     /* white on ink — 16.30:1               */
+    --text-2:    var(--n-300);   /*  9.35:1 on ink                       */
+    --text-3:    var(--n-500);   /*  5.31:1 on ink                       */
+    --surface:   var(--n-900);
+    --surface-2: var(--n-800);
+    --border:    var(--n-800);
+    --border-2:  var(--n-900);
+
+    /* Signal overrides for ink context */
+    --sig-text:  var(--sig-300); /* red text on ink — 7.73:1 PASS        */
+    --sig-hover: var(--sig-400);
+}
