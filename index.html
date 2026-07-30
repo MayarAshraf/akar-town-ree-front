@@ -252,10 +252,15 @@
       .props-det-count,
       .ibt-n,
       .hs-num,
-      .hn-counter {
+      .hn-counter,
+      .loc-prop-count,
+      .loc-num,
+      .loc-stat-val {
         font-family: var(--font-data);
         font-variant-numeric: tabular-nums;
-        font-feature-settings: "tnum" 1, "zero" 1;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
       }
 
       /* ==========================================================
@@ -1111,7 +1116,6 @@
         display: flex;
         align-items: center;
         gap: var(--sp2);
-        margin-bottom: var(--sp2);
       }
       /* ── .slab — the red parallelogram from the AK logo ──
          clip-path reproduces the exact logo geometry:
@@ -1607,7 +1611,7 @@
         line-height: 1.1;
         letter-spacing: -0.02em;
         color: var(--text);
-        margin: var(--sp2) 0 0;
+        margin: var(--sp2) 0 var(--sp3);
       }
       /* All section headings share the same scale */
       .sec-heading,
@@ -1899,6 +1903,383 @@
           width: clamp(180px, 60vw, 240px);
         }
       }
+
+      /* ==========================================================
+         SECTION 4 — LOCATIONS EXPLORER
+         Expanding row strips on dark --ink ground
+      ========================================================== */
+      .sec-locs {
+        background: var(--ink);
+        color: var(--n-0);
+        padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+        overflow: hidden;
+      }
+
+      /* Header block */
+      .locs-header {
+        max-width: var(--container, 1320px);
+        margin: 0 auto var(--sp3);
+        padding: 0 clamp(1rem, 4vw, 2.5rem);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      .locs-title-group {
+        display: flex;
+        flex-direction: column;
+      }
+      /* Strip list */
+      .locs-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--n-800);
+      }
+
+      /* Individual row */
+      .loc-item {
+        position: relative;
+        height: 88px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--n-800);
+        cursor: pointer;
+        transition: height 0.65s var(--ease-expo);
+        isolation: isolate;
+      }
+      .loc-item:hover,
+      .loc-item.is-open {
+        height: 240px;
+      }
+
+      /* Background photo */
+      .loc-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-size: cover;
+        background-position: center;
+        transform: scale(1.06);
+        opacity: 0;
+        transition:
+          opacity 0.65s var(--ease-expo),
+          transform 0.65s var(--ease-expo);
+      }
+      .loc-item:hover .loc-bg,
+      .loc-item.is-open .loc-bg {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Dark scrim */
+      .loc-scrim {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--ink) 88%, transparent) 0%,
+          color-mix(in oklab, var(--ink) 60%, transparent) 50%,
+          color-mix(in oklab, var(--ink) 30%, transparent) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.5s var(--ease-expo);
+      }
+      .loc-item:hover .loc-scrim,
+      .loc-item.is-open .loc-scrim {
+        opacity: 1;
+      }
+
+      /* Red left-edge slab — slides in vertically */
+      .loc-edge {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 3;
+        width: 3px;
+        background: var(--sig-500);
+        transform: scaleY(0);
+        transform-origin: bottom center;
+        transition: transform 0.55s var(--ease-expo);
+      }
+      .loc-item:hover .loc-edge,
+      .loc-item.is-open .loc-edge {
+        transform: scaleY(1);
+      }
+
+      /* Ghost number watermark */
+      /* Inner content */
+      .loc-inner {
+        position: relative;
+        z-index: 4;
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 2.5rem);
+        height: 88px;
+        display: flex;
+        align-items: center;
+        gap: clamp(1rem, 3vw, 3rem);
+      }
+      .loc-num {
+        font-size: clamp(2rem, 4.5vw, 4.5rem);
+        font-weight: var(--fw-bold);
+        color: var(--n-800);
+        line-height: 1;
+        letter-spacing: -0.05em;
+        flex-shrink: 0;
+        user-select: none;
+        transition:
+          color 0.4s ease,
+          transform 0.55s var(--ease-expo);
+      }
+      .loc-item:hover .loc-num,
+      .loc-item.is-open .loc-num {
+        color: color-mix(in oklab, var(--n-0) 12%, transparent);
+        transform: translateX(4px);
+      }
+      .loc-name {
+        font-family: var(--font-display);
+        font-weight: var(--fw-bold);
+        font-size: clamp(1rem, 1vw + 0.4rem, 1.35rem);
+        letter-spacing: -0.01em;
+        color: var(--n-100);
+        transition:
+          color 0.3s ease,
+          transform 0.45s var(--ease-expo);
+        flex: 1;
+        white-space: nowrap;
+      }
+      .loc-item:hover .loc-name,
+      .loc-item.is-open .loc-name {
+        color: var(--n-0);
+        transform: translateX(6px);
+      }
+      .loc-tag {
+        font-size: var(--text-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--n-300);
+        padding: 3px 12px;
+        border: 1px solid var(--n-700);
+        border-radius: 100px;
+        white-space: nowrap;
+        transition:
+          color 0.3s ease,
+          border-color 0.3s ease,
+          background 0.3s ease;
+      }
+      .loc-item:hover .loc-tag,
+      .loc-item.is-open .loc-tag {
+        color: var(--n-0);
+        border-color: var(--n-500);
+      }
+      .loc-prop-count {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
+        font-size: var(--text-sm);
+        font-weight: var(--fw-medium);
+        color: var(--n-400);
+        white-space: nowrap;
+        transition: color 0.3s ease;
+      }
+      .loc-item:hover .loc-prop-count,
+      .loc-item.is-open .loc-prop-count {
+        color: var(--n-100);
+      }
+
+      /* Expand arrow */
+      .loc-arrow {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--n-800);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          border-color 0.3s ease,
+          background 0.3s ease,
+          transform 0.45s var(--ease-expo);
+        color: var(--n-600);
+      }
+      .loc-arrow svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.45s var(--ease-expo);
+      }
+      .loc-item:hover .loc-arrow,
+      .loc-item.is-open .loc-arrow {
+        border-color: var(--sig-600);
+        background: var(--sig-600);
+        color: var(--n-0);
+        transform: rotate(45deg);
+      }
+
+      /* Expanded reveal area */
+      .loc-expand {
+        position: relative;
+        z-index: 4;
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+        padding-left: calc(
+          clamp(1rem, 4vw, 2.5rem) + 2ch + clamp(1rem, 3vw, 3rem)
+        );
+        display: grid;
+        grid-template-columns: repeat(3, auto) 1fr;
+        gap: 0.5rem 2.5rem;
+        align-items: start;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity 0.45s var(--ease-expo) 0.1s,
+          transform 0.45s var(--ease-expo) 0.1s;
+        pointer-events: none;
+      }
+      .loc-item:hover .loc-expand,
+      .loc-item.is-open .loc-expand {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .loc-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .loc-stat-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
+        font-size: clamp(1rem, 1.2vw + 0.3rem, 1.4rem);
+        font-weight: var(--fw-semibold);
+        color: var(--n-0);
+        line-height: 1;
+      }
+      .loc-stat-key {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--n-400);
+        font-weight: var(--fw-medium);
+      }
+      .loc-districts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-self: center;
+        justify-content: flex-end;
+      }
+      .loc-district-tag {
+        font-size: 0.75rem;
+        font-weight: var(--fw-medium);
+        color: var(--n-300);
+        padding: 3px 9px;
+        background: color-mix(in oklab, var(--n-0) 6%, transparent);
+        border: 1px solid var(--n-700);
+        border-radius: 4px;
+        white-space: nowrap;
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
+      }
+      .loc-item:hover .loc-district-tag {
+        background: color-mix(in oklab, var(--n-0) 12%, transparent);
+        border-color: var(--n-500);
+        color: var(--n-0);
+      }
+
+      /* Divider line between inner and expand */
+      .loc-divider {
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 2.5rem) 0
+          calc(clamp(1rem, 4vw, 2.5rem) + 2ch + clamp(1rem, 3vw, 3rem));
+        opacity: 0;
+        transition: opacity 0.3s ease 0.05s;
+      }
+      .loc-divider hr {
+        border: none;
+        border-top: 1px solid var(--n-800);
+        margin: 0;
+      }
+      .loc-item:hover .loc-divider,
+      .loc-item.is-open .loc-divider {
+        opacity: 1;
+      }
+
+      /* CTA footer */
+      .locs-footer {
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 2.5rem);
+        border-top: 1px solid var(--n-800);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+      .locs-footer-text {
+        font-size: var(--text-sm);
+        color: var(--n-500);
+      }
+      .locs-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-display);
+        font-weight: var(--fw-semibold);
+        font-size: var(--text-sm);
+        color: var(--n-0);
+        text-decoration: none;
+        padding: 0.6rem 1.4rem;
+        border: 1px solid var(--n-700);
+        border-radius: 100px;
+        transition:
+          background 0.25s ease,
+          border-color 0.25s ease,
+          color 0.25s ease;
+      }
+      .locs-cta:hover {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+
+      @media (max-width: 768px) {
+        .loc-tag {
+          display: none;
+        }
+        .loc-prop-count {
+          display: none;
+        }
+        .loc-expand {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.75rem 1.5rem;
+        }
+        .loc-districts {
+          display: none;
+        }
+      }
+      @media (max-width: 520px) {
+        .loc-item {
+          height: 72px;
+        }
+        .loc-item:hover,
+        .loc-item.is-open {
+          height: 200px;
+        }
+        .loc-inner {
+          height: 72px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1980,53 +2361,53 @@
     <header class="site-header" id="siteHdr">
       <div class="hdr-inner">
         <a href="index.html" class="logo" aria-label="Akar Town">
-         <svg
-          width="300"
-          viewBox="0 0 2750 380"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
-            fill="white"
-          />
-          <path
-            d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
-            fill="#FF0000"
-          />
-          <path
-            d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
-            fill="white"
-          />
-          <path
-            d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
-            fill="white"
-          />
-          <path
-            d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
-            fill="white"
-          />
-          <path
-            d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
-            fill="white"
-          />
-          <path
-            d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
-            fill="white"
-          />
-          <path
-            d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
-            fill="white"
-          />
-          <path
-            d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
-            fill="white"
-          />
-          <path
-            d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
-            fill="white"
-          />
-        </svg>
+          <svg
+            width="300"
+            viewBox="0 0 2750 380"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+              fill="white"
+            />
+            <path
+              d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+              fill="#FF0000"
+            />
+            <path
+              d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+              fill="white"
+            />
+            <path
+              d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
+              fill="white"
+            />
+            <path
+              d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+              fill="white"
+            />
+            <path
+              d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
+              fill="white"
+            />
+            <path
+              d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
+              fill="white"
+            />
+            <path
+              d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+              fill="white"
+            />
+            <path
+              d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+              fill="white"
+            />
+            <path
+              d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+              fill="white"
+            />
+          </svg>
         </a>
         <nav class="main-nav" aria-label="Primary navigation">
           <a href="index.html" class="active">Home</a>
@@ -2728,6 +3109,363 @@
               >Find Listings →</a
             >
           </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4 — LOCATIONS EXPLORER -->
+      <section class="sec-locs on-ink" aria-label="Explore Locations">
+        <div class="locs-header">
+          <div class="locs-title-group">
+            <div class="fnd-eyebrow">
+              <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
+              <span class="fnd-eyebrow-text">Explore by Location</span>
+            </div>
+            <h2 class="props-heading">
+              Where Do You Want to <span class="mark">Live?</span>
+            </h2>
+          </div>
+        </div>
+
+        <ul class="locs-list" role="list">
+          <!-- 01 New Cairo -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="New Cairo — 148 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">01</span>
+              <span class="loc-name">New Cairo</span>
+              <span class="loc-tag">East Cairo</span>
+              <span class="loc-prop-count">148 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">148</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 2.4M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">12</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">Fifth Settlement</span>
+                <span class="loc-district-tag">El Banafseg</span>
+                <span class="loc-district-tag">Rehab City</span>
+                <span class="loc-district-tag">Madinaty</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 02 North Coast -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="North Coast — 96 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">02</span>
+              <span class="loc-name">North Coast</span>
+              <span class="loc-tag">Mediterranean</span>
+              <span class="loc-prop-count">96 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">96</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 3.1M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">8</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">Sidi Abdel Rahman</span>
+                <span class="loc-district-tag">Hacienda Bay</span>
+                <span class="loc-district-tag">Marassi</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 03 Sheikh Zayed -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="Sheikh Zayed — 74 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">03</span>
+              <span class="loc-name">Sheikh Zayed</span>
+              <span class="loc-tag">West Cairo</span>
+              <span class="loc-prop-count">74 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">74</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 1.9M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">6</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">Allegria</span>
+                <span class="loc-district-tag">Zayed 2000</span>
+                <span class="loc-district-tag">Golf District</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 04 New Administrative Capital -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="New Capital — 112 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">04</span>
+              <span class="loc-name">New Capital</span>
+              <span class="loc-tag">Future City</span>
+              <span class="loc-prop-count">112 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">112</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 2.8M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">14</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">R7 District</span>
+                <span class="loc-district-tag">R8 District</span>
+                <span class="loc-district-tag">Downtown</span>
+                <span class="loc-district-tag">MU23</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 05 Ain Sokhna -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="Ain Sokhna — 53 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">05</span>
+              <span class="loc-name">Ain Sokhna</span>
+              <span class="loc-tag">Red Sea</span>
+              <span class="loc-prop-count">53 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">53</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 1.5M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">5</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">Porto Sokhna</span>
+                <span class="loc-district-tag">Azzurra</span>
+                <span class="loc-district-tag">La Vista</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 06 October City -->
+          <li
+            class="loc-item"
+            tabindex="0"
+            aria-label="October City — 61 properties"
+          >
+            <div
+              class="loc-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=90&quot;);
+              "
+            ></div>
+            <div class="loc-scrim"></div>
+            <div class="loc-edge" aria-hidden="true"></div>
+            <div class="loc-inner">
+              <span class="loc-num">06</span>
+              <span class="loc-name">October City</span>
+              <span class="loc-tag">West Cairo</span>
+              <span class="loc-prop-count">61 properties</span>
+              <div class="loc-arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="2" y1="7" x2="12" y2="7" />
+                  <polyline points="8,3 12,7 8,11" />
+                </svg>
+              </div>
+            </div>
+            <div class="loc-divider"><hr /></div>
+            <div class="loc-expand">
+              <div class="loc-stat">
+                <span class="loc-stat-val">61</span
+                ><span class="loc-stat-key">Properties</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">EGP 1.7M+</span
+                ><span class="loc-stat-key">Price from</span>
+              </div>
+              <div class="loc-stat">
+                <span class="loc-stat-val">5</span
+                ><span class="loc-stat-key">Projects</span>
+              </div>
+              <div class="loc-districts">
+                <span class="loc-district-tag">Hadayek October</span>
+                <span class="loc-district-tag">Wadi El Nile</span>
+                <span class="loc-district-tag">Beverly Hills</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="locs-footer">
+          <span class="locs-footer-text"
+            >Serving 6 prime destinations · 544+ active listings</span
+          >
+          <a href="properties.html" class="locs-cta">
+            View All Locations
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <line x1="2" y1="7" x2="12" y2="7" />
+              <polyline points="8,3 12,7 8,11" />
+            </svg>
+          </a>
         </div>
       </section>
     </main>
@@ -3508,6 +4246,27 @@
           },
         },
       });
+
+      /* ── Locations — keyboard + accordion logic ── */
+      (function () {
+        var items = document.querySelectorAll(".loc-item");
+        items.forEach(function (item) {
+          function toggle() {
+            var isOpen = item.classList.contains("is-open");
+            items.forEach(function (el) {
+              el.classList.remove("is-open");
+            });
+            if (!isOpen) item.classList.add("is-open");
+          }
+          item.addEventListener("click", toggle);
+          item.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggle();
+            }
+          });
+        });
+      })();
     </script>
   </body>
 </html>
