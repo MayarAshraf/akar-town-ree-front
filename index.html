@@ -619,7 +619,7 @@
       .hs-inner {
         width: 100%;
         height: 100%;
-        border-radius: 18px;
+        border-radius: 4px;
         overflow: hidden;
         position: relative;
         transition: border-color 0.7s var(--ease-expo);
@@ -639,7 +639,7 @@
         position: absolute;
         inset: 0;
         pointer-events: none;
-        border-radius: 18px;
+        border-radius: 4px;
         background: linear-gradient(
           142deg,
           rgba(255, 255, 255, 0.16) 0%,
@@ -876,7 +876,7 @@
         backdrop-filter: blur(22px) saturate(180%);
         -webkit-backdrop-filter: blur(22px) saturate(180%);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
+        border-radius: 4px;
         padding: 20px 36px;
         display: flex;
         align-items: center;
@@ -1094,12 +1094,36 @@
         gap: var(--sp2);
         margin-bottom: var(--sp2);
       }
-      .fnd-eyebrow-slab {
-        width: 28px;
-        height: 7px;
+      /* ── .slab — the red parallelogram from the AK logo ──
+         clip-path reproduces the exact logo geometry:
+         top edge offset right, bottom flush left, both parallel at 39.5°.
+         Use --slab-w / --slab-h to size; shape auto-adjusts. */
+      .slab {
+        --slab-w: 28px;
+        --slab-h: 4px;
+        width: var(--slab-w);
+        height: var(--slab-h);
         background: var(--sig-500);
         flex-shrink: 0;
-        border-radius: 2px;
+        clip-path: polygon(
+          calc(var(--slab-h) * 0.81) 0%,
+          100% 0%,
+          calc(100% - var(--slab-h) * 0.81) 100%,
+          0% 100%
+        );
+      }
+      [dir="rtl"] .slab {
+        clip-path: polygon(
+          0% 0%,
+          calc(100% - var(--slab-h) * 0.81) 0%,
+          100% 100%,
+          calc(var(--slab-h) * 0.81) 100%
+        );
+      }
+
+      .fnd-eyebrow-slab {
+        --slab-w: 26px;
+        --slab-h: 4px;
       }
       .fnd-eyebrow-text {
         font-family: var(--font-body);
@@ -1111,15 +1135,13 @@
       }
 
       .fnd-heading {
-        font-family: var(--font-body);
-        font-size: 1.3rem;
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 2.5vw, 2.4rem);
         font-weight: 600;
-        line-height: 1;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--n-700);
-        margin-bottom: var(--sp3);
-        padding-left: 2px;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: var(--sp2) 0 var(--sp3);
       }
 
       /* Type pills row */
@@ -1523,9 +1545,6 @@
         }
       }
       @media (max-width: 600px) {
-        .fnd-heading {
-          font-size: 0.78rem;
-        }
         .fnd-pills {
           gap: 6px;
         }
@@ -1537,6 +1556,328 @@
         .fnd-cta {
           width: 100%;
           justify-content: center;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+         PROPERTIES SLIDER — Section 3
+      ══════════════════════════════════════════════════ */
+      .sec-props {
+        background: var(--ink);
+        overflow: hidden;
+        padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+      }
+
+      /* Header row */
+      .props-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--sp4);
+        padding: 0 clamp(1rem, 4vw, 2.5rem);
+        max-width: var(--container, 1320px);
+        margin: 0 auto var(--sp3);
+      }
+      .props-heading-group {
+        flex: 1;
+      }
+      .props-heading {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 2vw, 2.4rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: var(--sp2) 0 0;
+      }
+      /* All section headings share the same scale */
+      .sec-heading,
+      .fnd-heading,
+      .props-heading {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 2.5vw, 2.4rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+      }
+
+      /* Nav arrows */
+      .props-nav {
+        display: flex;
+        gap: var(--sp2);
+        flex-shrink: 0;
+        padding-bottom: 4px;
+      }
+      .props-nav-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border);
+        background: transparent;
+        color: var(--text);
+        cursor: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          border-color var(--dur-ui) var(--ease-expo),
+          transform var(--dur-ui) var(--ease-expo);
+      }
+      .props-nav-btn:hover {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        transform: scale(1.06);
+      }
+      .props-nav-btn svg {
+        pointer-events: none;
+      }
+
+      /* Split layout */
+      .props-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 0;
+        align-items: stretch;
+        padding: 0 clamp(1rem, 4vw, 2.5rem) 0 clamp(1rem, 4vw, 2.5rem);
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+      }
+
+      /* ── Swiper side ── */
+      .props-swiper-wrap {
+        overflow: hidden;
+        min-width: 0;
+        height: 100%;
+      }
+      .props-swiper {
+        overflow: visible;
+        height: 100%;
+      }
+      .props-swiper .swiper-wrapper {
+        align-items: stretch;
+        height: 100%;
+      }
+      .props-swiper .swiper-slide {
+        height: 100% !important;
+      }
+
+      .props-card {
+        position: relative;
+        height: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+        cursor: none;
+        flex-shrink: 0;
+        /* Shear clip — bottom-inline-start corner */
+        clip-path: polygon(
+          0 0,
+          100% 0,
+          100% 100%,
+          calc(var(--cut-sm) * 0.81) 100%,
+          0 calc(100% - var(--cut-sm))
+        );
+        transition: opacity 0.5s var(--ease-expo);
+      }
+      .props-card-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.9s var(--ease-expo);
+      }
+      .props-card:hover .props-card-photo {
+        transform: scale(1.04);
+      }
+      .props-card-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(35, 31, 32, 0.88) 0%,
+          rgba(35, 31, 32, 0.18) 55%,
+          transparent 100%
+        );
+      }
+      .props-card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.4rem 1.2rem 1.2rem;
+      }
+      .props-card-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+      .props-card-slab {
+        --slab-w: 18px;
+        --slab-h: 4px;
+      }
+      .props-card-cat {
+        font-family: var(--font-body);
+        font-size: 0.62rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--n-300);
+      }
+      .props-card-label {
+        font-family: var(--font-display);
+        font-size: clamp(1rem, 2.2vw, 1.4rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--n-0);
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+
+      /* Active slide highlight */
+      .props-swiper .swiper-slide {
+        width: clamp(200px, 28vw, 310px);
+      }
+      .props-swiper .swiper-slide:not(.swiper-slide-active) .props-card {
+        opacity: 0.55;
+      }
+      .props-swiper .swiper-slide-active .props-card {
+        outline: 1.5px solid rgba(255, 255, 255, 0.22);
+      }
+
+      /* ── Detail panel ── */
+      .props-detail {
+        background: var(--surface-2);
+        border-left: 1px solid var(--border);
+        padding: 2rem 1.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+        overflow: hidden;
+        min-height: clamp(240px, 34vw, 420px);
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      /* Subtle shear cut on the left edge */
+      .props-detail::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -1px;
+        bottom: 0;
+        width: 3px;
+        background: var(--sig-500);
+      }
+      .props-det-count {
+        font-family: var(--font-data);
+        font-size: 0.68rem;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--sig-300);
+        margin-bottom: var(--sp2);
+      }
+      .props-det-name {
+        font-family: var(--font-display);
+        font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        color: var(--text);
+        text-transform: uppercase;
+        margin: 0 0 var(--sp2);
+      }
+      .props-det-agent {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--text-2);
+        margin-bottom: var(--sp4);
+      }
+      .props-det-divider {
+        height: 1px;
+        background: var(--border);
+        margin-bottom: var(--sp4);
+      }
+      .props-det-table {
+        flex: 1;
+      }
+      .props-det-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--border-2);
+      }
+      .props-det-row:last-child {
+        border-bottom: none;
+      }
+      .props-det-key {
+        font-family: var(--font-body);
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-3);
+      }
+      .props-det-val {
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: 0.02em;
+      }
+      .props-det-val.accent {
+        color: var(--sig-300);
+      }
+      .props-det-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-top: var(--sp4);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: var(--n-0);
+        background: var(--accent-fill);
+        border: none;
+        padding: 9px 20px;
+        border-radius: 100px;
+        cursor: none;
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          transform var(--dur-ui) var(--ease-expo);
+        text-decoration: none;
+        align-self: center;
+        white-space: nowrap;
+      }
+      .props-det-cta:hover {
+        background: var(--accent-fill-hover);
+        transform: translateY(-2px);
+      }
+      .props-det-cta:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 900px) {
+        .props-layout {
+          grid-template-columns: 1fr;
+        }
+        .props-detail {
+          border-left: none;
+          border-top: 1px solid var(--border);
+          min-height: auto;
+        }
+      }
+      @media (max-width: 520px) {
+        .props-header {
+          flex-wrap: wrap;
+        }
+        .props-swiper .swiper-slide {
+          width: clamp(180px, 60vw, 240px);
         }
       }
     </style>
@@ -1943,12 +2284,12 @@
           <!-- LEFT: configurator -->
           <div class="fnd-config" id="fndConfig">
             <div class="fnd-eyebrow" aria-hidden="true">
-              <span class="fnd-eyebrow-slab"></span>
+              <span class="slab fnd-eyebrow-slab"></span>
               <span class="fnd-eyebrow-text">Configure Your Space</span>
             </div>
 
             <h2 class="fnd-heading">
-              Find your <span class="mark">perfect</span> home layout
+              Find Your <span class="mark">Perfect</span> Home Layout
             </h2>
 
             <!-- Type pills -->
@@ -2140,6 +2481,210 @@
           <!-- /fnd-visual -->
         </div>
         <!-- /finder-inner -->
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+           PROPERTIES SLIDER — Section 3
+      ══════════════════════════════════════════════════ -->
+      <section
+        class="sec-props on-ink"
+        id="properties"
+        aria-label="Property Listings"
+      >
+        <!-- Header -->
+        <header class="props-header">
+          <div class="props-heading-group">
+            <div class="fnd-eyebrow">
+              <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
+              <span class="fnd-eyebrow-text">Browse Properties</span>
+            </div>
+            <h2 class="props-heading">
+              Find Your <span class="mark">Perfect</span> Property
+            </h2>
+          </div>
+          <nav class="props-nav" aria-label="Properties slider navigation">
+            <button
+              class="props-nav-btn"
+              id="propsPrev"
+              aria-label="Previous property"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              class="props-nav-btn"
+              id="propsNext"
+              aria-label="Next property"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </nav>
+        </header>
+
+        <!-- Split layout -->
+        <div class="props-layout">
+          <!-- Left: slider -->
+          <div class="props-swiper-wrap">
+            <div class="swiper props-swiper" id="propsSwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="props-card">
+                    <img
+                      class="props-card-photo"
+                      src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=800&fit=crop&q=80"
+                      alt="Studio Apartment"
+                      loading="lazy"
+                    />
+                    <div class="props-card-scrim"></div>
+                    <div class="props-card-body">
+                      <div class="props-card-eyebrow">
+                        <div class="slab props-card-slab"></div>
+                        <span class="props-card-cat">Residential</span>
+                      </div>
+                      <div class="props-card-label">Studio<br />Apartment</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swiper-slide">
+                  <div class="props-card">
+                    <img
+                      class="props-card-photo"
+                      src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=800&fit=crop&q=80"
+                      alt="1-Bedroom Apartment"
+                      loading="lazy"
+                    />
+                    <div class="props-card-scrim"></div>
+                    <div class="props-card-body">
+                      <div class="props-card-eyebrow">
+                        <div class="slab props-card-slab"></div>
+                        <span class="props-card-cat">Residential</span>
+                      </div>
+                      <div class="props-card-label">1BR<br />Apartment</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swiper-slide">
+                  <div class="props-card">
+                    <img
+                      class="props-card-photo"
+                      src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=800&fit=crop&q=80"
+                      alt="2-Bedroom Penthouse"
+                      loading="lazy"
+                    />
+                    <div class="props-card-scrim"></div>
+                    <div class="props-card-body">
+                      <div class="props-card-eyebrow">
+                        <div class="slab props-card-slab"></div>
+                        <span class="props-card-cat">Premium</span>
+                      </div>
+                      <div class="props-card-label">2BR<br />Penthouse</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swiper-slide">
+                  <div class="props-card">
+                    <img
+                      class="props-card-photo"
+                      src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&h=800&fit=crop&q=80"
+                      alt="3-Bedroom Villa"
+                      loading="lazy"
+                    />
+                    <div class="props-card-scrim"></div>
+                    <div class="props-card-body">
+                      <div class="props-card-eyebrow">
+                        <div class="slab props-card-slab"></div>
+                        <span class="props-card-cat">Villa</span>
+                      </div>
+                      <div class="props-card-label">3BR<br />Garden Villa</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swiper-slide">
+                  <div class="props-card">
+                    <img
+                      class="props-card-photo"
+                      src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=800&fit=crop&q=80"
+                      alt="Sky Villa"
+                      loading="lazy"
+                    />
+                    <div class="props-card-scrim"></div>
+                    <div class="props-card-body">
+                      <div class="props-card-eyebrow">
+                        <div class="slab props-card-slab"></div>
+                        <span class="props-card-cat">Ultra-Premium</span>
+                      </div>
+                      <div class="props-card-label">Sky<br />Villa</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: detail panel -->
+          <div class="props-detail" id="propsDetail">
+            <div class="props-det-count" id="propsDetCount">
+              48 PROPERTY LISTING
+            </div>
+            <h3 class="props-det-name" id="propsDetName">Studio Apartment</h3>
+            <div class="props-det-agent" id="propsDetAgent">
+              Akar Town Real Estate
+            </div>
+            <div class="props-det-divider"></div>
+            <div class="props-det-table" id="propsDetTable">
+              <div class="props-det-row">
+                <span class="props-det-key">Price From</span>
+                <span class="props-det-val accent" id="propsDetPrice"
+                  >2,500,000 EGP</span
+                >
+              </div>
+              <div class="props-det-row">
+                <span class="props-det-key">Living Space</span>
+                <span class="props-det-val" id="propsDetArea">45 m²</span>
+              </div>
+              <div class="props-det-row">
+                <span class="props-det-key">Bedrooms</span>
+                <span class="props-det-val" id="propsDetBeds">Studio</span>
+              </div>
+              <div class="props-det-row">
+                <span class="props-det-key">Delivery</span>
+                <span class="props-det-val" id="propsDetDelivery"
+                  >Ready Now</span
+                >
+              </div>
+            </div>
+            <a href="properties.html" class="props-det-cta" id="propsDetCta"
+              >Find Listings →</a
+            >
+          </div>
+        </div>
       </section>
     </main>
 
@@ -2793,6 +3338,131 @@
           .to("#heroStage", { opacity: 1, y: 0, duration: 1.1 }, 0.18)
           .to("#heroNav", { opacity: 1, y: 0, duration: 0.7 }, 0.72)
           .to("#heroInfo", { opacity: 1, y: 0, duration: 0.88 }, 0.9);
+      });
+
+      /* ══════════════════════════════════════════════════
+         PROPERTIES SLIDER
+      ══════════════════════════════════════════════════ */
+      const PROPS_DATA = [
+        {
+          count: "48 PROPERTY LISTING",
+          name: "Studio Apartment",
+          agent: "Akar Town Real Estate",
+          price: "2,500,000 EGP",
+          area: "45 m²",
+          beds: "Studio",
+          delivery: "Ready Now",
+          href: "properties.html?type=studio",
+        },
+        {
+          count: "36 PROPERTY LISTING",
+          name: "1BR Apartment",
+          agent: "Akar Town Real Estate",
+          price: "3,800,000 EGP",
+          area: "75 m²",
+          beds: "1 Bedroom",
+          delivery: "Ready Now",
+          href: "properties.html?type=1br",
+        },
+        {
+          count: "24 PROPERTY LISTING",
+          name: "2BR Penthouse",
+          agent: "Akar Town Real Estate",
+          price: "7,200,000 EGP",
+          area: "140 m²",
+          beds: "2 Bedrooms",
+          delivery: "Q4 2026",
+          href: "properties.html?type=2br",
+        },
+        {
+          count: "12 PROPERTY LISTING",
+          name: "3BR Garden Villa",
+          agent: "Akar Town Real Estate",
+          price: "14,500,000 EGP",
+          area: "280 m²",
+          beds: "3 Bedrooms",
+          delivery: "Q2 2027",
+          href: "properties.html?type=villa",
+        },
+        {
+          count: "6 PROPERTY LISTING",
+          name: "Sky Villa",
+          agent: "Akar Town Real Estate",
+          price: "28,000,000 EGP",
+          area: "480 m²",
+          beds: "5 Bedrooms",
+          delivery: "Off-Plan",
+          href: "properties.html?type=sky",
+        },
+      ];
+
+      function updatePropsDetail(idx) {
+        var d = PROPS_DATA[idx];
+        if (!d) return;
+        var els = [
+          "#propsDetCount",
+          "#propsDetName",
+          "#propsDetAgent",
+          "#propsDetPrice",
+          "#propsDetArea",
+          "#propsDetBeds",
+          "#propsDetDelivery",
+        ].map(function (s) {
+          return document.querySelector(s);
+        });
+
+        gsap.to(els, {
+          opacity: 0,
+          y: -8,
+          duration: 0.22,
+          stagger: 0.03,
+          ease: "power2.in",
+          onComplete: function () {
+            document.getElementById("propsDetCount").textContent = d.count;
+            document.getElementById("propsDetName").textContent = d.name;
+            document.getElementById("propsDetAgent").textContent = d.agent;
+            document.getElementById("propsDetPrice").textContent = d.price;
+            document.getElementById("propsDetArea").textContent = d.area;
+            document.getElementById("propsDetBeds").textContent = d.beds;
+            document.getElementById("propsDetDelivery").textContent =
+              d.delivery;
+            document.getElementById("propsDetCta").href = d.href;
+            gsap.fromTo(
+              els,
+              { opacity: 0, y: 12 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.045,
+                ease: "expo.out",
+              },
+            );
+          },
+        });
+      }
+
+      const propsSwiper = new Swiper("#propsSwiper", {
+        slidesPerView: "auto",
+        spaceBetween: 16,
+        grabCursor: true,
+        speed: 680,
+        loop: true,
+        centeredSlides: false,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
+        navigation: {
+          prevEl: "#propsPrev",
+          nextEl: "#propsNext",
+        },
+        on: {
+          slideChange: function () {
+            updatePropsDetail(this.realIndex);
+          },
+        },
       });
     </script>
   </body>
