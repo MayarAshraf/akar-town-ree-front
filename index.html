@@ -240,6 +240,25 @@
       }
 
       /* ==========================================================
+       GLOBAL NUMERIC TREATMENT
+       All elements displaying numbers use IBM Plex Mono with the
+       same OpenType features as the hero — tabular figures + slashed zero.
+    ========================================================== */
+      .fnd-step-val,
+      .fnd-price-val,
+      .fnd-area-inp,
+      .fnd-row-val,
+      .props-det-val,
+      .props-det-count,
+      .ibt-n,
+      .hs-num,
+      .hn-counter {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1, "zero" 1;
+      }
+
+      /* ==========================================================
        SHARED LAYOUT
     ========================================================== */
       .container {
