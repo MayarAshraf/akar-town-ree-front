@@ -149,6 +149,97 @@
       }
 
       /* ==========================================================
+       .mark — diamond-facet gradient word emphasis
+       Gradient at the logo's 39.5° shear angle. A bright white
+       streak sweeps through at the same angle — like a diamond
+       catching light along its cut face.
+       Usage: <span class="mark">word</span>
+    ========================================================== */
+
+      @property --dp {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: -20%;
+      }
+
+      .mark {
+        display: inline;
+        white-space: nowrap;
+        font-style: normal;
+        /* Two gradient layers clipped to text glyphs */
+        background:
+          /* Layer 1 — diamond facet: thin white streak at logo angle */
+          linear-gradient(
+            39.5deg,
+            transparent calc(var(--dp) - 16%),
+            rgba(255, 255, 255, 0.08) calc(var(--dp) - 10%),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) - 1%),
+            rgba(255, 255, 255, 1) var(--dp),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) + 1%),
+            rgba(255, 255, 255, 0.08) calc(var(--dp) + 10%),
+            transparent calc(var(--dp) + 16%)
+          ),
+          /* Layer 2 — base red gradient at logo angle */
+          linear-gradient(
+              39.5deg,
+              var(--sig-800) 0%,
+              var(--sig-700) 22%,
+              var(--sig-600) 45%,
+              var(--sig-500) 68%,
+              var(--sig-400) 100%
+            );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--sig-600); /* fallback */
+        animation: diamond-shine 4s linear infinite;
+      }
+
+      @keyframes diamond-shine {
+        0% {
+          --dp: -20%;
+        }
+        22% {
+          --dp: 120%;
+        }
+        22.1% {
+          --dp: -20%;
+        } /* instant invisible reset */
+        100% {
+          --dp: -20%;
+        }
+      }
+
+      /* Dark sections — lighter reds so the gradient reads on dark ground */
+      .on-ink .mark {
+        background:
+          linear-gradient(
+            39.5deg,
+            transparent calc(var(--dp) - 16%),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) - 1%),
+            rgba(255, 255, 255, 1) var(--dp),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) + 1%),
+            transparent calc(var(--dp) + 16%)
+          ),
+          linear-gradient(
+            39.5deg,
+            var(--sig-600) 0%,
+            var(--sig-500) 35%,
+            var(--sig-400) 65%,
+            var(--sig-300) 100%
+          );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mark {
+          animation: none;
+        }
+      }
+
+      /* ==========================================================
        SHARED LAYOUT
     ========================================================== */
       .container {
@@ -973,6 +1064,484 @@
           animation: none;
         }
       }
+
+      /* ==========================================================
+       FIND YOUR SPACE — SECTION
+      ========================================================== */
+      .sec-finder {
+        background: var(--mist, var(--n-100));
+        padding: clamp(2rem, 4vw, 3.5rem) 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .finder-inner {
+        display: grid;
+        grid-template-columns: 5fr 7fr;
+        gap: var(--sp5);
+        align-items: start;
+      }
+
+      /* ── Left panel ── */
+      .fnd-config {
+        opacity: 0;
+        transform: translate(-39px, 48px);
+      }
+
+      .fnd-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp2);
+      }
+      .fnd-eyebrow-slab {
+        width: 28px;
+        height: 7px;
+        background: var(--sig-500);
+        flex-shrink: 0;
+        border-radius: 2px;
+      }
+      .fnd-eyebrow-text {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--n-600);
+      }
+
+      .fnd-heading {
+        font-family: var(--font-body);
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--n-700);
+        margin-bottom: var(--sp3);
+        padding-left: 2px;
+      }
+
+      /* Type pills row */
+      .fnd-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp1);
+        margin-bottom: var(--sp3);
+      }
+      .fnd-pill {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        padding: 5px 13px;
+        border-radius: 100px;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-700);
+        cursor: none;
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          color var(--dur-ui) var(--ease-expo),
+          border-color var(--dur-ui) var(--ease-expo),
+          transform var(--dur-ui) var(--ease-expo);
+      }
+      .fnd-pill:hover {
+        border-color: var(--n-500);
+        color: var(--n-950);
+        transform: translateY(-1px);
+      }
+      .fnd-pill.active {
+        background: var(--n-950);
+        color: var(--n-0);
+        border-color: var(--n-950);
+      }
+
+      /* Filter rows */
+      .fnd-rows {
+        border-top: 1px solid var(--n-200);
+        margin-bottom: var(--sp3);
+      }
+      .fnd-row {
+        display: flex;
+        align-items: center;
+        gap: var(--sp3);
+        padding: var(--sp2) 0;
+        border-bottom: 1px solid var(--n-100);
+      }
+      .fnd-row-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        color: var(--n-500);
+      }
+      .fnd-row-label {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--n-600);
+        flex: 1;
+      }
+      .fnd-row-val {
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-950);
+        min-width: 60px;
+        text-align: right;
+        letter-spacing: 0.01em;
+      }
+
+      /* Stepper */
+      .fnd-stepper {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+      }
+      .fnd-step-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-700);
+        cursor: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          color var(--dur-ui) var(--ease-expo),
+          border-color var(--dur-ui) var(--ease-expo),
+          transform var(--dur-ui) var(--ease-expo);
+        font-size: 1rem;
+        line-height: 1;
+        padding: 0;
+      }
+      .fnd-step-btn:hover {
+        background: var(--n-950);
+        color: var(--n-0);
+        border-color: var(--n-950);
+        transform: scale(1.08);
+      }
+      .fnd-step-val {
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-950);
+        min-width: 18px;
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+
+      /* Finishing pills */
+      .fnd-finish-group {
+        display: flex;
+        gap: var(--sp1);
+      }
+      .fnd-finish {
+        font-family: var(--font-body);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        padding: 5px 12px;
+        border-radius: 100px;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-600);
+        cursor: none;
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          color var(--dur-ui) var(--ease-expo),
+          border-color var(--dur-ui) var(--ease-expo);
+      }
+      .fnd-finish:hover {
+        border-color: var(--n-500);
+        color: var(--n-950);
+      }
+      .fnd-finish.active {
+        background: var(--n-950);
+        color: var(--n-0);
+        border-color: var(--n-950);
+      }
+
+      /* Area range inputs */
+      .fnd-area-range {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .fnd-area-inp {
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-950);
+        background: transparent;
+        border: none;
+        border-bottom: 1.5px solid var(--n-200);
+        width: 52px;
+        text-align: center;
+        padding: 2px 2px 3px;
+        letter-spacing: 0.02em;
+        outline: none;
+        cursor: text;
+        transition: border-color var(--dur-ui) var(--ease-expo);
+        -moz-appearance: textfield;
+      }
+      .fnd-area-inp::-webkit-inner-spin-button,
+      .fnd-area-inp::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+      .fnd-area-inp:focus {
+        border-bottom-color: var(--sig-600);
+      }
+      .fnd-area-sep {
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        color: var(--n-400);
+        user-select: none;
+      }
+      .fnd-area-unit {
+        font-family: var(--font-data);
+        font-size: 0.72rem;
+        color: var(--n-500);
+        letter-spacing: 0.04em;
+      }
+
+      /* Footer: price + CTA */
+      .fnd-footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--sp3);
+        padding-top: var(--sp3);
+        border-top: 1px solid var(--n-200);
+        flex-wrap: wrap;
+      }
+      .fnd-price-block {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .fnd-price-label {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--n-500);
+      }
+      .fnd-price-val {
+        font-family: var(--font-data);
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--n-950);
+        line-height: 1;
+        letter-spacing: -0.01em;
+      }
+      .fnd-price-val sub {
+        font-size: 0.65rem;
+        font-weight: 400;
+        color: var(--n-500);
+        vertical-align: baseline;
+        margin-left: 4px;
+      }
+      .fnd-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        padding: 9px 20px;
+        border-radius: 100px;
+        background: var(--accent-fill);
+        color: var(--n-0);
+        border: none;
+        cursor: none;
+        box-shadow: 0 2px 14px rgba(211, 2, 1, 0.28);
+        transition:
+          background var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo),
+          transform var(--dur-ui) var(--ease-expo);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .fnd-cta:hover {
+        background: var(--accent-fill-hover, #b80100);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 22px rgba(211, 2, 1, 0.4);
+      }
+      .fnd-cta:active {
+        transform: translateY(0);
+      }
+
+      /* ── Right panel ── */
+      .fnd-visual {
+        position: relative;
+        opacity: 0;
+        transform: translate(20px, 48px);
+      }
+
+      /* Floating chips */
+      .fnd-chip {
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: var(--n-950);
+        color: var(--n-0);
+        padding: 8px 14px;
+        border-radius: 100px;
+        box-shadow: 0 4px 20px rgba(35, 31, 32, 0.25);
+        opacity: 0;
+        pointer-events: none;
+      }
+      .fnd-chip-num {
+        font-family: var(--font-data);
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+      }
+      .fnd-chip-label {
+        font-family: var(--font-body);
+        font-size: 0.6rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--n-400);
+        line-height: 1;
+      }
+
+      /* 3-D floor plan */
+      .fnd-plan-wrap {
+        perspective: 1100px;
+        perspective-origin: 50% 45%;
+      }
+      .fnd-plan {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 5 / 3;
+        background: var(--paper, var(--n-0));
+        border: 1.5px solid var(--n-700);
+        transform: rotateX(18deg) rotateY(-8deg);
+        transform-style: preserve-3d;
+        will-change: transform;
+        background-image:
+          linear-gradient(rgba(100, 98, 99, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(100, 98, 99, 0.08) 1px, transparent 1px);
+        background-size: 10% 10%;
+      }
+      /* Corner accent brackets */
+      .fnd-plan::before,
+      .fnd-plan::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        pointer-events: none;
+        z-index: 5;
+      }
+      .fnd-plan::before {
+        top: -2px;
+        left: -2px;
+        border-top: 2.5px solid var(--sig-500);
+        border-left: 2.5px solid var(--sig-500);
+      }
+      .fnd-plan::after {
+        bottom: -2px;
+        right: -2px;
+        border-bottom: 2.5px solid var(--sig-500);
+        border-right: 2.5px solid var(--sig-500);
+      }
+
+      /* Rooms */
+      .fnd-room {
+        position: absolute;
+        border: 1.5px solid rgba(35, 31, 32, 0.65);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        padding: 4px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .fnd-room[data-t="bed"] {
+        background: rgba(35, 31, 32, 0.03);
+      }
+      .fnd-room[data-t="live"] {
+        background: rgba(35, 31, 32, 0.015);
+      }
+      .fnd-room[data-t="kitchen"] {
+        background: rgba(211, 2, 1, 0.04);
+        border-color: rgba(211, 2, 1, 0.4);
+      }
+      .fnd-room[data-t="bath"] {
+        background: rgba(22, 94, 152, 0.04);
+        border-color: rgba(22, 94, 152, 0.35);
+      }
+      .fnd-room[data-t="out"] {
+        background: rgba(27, 108, 54, 0.04);
+        border-color: rgba(27, 108, 54, 0.3);
+      }
+      .fnd-room[data-t="dining"] {
+        background: rgba(120, 83, 2, 0.04);
+        border-color: rgba(120, 83, 2, 0.3);
+      }
+      .fnd-room[data-t="main"] {
+        background: rgba(35, 31, 32, 0.03);
+      }
+
+      .fnd-room-n {
+        font-family: var(--font-display);
+        font-size: clamp(0.45rem, 1.1vw, 0.62rem);
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--n-800);
+        text-align: center;
+        line-height: 1.1;
+        letter-spacing: 0.04em;
+      }
+      .fnd-room-s {
+        font-family: var(--font-data);
+        font-size: clamp(0.38rem, 0.9vw, 0.52rem);
+        color: var(--n-500);
+        text-align: center;
+        line-height: 1;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 1024px) {
+        .finder-inner {
+          grid-template-columns: 1fr;
+        }
+        .fnd-visual {
+          max-width: 520px;
+          margin: 0 auto;
+          width: 100%;
+        }
+      }
+      @media (max-width: 600px) {
+        .fnd-heading {
+          font-size: 0.78rem;
+        }
+        .fnd-pills {
+          gap: 6px;
+        }
+        .fnd-footer {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: var(--sp3);
+        }
+        .fnd-cta {
+          width: 100%;
+          justify-content: center;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1368,6 +1937,213 @@
           </div>
         </div>
       </section>
+
+      <!-- ══════════════════════════════════════════════════
+     FIND YOUR SPACE
+══════════════════════════════════════════════════ -->
+      <section class="sec-finder" id="finder" aria-label="Find Your Space">
+        <div class="finder-inner container">
+          <!-- LEFT: configurator -->
+          <div class="fnd-config" id="fndConfig">
+            <div class="fnd-eyebrow" aria-hidden="true">
+              <span class="fnd-eyebrow-slab"></span>
+              <span class="fnd-eyebrow-text">Configure Your Space</span>
+            </div>
+
+            <h2 class="fnd-heading">
+              Find your <span class="mark">perfect</span> home layout
+            </h2>
+
+            <!-- Type pills -->
+            <div class="fnd-pills" role="group" aria-label="Property type">
+              <button class="fnd-pill" data-plan="studio">Studio</button>
+              <button class="fnd-pill" data-plan="1br">1 BR</button>
+              <button class="fnd-pill active" data-plan="2br">2 BR</button>
+              <button class="fnd-pill" data-plan="3br">3 BR</button>
+              <button class="fnd-pill" data-plan="villa">Villa</button>
+            </div>
+
+            <!-- Filter rows -->
+            <div class="fnd-rows">
+              <!-- Bedrooms -->
+              <div class="fnd-row">
+                <svg
+                  class="fnd-row-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 20v-6a2 2 0 012-2h16a2 2 0 012 2v6M2 14V9a2 2 0 012-2h1V5a2 2 0 012-2h10a2 2 0 012 2v2h1a2 2 0 012 2v5"
+                  />
+                </svg>
+                <span class="fnd-row-label">Bedrooms</span>
+                <div class="fnd-stepper" aria-label="Bedrooms stepper">
+                  <button
+                    class="fnd-step-btn"
+                    id="bedMinus"
+                    aria-label="Fewer bedrooms"
+                  >
+                    −
+                  </button>
+                  <span class="fnd-step-val" id="bedVal" aria-live="polite"
+                    >2</span
+                  >
+                  <button
+                    class="fnd-step-btn"
+                    id="bedPlus"
+                    aria-label="More bedrooms"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Bathrooms -->
+              <div class="fnd-row">
+                <svg
+                  class="fnd-row-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M9 6C9 4.343 7.657 3 6 3s-3 1.343-3 3v8h18v2c0 3.314-2.686 6-6 6H9c-3.314 0-6-2.686-6-6v-2"
+                  />
+                </svg>
+                <span class="fnd-row-label">Bathrooms</span>
+                <div class="fnd-stepper" aria-label="Bathrooms stepper">
+                  <button
+                    class="fnd-step-btn"
+                    id="bathMinus"
+                    aria-label="Fewer bathrooms"
+                  >
+                    −
+                  </button>
+                  <span class="fnd-step-val" id="bathVal" aria-live="polite"
+                    >2</span
+                  >
+                  <button
+                    class="fnd-step-btn"
+                    id="bathPlus"
+                    aria-label="More bathrooms"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Area Range -->
+              <div class="fnd-row">
+                <svg
+                  class="fnd-row-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="1" />
+                  <path d="M3 9h18M9 3v18" />
+                </svg>
+                <span class="fnd-row-label">Area Range</span>
+                <div
+                  class="fnd-area-range"
+                  role="group"
+                  aria-label="Area range in square metres"
+                >
+                  <input
+                    class="fnd-area-inp"
+                    id="areaMin"
+                    type="number"
+                    min="30"
+                    max="999"
+                    value="120"
+                    aria-label="Minimum area"
+                  />
+                  <span class="fnd-area-sep">–</span>
+                  <input
+                    class="fnd-area-inp"
+                    id="areaMax"
+                    type="number"
+                    min="30"
+                    max="999"
+                    value="200"
+                    aria-label="Maximum area"
+                  />
+                  <span class="fnd-area-unit">m²</span>
+                </div>
+              </div>
+
+              <!-- Finishing -->
+              <div class="fnd-row">
+                <svg
+                  class="fnd-row-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+                <span class="fnd-row-label">Finishing</span>
+                <div
+                  class="fnd-finish-group"
+                  role="group"
+                  aria-label="Finishing level"
+                >
+                  <button class="fnd-finish active" data-finish="standard">
+                    Standard
+                  </button>
+                  <button class="fnd-finish" data-finish="luxury">
+                    Luxury
+                  </button>
+                  <button class="fnd-finish" data-finish="ultra">Ultra</button>
+                </div>
+              </div>
+            </div>
+            <!-- /fnd-rows -->
+
+            <!-- Footer: price + CTA -->
+            <div class="fnd-footer">
+              <div class="fnd-price-block">
+                <span class="fnd-price-label">Starting From</span>
+                <div
+                  class="fnd-price-val"
+                  id="fndPrice"
+                  aria-live="polite"
+                  aria-label="Price"
+                >
+                  5,800,000<sub>EGP</sub>
+                </div>
+              </div>
+              <a href="properties.html" class="fnd-cta">Find Properties →</a>
+            </div>
+          </div>
+          <!-- /fnd-config -->
+
+          <!-- RIGHT: 3-D floor plan -->
+          <div class="fnd-visual" id="fndVisual">
+            <div class="fnd-plan-wrap">
+              <div
+                class="fnd-plan"
+                id="fndPlan"
+                aria-label="Interactive floor plan"
+                role="img"
+              ></div>
+            </div>
+          </div>
+          <!-- /fnd-visual -->
+        </div>
+        <!-- /finder-inner -->
+      </section>
     </main>
 
     <!-- SCRIPTS -->
@@ -1599,6 +2375,406 @@
         document.getElementById("hn-bar").style.width =
           ((idx + 1) / total) * 100 + "%";
       }
+
+      /* ══════════════════════════════════════════════════
+       FIND YOUR SPACE — configurator
+      ══════════════════════════════════════════════════ */
+      (function () {
+        /* ── Plan data ── */
+        const PLANS = {
+          studio: {
+            beds: 0,
+            baths: 1,
+            areaMin: 40,
+            areaMax: 60,
+            price: 2200000,
+            rooms: [
+              { n: "Studio", x: 2, y: 2, w: 62, h: 60, t: "main" },
+              { n: "Kitchen", x: 66, y: 2, w: 32, h: 28, t: "kitchen" },
+              { n: "Bath", x: 66, y: 32, w: 32, h: 30, t: "bath" },
+              { n: "Balcony", x: 2, y: 64, w: 96, h: 34, t: "out" },
+            ],
+          },
+          "1br": {
+            beds: 1,
+            baths: 1,
+            areaMin: 70,
+            areaMax: 110,
+            price: 3500000,
+            rooms: [
+              { n: "Bedroom", x: 2, y: 2, w: 44, h: 52, t: "bed" },
+              { n: "Living", x: 50, y: 2, w: 48, h: 52, t: "live" },
+              { n: "Kitchen", x: 2, y: 58, w: 28, h: 38, t: "kitchen" },
+              { n: "Bath", x: 34, y: 58, w: 22, h: 38, t: "bath" },
+              { n: "Balcony", x: 60, y: 58, w: 38, h: 38, t: "out" },
+            ],
+          },
+          "2br": {
+            beds: 2,
+            baths: 2,
+            areaMin: 120,
+            areaMax: 200,
+            price: 5800000,
+            rooms: [
+              { n: "Master", x: 2, y: 2, w: 42, h: 44, t: "bed" },
+              { n: "Bedroom", x: 48, y: 2, w: 50, h: 44, t: "bed" },
+              { n: "Living", x: 2, y: 50, w: 42, h: 48, t: "live" },
+              { n: "Kitchen", x: 48, y: 50, w: 24, h: 24, t: "kitchen" },
+              { n: "Bath", x: 48, y: 76, w: 24, h: 22, t: "bath" },
+              { n: "Bath 2", x: 76, y: 50, w: 22, h: 22, t: "bath" },
+              { n: "Balcony", x: 76, y: 76, w: 22, h: 22, t: "out" },
+            ],
+          },
+          "3br": {
+            beds: 3,
+            baths: 2,
+            areaMin: 200,
+            areaMax: 340,
+            price: 9500000,
+            rooms: [
+              { n: "Master", x: 2, y: 2, w: 34, h: 42, t: "bed" },
+              { n: "Bed 2", x: 40, y: 2, w: 26, h: 42, t: "bed" },
+              { n: "Bed 3", x: 70, y: 2, w: 28, h: 42, t: "bed" },
+              { n: "Living", x: 2, y: 48, w: 44, h: 50, t: "live" },
+              { n: "Dining", x: 50, y: 48, w: 22, h: 50, t: "dining" },
+              { n: "Kitchen", x: 76, y: 48, w: 22, h: 24, t: "kitchen" },
+              { n: "Bath", x: 76, y: 76, w: 22, h: 22, t: "bath" },
+            ],
+          },
+          villa: {
+            beds: 4,
+            baths: 3,
+            areaMin: 380,
+            areaMax: 600,
+            price: 18000000,
+            rooms: [
+              { n: "Master", x: 2, y: 2, w: 28, h: 34, t: "bed" },
+              { n: "Bed 2", x: 34, y: 2, w: 24, h: 34, t: "bed" },
+              { n: "Bed 3", x: 62, y: 2, w: 20, h: 34, t: "bed" },
+              { n: "Bed 4", x: 86, y: 2, w: 12, h: 34, t: "bed" },
+              { n: "Living", x: 2, y: 40, w: 44, h: 30, t: "live" },
+              { n: "Dining", x: 50, y: 40, w: 22, h: 30, t: "dining" },
+              { n: "Kitchen", x: 76, y: 40, w: 22, h: 14, t: "kitchen" },
+              { n: "Bath", x: 76, y: 56, w: 22, h: 14, t: "bath" },
+              { n: "Pool", x: 2, y: 74, w: 44, h: 24, t: "out" },
+              { n: "Garden", x: 50, y: 74, w: 48, h: 24, t: "out" },
+            ],
+          },
+        };
+
+        const planKeys = ["studio", "1br", "2br", "3br", "villa"];
+        let currentPlanKey = "2br";
+        let finishMultiplier = 1.0;
+        let bathOverride = null; /* null = use plan default */
+        let displayedPrice = PLANS["2br"].price;
+
+        /* ── Helpers ── */
+        function formatPrice(n) {
+          return n.toLocaleString("en-EG");
+        }
+
+        function calcPrice() {
+          return Math.round(PLANS[currentPlanKey].price * finishMultiplier);
+        }
+
+        /* ── Render floor plan ── */
+        function buildPlan() {
+          var planEl = document.getElementById("fndPlan");
+          var plan = PLANS[currentPlanKey];
+          planEl.innerHTML = "";
+          plan.rooms.forEach(function (r) {
+            var div = document.createElement("div");
+            div.className = "fnd-room";
+            div.setAttribute("data-t", r.t);
+            div.style.left = r.x + "%";
+            div.style.top = r.y + "%";
+            div.style.width = r.w + "%";
+            div.style.height = r.h + "%";
+            var nameSpan = document.createElement("span");
+            nameSpan.className = "fnd-room-n";
+            nameSpan.textContent = r.n;
+            var areaVal = Math.round((r.w * r.h) / 100);
+            var sizeSpan = document.createElement("span");
+            sizeSpan.className = "fnd-room-s";
+            sizeSpan.textContent = areaVal + " m²";
+            div.appendChild(nameSpan);
+            div.appendChild(sizeSpan);
+            planEl.appendChild(div);
+          });
+          gsap.fromTo(
+            ".fnd-room",
+            { opacity: 0, scale: 0.88, y: "4%" },
+            {
+              opacity: 1,
+              scale: 1,
+              y: "0%",
+              duration: 0.55,
+              stagger: { amount: 0.28 },
+              ease: "expo.out",
+            },
+          );
+        }
+
+        function renderPlan(key, animate) {
+          animate = animate !== false;
+          var planEl = document.getElementById("fndPlan");
+          var existing = planEl.querySelectorAll(".fnd-room");
+          if (animate && existing.length > 0) {
+            gsap.to(existing, {
+              opacity: 0,
+              scale: 0.9,
+              duration: 0.22,
+              stagger: 0.03,
+              onComplete: buildPlan,
+            });
+          } else {
+            buildPlan();
+          }
+        }
+
+        /* ── Animate price counter ── */
+        function animatePrice(newPrice) {
+          var priceEl = document.getElementById("fndPrice");
+          var obj = { v: displayedPrice };
+          gsap.to(obj, {
+            v: newPrice,
+            duration: 0.6,
+            ease: "power2.out",
+            onUpdate: function () {
+              priceEl.innerHTML =
+                formatPrice(Math.round(obj.v)) + "<sub>EGP</sub>";
+            },
+            onComplete: function () {
+              displayedPrice = newPrice;
+            },
+          });
+        }
+
+        /* ── Sync UI to current plan ── */
+        function syncUI(key) {
+          var plan = PLANS[key];
+          var baths = bathOverride !== null ? bathOverride : plan.baths;
+
+          /* bed value */
+          document.getElementById("bedVal").textContent = plan.beds;
+
+          /* bath value */
+          document.getElementById("bathVal").textContent = baths;
+
+          /* area */
+          document.getElementById("areaMin").value = plan.areaMin;
+          document.getElementById("areaMax").value = plan.areaMax;
+
+          /* price */
+          var newPrice = calcPrice();
+          animatePrice(newPrice);
+
+          /* active pill */
+          document.querySelectorAll(".fnd-pill").forEach(function (btn) {
+            btn.classList.toggle("active", btn.dataset.plan === key);
+          });
+        }
+
+        /* ── Type pill clicks ── */
+        document.querySelectorAll(".fnd-pill").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            currentPlanKey = btn.dataset.plan;
+            bathOverride = null;
+            renderPlan(currentPlanKey, true);
+            syncUI(currentPlanKey);
+          });
+        });
+
+        /* ── Bed stepper (navigates plan index) ── */
+        document
+          .getElementById("bedMinus")
+          .addEventListener("click", function () {
+            var idx = planKeys.indexOf(currentPlanKey);
+            if (idx > 0) {
+              currentPlanKey = planKeys[idx - 1];
+              bathOverride = null;
+              renderPlan(currentPlanKey, true);
+              syncUI(currentPlanKey);
+            }
+          });
+        document
+          .getElementById("bedPlus")
+          .addEventListener("click", function () {
+            var idx = planKeys.indexOf(currentPlanKey);
+            if (idx < planKeys.length - 1) {
+              currentPlanKey = planKeys[idx + 1];
+              bathOverride = null;
+              renderPlan(currentPlanKey, true);
+              syncUI(currentPlanKey);
+            }
+          });
+
+        /* ── Bath stepper (display only, affects price slightly) ── */
+        document
+          .getElementById("bathMinus")
+          .addEventListener("click", function () {
+            var plan = PLANS[currentPlanKey];
+            var cur = bathOverride !== null ? bathOverride : plan.baths;
+            if (cur > 1) {
+              bathOverride = cur - 1;
+              document.getElementById("bathVal").textContent = bathOverride;
+              var newPrice = calcPrice();
+              animatePrice(newPrice);
+            }
+          });
+        document
+          .getElementById("bathPlus")
+          .addEventListener("click", function () {
+            var plan = PLANS[currentPlanKey];
+            var cur = bathOverride !== null ? bathOverride : plan.baths;
+            if (cur < 4) {
+              bathOverride = cur + 1;
+              document.getElementById("bathVal").textContent = bathOverride;
+              var newPrice = Math.round(calcPrice() * 1.04);
+              animatePrice(newPrice);
+            }
+          });
+
+        /* ── Finishing level ── */
+        var finishMap = { standard: 1.0, luxury: 1.38, ultra: 1.72 };
+        document.querySelectorAll(".fnd-finish").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            document.querySelectorAll(".fnd-finish").forEach(function (b) {
+              b.classList.remove("active");
+            });
+            btn.classList.add("active");
+            finishMultiplier = finishMap[btn.dataset.finish] || 1.0;
+            animatePrice(calcPrice());
+          });
+        });
+
+        /* ── Area range inputs ── */
+        function syncAreaChip() {
+          /* reserved for future chip sync */
+        }
+
+        document
+          .getElementById("areaMin")
+          .addEventListener("input", function () {
+            var min = parseInt(this.value, 10);
+            var max = parseInt(document.getElementById("areaMax").value, 10);
+            if (!isNaN(min) && !isNaN(max) && min > max) {
+              document.getElementById("areaMax").value = min;
+            }
+            syncAreaChip();
+          });
+
+        document
+          .getElementById("areaMax")
+          .addEventListener("input", function () {
+            var min = parseInt(document.getElementById("areaMin").value, 10);
+            var max = parseInt(this.value, 10);
+            if (!isNaN(min) && !isNaN(max) && max < min) {
+              document.getElementById("areaMin").value = max;
+            }
+            syncAreaChip();
+          });
+
+        /* ── 3-D hover on visual panel ── */
+        var visual = document.getElementById("fndVisual");
+        visual.addEventListener("mousemove", function (e) {
+          var rect = visual.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var dx = (e.clientX - cx) / (rect.width / 2);
+          var dy = (e.clientY - cy) / (rect.height / 2);
+          gsap.to("#fndPlan", {
+            rotateX: 18 - dy * 5,
+            rotateY: -8 + dx * 7,
+            duration: 0.9,
+            ease: "power3.out",
+          });
+        });
+        visual.addEventListener("mouseleave", function () {
+          gsap.to("#fndPlan", {
+            rotateX: 18,
+            rotateY: -8,
+            duration: 1.1,
+            ease: "expo.out",
+          });
+        });
+
+        /* ── IntersectionObserver reveal ── */
+        var section = document.getElementById("finder");
+        var obs = new IntersectionObserver(
+          function (entries) {
+            if (!entries[0].isIntersecting) return;
+            obs.disconnect();
+
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              document.getElementById("fndConfig").style.opacity = "1";
+              document.getElementById("fndConfig").style.transform = "none";
+              document.getElementById("fndVisual").style.opacity = "1";
+              document.getElementById("fndVisual").style.transform = "none";
+              return;
+            }
+
+            gsap.to("#fndConfig", {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 1.0,
+              ease: "expo.out",
+            });
+            gsap.to("#fndVisual", {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 1.0,
+              delay: 0.14,
+              ease: "expo.out",
+              onComplete: function () {
+                /* reveal chips after visual is in */
+                gsap.to("#chipBeds", {
+                  opacity: 1,
+                  duration: 0.45,
+                  delay: 0.05,
+                  ease: "expo.out",
+                });
+                gsap.to("#chipArea", {
+                  opacity: 1,
+                  duration: 0.45,
+                  delay: 0.18,
+                  ease: "expo.out",
+                });
+              },
+            });
+          },
+          { threshold: 0.2 },
+        );
+        obs.observe(section);
+
+        /* ── Init ── */
+        renderPlan("2br", false);
+        syncUI("2br");
+
+        /* chips animate in after initial delay if already in view */
+        setTimeout(function () {
+          if (
+            parseFloat(
+              window.getComputedStyle(document.getElementById("fndVisual"))
+                .opacity,
+            ) > 0.5
+          ) {
+            gsap.to("#chipBeds", {
+              opacity: 1,
+              duration: 0.45,
+              ease: "expo.out",
+            });
+            gsap.to("#chipArea", {
+              opacity: 1,
+              duration: 0.45,
+              delay: 0.12,
+              ease: "expo.out",
+            });
+          }
+        }, 800);
+      })(); /* end IIFE */
 
       /* ── GSAP hero entrance ── */
       window.addEventListener("load", () => {
