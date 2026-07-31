@@ -697,7 +697,7 @@
         background-image: url("https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=85");
       }
       .cp3 {
-        background-image: url("https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=85");
+        background-image: url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85");
       }
       .cp4 {
         background-image: url("https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=85");
@@ -706,7 +706,7 @@
         background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85");
       }
       .cp6 {
-        background-image: url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=85");
+        background-image: url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85");
       }
 
       /* Scrims */
@@ -2280,6 +2280,270 @@
           height: 72px;
         }
       }
+
+      /* ==========================================================
+         SECTION — PROJECTS  (paper ground, vertical scroll left)
+      ========================================================== */
+      .sec-projects {
+        background: var(--mist);
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+      }
+      /* Faint architectural texture behind whole section — glass panel blurs this */
+      .sec-projects::before {
+        content: "";
+        position: absolute;
+        inset: -20px;
+        background-image: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=80");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.18;
+        filter: blur(8px);
+        pointer-events: none;
+      }
+      .proj-split {
+        width: 100%;
+      }
+
+      /* ── Scroll column — now lives inside .proj-statement ── */
+      .proj-scroll-col {
+        overflow: hidden;
+        position: relative;
+        border-right: 1px solid
+          color-mix(in oklab, var(--paper) 22%, transparent);
+        /* Left edge matches other sections' content start point */
+        padding-left: max(
+          clamp(1rem, 4vw, 2.5rem),
+          calc((100vw - var(--container, 1320px)) / 2)
+        );
+      }
+      .proj-scroll-col::before {
+        top: 0;
+        background: linear-gradient(to bottom, var(--n-100), transparent);
+      }
+      .proj-scroll-col::after {
+        bottom: 0;
+        background: linear-gradient(to top, var(--n-100), transparent);
+      }
+      .proj-scroll-track {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 1rem 1rem 1rem 0;
+        will-change: transform;
+      }
+
+      /* Project card */
+      .proj-card {
+        flex-shrink: 0;
+        background: var(--n-100);
+        overflow: hidden;
+        cursor: pointer;
+        border-radius: 4px;
+        transition:
+          background 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .proj-card:hover {
+        background: var(--n-200);
+        box-shadow: 0 4px 16px -4px
+          color-mix(in oklab, var(--ink) 15%, transparent);
+      }
+      .proj-card-media {
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+      }
+      .proj-card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.65s var(--ease-expo);
+      }
+      .proj-card:hover .proj-card-media img {
+        transform: scale(1.04);
+      }
+      .proj-card-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.65rem 0.9rem;
+        border-top: 1px solid var(--n-200);
+      }
+      .proj-card-name {
+        font-family: var(--font-display);
+        font-weight: var(--fw-semibold);
+        font-size: var(--text-sm);
+        color: var(--ink);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .proj-card-price {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
+        font-size: var(--text-sm);
+        font-weight: var(--fw-semibold);
+        color: var(--ink);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      /* ── Statement panel — full width, text left + cards right ── */
+      .proj-statement {
+        position: relative;
+        overflow: hidden;
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-200) 40%, transparent) 0%,
+            transparent 50%
+          ),
+          color-mix(in oklab, var(--mist) 75%, transparent);
+        backdrop-filter: blur(40px) saturate(160%) brightness(1.03);
+        box-shadow:
+          inset 0 1px 0 color-mix(in oklab, var(--n-0) 60%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-300) 30%, transparent),
+          0 24px 48px -12px color-mix(in oklab, var(--ink) 8%, transparent);
+        display: grid;
+        grid-template-columns: 450px 1fr;
+        align-items: stretch;
+        height: 520px;
+        transition: backdrop-filter 0s; /* never animate backdrop-filter */
+      }
+      .proj-stmt-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.08;
+        pointer-events: none;
+      }
+      .proj-stmt-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          color-mix(in oklab, var(--sig-500) 3%, transparent) 0%,
+          transparent 50%
+        );
+        pointer-events: none;
+      }
+      .proj-stmt-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4rem);
+        overflow: hidden;
+      }
+      .proj-stmt-headline {
+        font-family: var(--font-display);
+        font-weight: var(--fw-bold);
+        font-size: clamp(1.6rem, 1.4vw + 0.8rem, 2.6rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin: 0;
+      }
+      .proj-stmt-body {
+        font-size: var(--text-sm);
+        color: var(--n-600);
+        line-height: 1.7;
+        margin: 0;
+      }
+      .proj-stmt-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        align-self: flex-start;
+        font-family: var(--font-display);
+        font-weight: var(--fw-semibold);
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        color: var(--ink);
+        text-decoration: none;
+        padding: 0.55rem 1.1rem;
+        border: 1px solid color-mix(in oklab, var(--ink) 30%, transparent);
+        border-radius: 100px;
+        background: color-mix(in oklab, var(--paper) 60%, transparent);
+        backdrop-filter: blur(8px);
+        transition:
+          background 0.22s ease,
+          border-color 0.22s ease,
+          color 0.22s ease;
+      }
+      .proj-stmt-cta:hover {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: var(--paper);
+      }
+
+      /* Slider controls */
+      .proj-ctrls {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .proj-ctrl {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid color-mix(in oklab, var(--ink) 20%, transparent);
+        background: color-mix(in oklab, var(--n-0) 70%, transparent);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink);
+        transition:
+          background 0.18s ease,
+          color 0.18s ease,
+          border-color 0.18s ease,
+          transform 0.18s ease;
+        padding: 0;
+      }
+      .proj-ctrl:hover {
+        background: var(--ink);
+        color: var(--n-0);
+        border-color: var(--ink);
+        transform: scale(1.08);
+      }
+      .proj-ctrl svg {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .proj-statement {
+          grid-template-columns: 1fr;
+        }
+        .proj-scroll-col {
+          border-left: none;
+          border-top: 1px solid
+            color-mix(in oklab, var(--paper) 22%, transparent);
+          height: 260px;
+        }
+        .proj-scroll-track {
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 0 clamp(1rem, 4vw, 2.5rem);
+        }
+        .proj-card {
+          min-width: 140px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -3055,7 +3319,7 @@
                   <div class="props-card">
                     <img
                       class="props-card-photo"
-                      src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=800&fit=crop&q=80"
+                      src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=800&fit=crop&q=80"
                       alt="Sky Villa"
                       loading="lazy"
                     />
@@ -3108,6 +3372,252 @@
             <a href="properties.html" class="props-det-cta" id="propsDetCta"
               >Find Listings →</a
             >
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION — PROJECTS -->
+      <section class="sec-projects" aria-label="Our Projects">
+        <div class="proj-split">
+          <div class="proj-statement">
+            <div
+              class="proj-stmt-bg"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=85&quot;);
+              "
+            ></div>
+            <div class="proj-stmt-scrim"></div>
+
+            <!-- Left: vertical auto-scroll cards — inside the glass panel -->
+            <div class="proj-scroll-col">
+              <div class="proj-scroll-track">
+                <!-- ── Original set ── -->
+                <article class="proj-card">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=625&fit=crop&q=90"
+                      alt="The Residences"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >The Residences — New Cairo</span
+                    >
+                    <span class="proj-card-price">EGP 2.4M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=625&fit=crop&q=90"
+                      alt="Skyline Tower"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >Skyline Tower — New Capital</span
+                    >
+                    <span class="proj-card-price">EGP 3.1M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=625&fit=crop&q=90"
+                      alt="Palm Shore"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name">Palm Shore — North Coast</span>
+                    <span class="proj-card-price">EGP 3.8M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=625&fit=crop&q=90"
+                      alt="The Boulevard"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >The Boulevard — Sheikh Zayed</span
+                    >
+                    <span class="proj-card-price">EGP 2.9M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&h=625&fit=crop&q=90"
+                      alt="Azzurra Bay"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name">Azzurra Bay — Ain Sokhna</span>
+                    <span class="proj-card-price">EGP 1.9M+</span>
+                  </div>
+                </article>
+
+                <!-- ── Duplicate set (seamless loop) ── -->
+                <article class="proj-card" aria-hidden="true">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=625&fit=crop&q=90"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >The Residences — New Cairo</span
+                    >
+                    <span class="proj-card-price">EGP 2.4M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card" aria-hidden="true">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=625&fit=crop&q=90"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >Skyline Tower — New Capital</span
+                    >
+                    <span class="proj-card-price">EGP 3.1M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card" aria-hidden="true">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=625&fit=crop&q=90"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name">Palm Shore — North Coast</span>
+                    <span class="proj-card-price">EGP 3.8M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card" aria-hidden="true">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=625&fit=crop&q=90"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name"
+                      >The Boulevard — Sheikh Zayed</span
+                    >
+                    <span class="proj-card-price">EGP 2.9M+</span>
+                  </div>
+                </article>
+
+                <article class="proj-card" aria-hidden="true">
+                  <div class="proj-card-media">
+                    <img
+                      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&h=625&fit=crop&q=90"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="proj-card-info">
+                    <span class="proj-card-name">Azzurra Bay — Ain Sokhna</span>
+                    <span class="proj-card-price">EGP 1.9M+</span>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Up / Down controls -->
+              <div class="proj-ctrls" role="group" aria-label="Scroll projects">
+                <button class="proj-ctrl proj-ctrl-up" aria-label="Scroll up">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="2,8 6,4 10,8" />
+                  </svg>
+                </button>
+                <button
+                  class="proj-ctrl proj-ctrl-down"
+                  aria-label="Scroll down"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="2,4 6,8 10,4" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: editorial text -->
+            <div class="proj-stmt-content">
+              <div class="fnd-eyebrow">
+                <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
+                <span class="fnd-eyebrow-text">Our Projects</span>
+              </div>
+              <h2 class="proj-stmt-headline">
+                Your Next Chapter Starts With the Right
+                <span class="mark">Address.</span>
+              </h2>
+              <p class="proj-stmt-body">
+                From New Cairo's rising skyline to the North Coast's pristine
+                shores, every project in our portfolio is hand-selected for
+                location strength, developer credibility, and long-term
+                investment value.
+                <br /><br />
+                We partner exclusively with Egypt's most trusted developers — so
+                every property you explore comes with a proven track record,
+                transparent pricing, and a guaranteed delivery timeline. No
+                surprises. No compromises.
+              </p>
+              <a href="projects.html" class="proj-stmt-cta">
+                Explore All Projects
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 13 13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="1.5" y1="6.5" x2="11.5" y2="6.5" />
+                  <polyline points="7.5,2.5 11.5,6.5 7.5,10.5" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -4246,6 +4756,75 @@
           },
         },
       });
+
+      /* ── Projects — vertical scroll controller ── */
+      (function () {
+        var col = document.querySelector(".proj-scroll-col");
+        var track = document.querySelector(".proj-scroll-track");
+        if (!col || !track) return;
+
+        var pos = 0;
+        var speed = 0.5; /* px per frame */
+        var paused = false;
+        var raf;
+        var resumeTimer;
+
+        function halfH() {
+          return track.scrollHeight / 2;
+        }
+
+        function tick() {
+          if (!paused) {
+            pos += speed;
+            var h = halfH();
+            if (pos >= h) pos -= h;
+            track.style.transform = "translateY(-" + pos + "px)";
+          }
+          raf = requestAnimationFrame(tick);
+        }
+
+        /* Pause on hover */
+        col.addEventListener("mouseenter", function () {
+          paused = true;
+        });
+        col.addEventListener("mouseleave", function () {
+          paused = false;
+        });
+
+        /* Step by one card on button click, then resume after 2 s */
+        function step(dir) {
+          var first = track.querySelector(".proj-card:not([aria-hidden])");
+          var cardH = first ? first.offsetHeight + 10 : 220;
+          pos += dir * cardH;
+          var h = halfH();
+          if (pos < 0) pos += h;
+          if (pos >= h) pos -= h;
+          track.style.transform = "translateY(-" + pos + "px)";
+          paused = true;
+          clearTimeout(resumeTimer);
+          resumeTimer = setTimeout(function () {
+            paused = false;
+          }, 2000);
+        }
+
+        var btnUp = document.querySelector(".proj-ctrl-up");
+        var btnDown = document.querySelector(".proj-ctrl-down");
+        if (btnUp)
+          btnUp.addEventListener("click", function () {
+            step(-1);
+          });
+        if (btnDown)
+          btnDown.addEventListener("click", function () {
+            step(1);
+          });
+
+        /* Respect reduced motion */
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          paused = true;
+        }
+
+        raf = requestAnimationFrame(tick);
+      })();
 
       /* ── Locations — keyboard + accordion logic ── */
       (function () {
