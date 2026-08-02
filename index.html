@@ -1442,36 +1442,6 @@
         transform: translate(20px, 48px);
       }
 
-      /* Floating chips */
-      .fnd-chip {
-        position: absolute;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        background: var(--n-950);
-        color: var(--n-0);
-        padding: 8px 14px;
-        border-radius: 100px;
-        box-shadow: 0 4px 20px rgba(35, 31, 32, 0.25);
-        opacity: 0;
-        pointer-events: none;
-      }
-      .fnd-chip-num {
-        font-size: 1rem;
-        font-weight: 500;
-        line-height: 1.1;
-        letter-spacing: 0.01em;
-      }
-      .fnd-chip-label {
-        font-family: var(--font-body);
-        font-size: 0.6rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--n-400);
-        line-height: 1;
-      }
 
       /* 3-D floor plan */
       .fnd-plan-wrap {
@@ -3385,6 +3355,7 @@
                 role="img"
               ></div>
             </div>
+
           </div>
           <!-- /fnd-visual -->
         </div>
@@ -4855,6 +4826,7 @@
           document.getElementById("areaMin").value = plan.areaMin;
           document.getElementById("areaMax").value = plan.areaMax;
 
+
           /* price */
           var newPrice = calcPrice();
           animatePrice(newPrice);
@@ -5043,21 +5015,7 @@
               duration: 1.0,
               delay: 0.14,
               ease: "expo.out",
-              onComplete: function () {
-                /* reveal chips after visual is in */
-                gsap.to("#chipBeds", {
-                  opacity: 1,
-                  duration: 0.45,
-                  delay: 0.05,
-                  ease: "expo.out",
-                });
-                gsap.to("#chipArea", {
-                  opacity: 1,
-                  duration: 0.45,
-                  delay: 0.18,
-                  ease: "expo.out",
-                });
-              },
+              onComplete: null,
             });
           },
           { threshold: 0.2 },
@@ -5068,27 +5026,6 @@
         renderPlan("2br", false);
         syncUI("2br");
 
-        /* chips animate in after initial delay if already in view */
-        setTimeout(function () {
-          if (
-            parseFloat(
-              window.getComputedStyle(document.getElementById("fndVisual"))
-                .opacity,
-            ) > 0.5
-          ) {
-            gsap.to("#chipBeds", {
-              opacity: 1,
-              duration: 0.45,
-              ease: "expo.out",
-            });
-            gsap.to("#chipArea", {
-              opacity: 1,
-              duration: 0.45,
-              delay: 0.12,
-              ease: "expo.out",
-            });
-          }
-        }, 800);
       })(); /* end IIFE */
 
       /* ── GSAP hero entrance ── */
