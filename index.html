@@ -1376,12 +1376,8 @@
         color: var(--n-500);
       }
       .fnd-price-val {
-        font-family: var(--font-data);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--n-950);
-        line-height: 1;
-        letter-spacing: -0.01em;
+        display: flex;
+        align-items: baseline;
       }
       .fnd-price-val sub {
         font-size: 0.65rem;
@@ -1389,6 +1385,29 @@
         color: var(--n-500);
         vertical-align: baseline;
         margin-left: 4px;
+      }
+      .fnd-price-input {
+        font-family: var(--font-data);
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--n-950);
+        line-height: 1;
+        letter-spacing: -0.01em;
+        border: none;
+        border-bottom: 1px solid transparent;
+        outline: none;
+        background: transparent;
+        padding: 0 0 1px;
+        width: 9ch;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        cursor: pointer;
+      }
+      .fnd-price-input:focus {
+        color: var(--accent-fill);
+        border-bottom-color: var(--accent-fill);
+        cursor: text;
       }
       .fnd-cta {
         display: inline-flex;
@@ -3345,14 +3364,19 @@
             <!-- Footer: price + CTA -->
             <div class="fnd-footer">
               <div class="fnd-price-block">
-                <span class="fnd-price-label">Starting From</span>
-                <div
-                  class="fnd-price-val"
-                  id="fndPrice"
-                  aria-live="polite"
-                  aria-label="Price"
+                <label for="fndPrice" class="fnd-price-label"
+                  >Starting From</label
                 >
-                  5,800,000<sub>EGP</sub>
+                <div class="fnd-price-val">
+                  <input
+                    type="text"
+                    id="fndPrice"
+                    class="fnd-price-input"
+                    value="5,800,000"
+                    aria-label="Price in EGP"
+                    inputmode="numeric"
+                    autocomplete="off"
+                  /><sub>EGP</sub>
                 </div>
               </div>
               <a href="properties.html" class="fnd-cta">Find Properties →</a>
@@ -4736,6 +4760,7 @@
         let finishMultiplier = 1.0;
         let bathOverride = null; /* null = use plan default */
         let displayedPrice = PLANS["2br"].price;
+        let userPriceBase = null;
 
         /* ── Helpers ── */
         function formatPrice(n) {
@@ -4743,7 +4768,11 @@
         }
 
         function calcPrice() {
-          return Math.round(PLANS[currentPlanKey].price * finishMultiplier);
+          var base =
+            userPriceBase !== null
+              ? userPriceBase
+              : PLANS[currentPlanKey].price;
+          return Math.round(base * finishMultiplier);
         }
 
         /* ── Render floor plan ── */
@@ -4810,8 +4839,9 @@
             duration: 0.6,
             ease: "power2.out",
             onUpdate: function () {
-              priceEl.innerHTML =
-                formatPrice(Math.round(obj.v)) + "<sub>EGP</sub>";
+              if (document.activeElement !== priceEl) {
+                priceEl.value = formatPrice(Math.round(obj.v));
+              }
             },
             onComplete: function () {
               displayedPrice = newPrice;
@@ -4849,6 +4879,7 @@
           btn.addEventListener("click", function () {
             currentPlanKey = btn.dataset.plan;
             bathOverride = null;
+            userPriceBase = null;
             renderPlan(currentPlanKey, true);
             syncUI(currentPlanKey);
           });
@@ -4862,6 +4893,7 @@
             if (idx > 0) {
               currentPlanKey = planKeys[idx - 1];
               bathOverride = null;
+              userPriceBase = null;
               renderPlan(currentPlanKey, true);
               syncUI(currentPlanKey);
             }
@@ -4873,6 +4905,7 @@
             if (idx < planKeys.length - 1) {
               currentPlanKey = planKeys[idx + 1];
               bathOverride = null;
+              userPriceBase = null;
               renderPlan(currentPlanKey, true);
               syncUI(currentPlanKey);
             }
@@ -4916,6 +4949,28 @@
             animatePrice(calcPrice());
           });
         });
+
+        /* ── Editable price input ── */
+        (function () {
+          var priceInp = document.getElementById("fndPrice");
+          priceInp.addEventListener("focus", function () {
+            this.value = this.value.replace(/,/g, "");
+            this.select();
+          });
+          priceInp.addEventListener("blur", function () {
+            var raw = parseInt(this.value.replace(/[^0-9]/g, ""), 10);
+            if (raw >= 100000) {
+              userPriceBase = raw;
+              displayedPrice = raw;
+              this.value = formatPrice(raw);
+            } else {
+              this.value = formatPrice(displayedPrice);
+            }
+          });
+          priceInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") this.blur();
+          });
+        })();
 
         /* ── Area range inputs ── */
         function syncAreaChip() {
