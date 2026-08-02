@@ -1,0 +1,2959 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Properties — Akar Town Premium Real Estate</title>
+    <meta
+      name="description"
+      content="Browse 544 premium properties across Egypt's most sought-after locations. Filter by type, price, area, and delivery status."
+    />
+
+    <!-- Fonts — Google Fonts CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@100..700&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Kufi+Arabic:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/colors.css" />
+
+    <style>
+      /* ============================================================
+         BASE TOKENS
+      ============================================================ */
+      :root {
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.25rem;
+
+        --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --dur-ui: 320ms;
+        --dur-scene: 720ms;
+
+        --container: 1320px;
+        --gutter: clamp(1rem, 4vw, 2.5rem);
+        --hh: 72px;
+
+        --sp1: 0.5rem;
+        --sp2: 0.75rem;
+        --sp3: 1rem;
+        --sp4: 1.5rem;
+        --sp5: 2rem;
+        --sp6: 3rem;
+        --sp7: 4.5rem;
+
+        --shear: 39.5deg;
+        --shear-tan: 0.81;
+      }
+
+      /* ============================================================
+         RESET
+      ============================================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--n-50);
+        color: var(--n-950);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: var(--lh-body);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      button {
+        border: none;
+        background: none;
+        cursor: none;
+        font-family: inherit;
+      }
+
+      /* ============================================================
+         CUSTOM CURSOR
+      ============================================================ */
+      #c-dot {
+        position: fixed;
+        z-index: 9999;
+        width: 7px;
+        height: 7px;
+        background: var(--sig-500);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.2s var(--ease-spring),
+          height 0.2s var(--ease-spring);
+      }
+      #c-ring {
+        position: fixed;
+        z-index: 9998;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid rgba(255, 255, 255, 0.28);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s var(--ease-spring),
+          height 0.3s var(--ease-spring),
+          border-color 0.3s;
+      }
+      body.ch #c-dot {
+        width: 11px;
+        height: 11px;
+      }
+      body.ch #c-ring {
+        width: 52px;
+        height: 52px;
+        border-color: rgba(255, 0, 0, 0.4);
+      }
+
+      /* ============================================================
+         .mark
+      ============================================================ */
+      @property --dp {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: -20%;
+      }
+      .mark {
+        display: inline;
+        white-space: nowrap;
+        font-style: normal;
+        background:
+          linear-gradient(
+            39.5deg,
+            transparent calc(var(--dp) - 16%),
+            rgba(255, 255, 255, 0.08) calc(var(--dp) - 10%),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) - 1%),
+            rgba(255, 255, 255, 1) var(--dp),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) + 1%),
+            rgba(255, 255, 255, 0.08) calc(var(--dp) + 10%),
+            transparent calc(var(--dp) + 16%)
+          ),
+          linear-gradient(
+            39.5deg,
+            var(--sig-700) 0%,
+            var(--sig-600) 35%,
+            var(--sig-500) 68%,
+            var(--sig-400) 100%
+          );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--sig-600);
+        animation: diamond-shine 4s linear infinite;
+      }
+      @keyframes diamond-shine {
+        0% {
+          --dp: -20%;
+        }
+        22% {
+          --dp: 120%;
+        }
+        22.1% {
+          --dp: -20%;
+        }
+        100% {
+          --dp: -20%;
+        }
+      }
+      .on-ink .mark {
+        background:
+          linear-gradient(
+            39.5deg,
+            transparent calc(var(--dp) - 16%),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) - 1%),
+            rgba(255, 255, 255, 1) var(--dp),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) + 1%),
+            transparent calc(var(--dp) + 16%)
+          ),
+          linear-gradient(
+            39.5deg,
+            var(--sig-600) 0%,
+            var(--sig-500) 35%,
+            var(--sig-400) 65%,
+            var(--sig-300) 100%
+          );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* ============================================================
+         NUMERIC TREATMENT
+      ============================================================ */
+      .num,
+      .prop-price,
+      .prop-area-val,
+      .hero-count,
+      .results-count,
+      .page-num,
+      .filter-badge {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
+      }
+
+      /* ============================================================
+         SHARED LAYOUT
+      ============================================================ */
+      .container {
+        width: 100%;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+
+      /* ============================================================
+         BUTTONS
+      ============================================================ */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        padding: 10px 22px;
+        border-radius: 100px;
+        white-space: nowrap;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        border: none;
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+      }
+      .btn-accent {
+        background: var(--accent-fill);
+        color: var(--n-0);
+        box-shadow: 0 2px 14px rgba(211, 2, 1, 0.3);
+      }
+      .btn-accent:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 20px rgba(211, 2, 1, 0.42);
+      }
+      .btn-accent:active {
+        transform: translateY(0);
+      }
+
+      /* ============================================================
+         MOBILE OVERLAY
+      ============================================================ */
+      .mob {
+        position: fixed;
+        inset: 0;
+        z-index: 990;
+        background: rgba(35, 31, 32, 0.97);
+        backdrop-filter: blur(28px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp2);
+        transform: translateY(-100%);
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          transform 0.65s var(--ease-expo),
+          visibility 0s 0.65s;
+      }
+      .mob.open {
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+          transform 0.65s var(--ease-expo),
+          visibility 0s 0s;
+      }
+      .mob a {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 7vw, 3.5rem);
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: -0.01em;
+        padding: var(--sp1) var(--sp6);
+        transition: color var(--dur-ui);
+      }
+      .mob a.active {
+        color: var(--n-0);
+      }
+      .mob a:hover {
+        color: var(--n-0);
+      }
+      .mob-x {
+        position: absolute;
+        top: var(--sp4);
+        right: var(--sp5);
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.3);
+        padding: var(--sp2);
+        transition: color var(--dur-ui);
+        cursor: none;
+      }
+      .mob-x:hover {
+        color: var(--n-0);
+      }
+
+      /* ============================================================
+         SITE HEADER
+      ============================================================ */
+      .site-header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 1000;
+        height: var(--hh);
+        color: var(--n-0);
+        transition:
+          height var(--dur-ui) var(--ease-expo),
+          background var(--dur-scene) var(--ease-expo),
+          box-shadow var(--dur-scene);
+      }
+      .hdr-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp5);
+        height: 100%;
+        width: 100%;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      .site-header.scrolled {
+        background: rgba(35, 31, 32, 0.92);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+      .logo svg {
+        width: 180px;
+        height: auto;
+        display: block;
+      }
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: var(--sp5);
+      }
+      .main-nav a {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.02em;
+        transition: color var(--dur-ui);
+        position: relative;
+      }
+      .main-nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1.5px;
+        background: var(--accent-fill);
+        transition: width var(--dur-ui) var(--ease-expo);
+      }
+      .main-nav a:hover {
+        color: var(--n-0);
+      }
+      .main-nav a:hover::after,
+      .main-nav a.active::after {
+        width: 100%;
+      }
+      .main-nav a.active {
+        color: var(--n-0);
+      }
+      .hdr-right {
+        display: flex;
+        align-items: center;
+        gap: var(--sp3);
+        flex-shrink: 0;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        padding: 8px;
+        cursor: none;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--n-0);
+        transition: all var(--dur-ui);
+      }
+      @media (max-width: 900px) {
+        .main-nav {
+          display: none;
+        }
+        .hdr-right .btn-ghost {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+      }
+
+      /* ============================================================
+         PAGE HERO — compact dark
+      ============================================================ */
+      .page-hero {
+        background: var(--n-950);
+        padding-top: var(--hh);
+        padding-bottom: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80")
+          center/cover no-repeat;
+        opacity: 0.12;
+      }
+      .page-hero-inner {
+        position: relative;
+        z-index: 1;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: clamp(2.5rem, 5vw, 4rem) var(--gutter) clamp(2.5rem, 5vw, 4rem);
+      }
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp4);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .breadcrumb a {
+        color: rgba(255, 255, 255, 0.4);
+        transition: color var(--dur-ui);
+      }
+      .breadcrumb a:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .breadcrumb-sep {
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+      }
+      .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp3);
+      }
+      .hero-eyebrow-slab {
+        width: 32px;
+        height: 3px;
+        background: var(--sig-500);
+        clip-path: polygon(
+          calc(3px * var(--shear-tan)) 0%,
+          100% 0%,
+          calc(100% - 3px * var(--shear-tan)) 100%,
+          0% 100%
+        );
+      }
+      .hero-eyebrow-text {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--sig-500);
+      }
+      .page-hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.2rem, 4vw + 1rem, 4rem);
+        font-weight: 700;
+        color: var(--n-0);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--sp3);
+      }
+      .page-hero-sub {
+        font-size: var(--text-base);
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 520px;
+        line-height: 1.65;
+        margin-bottom: var(--sp4);
+      }
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--sp4);
+        flex-wrap: wrap;
+      }
+      .hero-count-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+        background: rgba(211, 2, 1, 0.15);
+        border: 1px solid rgba(211, 2, 1, 0.3);
+        border-radius: 100px;
+        padding: 6px 16px;
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .hero-count {
+        color: var(--sig-400);
+        font-weight: 600;
+      }
+
+      /* ============================================================
+         FILTER BAR — sticky
+      ============================================================ */
+      .filter-bar {
+        position: sticky;
+        top: var(--hh);
+        z-index: 100;
+        background: var(--n-0);
+        border-bottom: 1px solid var(--n-100);
+        box-shadow: 0 2px 12px rgba(35, 31, 32, 0.06);
+      }
+      .filter-bar-inner {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+        display: flex;
+        align-items: center;
+        gap: var(--sp3);
+        height: 64px;
+      }
+      .filter-pills {
+        display: flex;
+        align-items: center;
+        gap: var(--sp1);
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex: 1;
+        padding: 4px 0;
+      }
+      .filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+      .pill {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 16px;
+        border-radius: 100px;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        font-family: var(--font-body);
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-600);
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        white-space: nowrap;
+      }
+      .pill:hover {
+        border-color: var(--n-400);
+        color: var(--n-950);
+      }
+      .pill.active {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .filter-bar-right {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        flex-shrink: 0;
+      }
+      .sort-select {
+        appearance: none;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-800);
+        background: transparent;
+        border: 1.5px solid var(--n-200);
+        border-radius: 100px;
+        padding: 7px 36px 7px 16px;
+        cursor: none;
+        outline: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23808080' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        transition: border-color var(--dur-ui);
+      }
+      .sort-select:hover {
+        border-color: var(--n-400);
+      }
+      .adv-filter-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp1);
+        padding: 7px 16px;
+        border-radius: 100px;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        font-family: var(--font-body);
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-700);
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        white-space: nowrap;
+      }
+      .adv-filter-btn:hover {
+        border-color: var(--n-400);
+        color: var(--n-950);
+      }
+      .adv-filter-btn.active {
+        background: var(--n-950);
+        border-color: var(--n-950);
+        color: var(--n-0);
+      }
+      .adv-filter-btn svg {
+        transition: transform var(--dur-ui) var(--ease-expo);
+      }
+      .adv-filter-btn.active svg {
+        transform: rotate(180deg);
+      }
+      .filter-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 100px;
+        background: var(--accent-fill);
+        color: var(--n-0);
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      /* ============================================================
+         ADVANCED FILTER PANEL
+      ============================================================ */
+      .adv-panel-wrap {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.45s var(--ease-expo);
+        background: var(--n-0);
+        border-bottom: 1px solid var(--n-100);
+      }
+      .adv-panel-wrap.open {
+        max-height: 600px;
+      }
+      .adv-panel {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: var(--sp5) var(--gutter);
+      }
+      .adv-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp5) var(--sp7);
+      }
+      @media (max-width: 900px) {
+        .adv-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 580px) {
+        .adv-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .adv-group-label {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--n-500);
+        margin-bottom: var(--sp2);
+        font-family: var(--font-display);
+      }
+      .adv-checkboxes {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp2);
+      }
+      .adv-checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        font-size: var(--text-sm);
+        color: var(--n-700);
+        cursor: none;
+        user-select: none;
+      }
+      .adv-checkbox-label input[type="checkbox"] {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 1.5px solid var(--n-300);
+        border-radius: 4px;
+        flex-shrink: 0;
+        cursor: none;
+        position: relative;
+        transition: all var(--dur-ui);
+      }
+      .adv-checkbox-label input[type="checkbox"]:checked {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+      }
+      .adv-checkbox-label input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        width: 5px;
+        height: 8px;
+        border: 2px solid white;
+        border-top: none;
+        border-left: none;
+        transform: rotate(45deg);
+      }
+      .range-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp2);
+      }
+      .range-inputs {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+      }
+      .range-input {
+        flex: 1;
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-variant-numeric: tabular-nums;
+        padding: 7px 10px;
+        border: 1.5px solid var(--n-200);
+        border-radius: 8px;
+        outline: none;
+        color: var(--n-950);
+        background: var(--n-50);
+        transition: border-color var(--dur-ui);
+        min-width: 0;
+      }
+      .range-input:focus {
+        border-color: var(--accent-fill);
+      }
+      .range-sep {
+        font-size: var(--text-xs);
+        color: var(--n-400);
+        flex-shrink: 0;
+      }
+      .range-slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 3px;
+        background: var(--n-200);
+        border-radius: 2px;
+        outline: none;
+        cursor: none;
+      }
+      .range-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--accent-fill);
+        cursor: none;
+        box-shadow: 0 1px 6px rgba(211, 2, 1, 0.3);
+        transition: transform var(--dur-ui);
+      }
+      .range-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+      .bed-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp1);
+      }
+      .bed-pill {
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-600);
+        cursor: none;
+        transition: all var(--dur-ui);
+        font-family: var(--font-body);
+      }
+      .bed-pill:hover {
+        border-color: var(--n-400);
+        color: var(--n-950);
+      }
+      .bed-pill.active {
+        background: var(--n-950);
+        border-color: var(--n-950);
+        color: var(--n-0);
+      }
+      .fin-pills {
+        display: flex;
+        gap: var(--sp1);
+        flex-wrap: wrap;
+      }
+      .fin-pill {
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        color: var(--n-600);
+        cursor: none;
+        transition: all var(--dur-ui);
+        font-family: var(--font-body);
+      }
+      .fin-pill:hover {
+        border-color: var(--n-400);
+        color: var(--n-950);
+      }
+      .fin-pill.active {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .adv-panel-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--sp3);
+        margin-top: var(--sp5);
+        padding-top: var(--sp4);
+        border-top: 1px solid var(--n-100);
+      }
+      .btn-clear {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-500);
+        padding: 9px 20px;
+        border-radius: 100px;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        cursor: none;
+        transition: all var(--dur-ui);
+      }
+      .btn-clear:hover {
+        color: var(--n-950);
+        border-color: var(--n-400);
+      }
+      .btn-apply {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--n-0);
+        padding: 9px 24px;
+        border-radius: 100px;
+        border: none;
+        background: var(--accent-fill);
+        cursor: none;
+        transition: all var(--dur-ui);
+        box-shadow: 0 2px 10px rgba(211, 2, 1, 0.25);
+      }
+      .btn-apply:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(211, 2, 1, 0.35);
+      }
+
+      /* ============================================================
+         RESULTS AREA
+      ============================================================ */
+      .results-area {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: var(--sp6) var(--gutter);
+      }
+      .results-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--sp5);
+        gap: var(--sp3);
+        flex-wrap: wrap;
+      }
+      .results-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--n-950);
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp2);
+        flex-wrap: wrap;
+      }
+      .results-count {
+        font-size: var(--text-sm);
+        color: var(--n-500);
+        font-weight: 400;
+      }
+      .view-toggle {
+        display: flex;
+        gap: 4px;
+        background: var(--n-100);
+        padding: 4px;
+        border-radius: 4px;
+      }
+      .view-btn {
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: none;
+        background: transparent;
+        color: var(--n-400);
+        cursor: none;
+        transition: all var(--dur-ui);
+        display: flex;
+        align-items: center;
+      }
+      .view-btn.active {
+        background: var(--n-0);
+        color: var(--n-950);
+        box-shadow: 0 1px 4px rgba(35, 31, 32, 0.1);
+      }
+
+      /* ============================================================
+         PROPERTY GRID
+      ============================================================ */
+      .prop-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp5);
+      }
+      @media (max-width: 1024px) {
+        .prop-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .prop-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── List view ── */
+      .prop-grid.list-view {
+        grid-template-columns: 1fr;
+        gap: var(--sp3);
+      }
+      .prop-grid.list-view .prop-card {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        height: 240px;
+        animation: none;
+      }
+      .prop-grid.list-view .prop-card-photo-wrap {
+        aspect-ratio: unset;
+        height: 240px;
+        width: 360px;
+        overflow: hidden;
+      }
+      .prop-grid.list-view .prop-card-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .prop-grid.list-view .prop-card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: var(--sp3) var(--sp4);
+        overflow: hidden;
+        min-width: 0;
+      }
+      .prop-grid.list-view .prop-card-footer {
+        margin-top: auto;
+        padding-top: var(--sp2);
+      }
+      .prop-grid.list-view .prop-name {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (max-width: 640px) {
+        .prop-grid.list-view .prop-card {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+        .prop-grid.list-view .prop-card-photo-wrap {
+          width: 100%;
+          height: 220px;
+        }
+      }
+
+      /* ============================================================
+         PROPERTY CARD
+      ============================================================ */
+      .prop-card {
+        background: var(--n-0);
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--n-100);
+        transition:
+          transform var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo);
+        cursor: none;
+      }
+      .prop-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(35, 31, 32, 0.1);
+      }
+      .prop-card-photo-wrap {
+        position: relative;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+      }
+      .prop-card-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s var(--ease-expo);
+        display: block;
+      }
+      .prop-card:hover .prop-card-photo {
+        transform: scale(1.04);
+      }
+
+      /* Shear clip — bottom-inline-start corner only */
+      .prop-card-shear {
+        position: absolute;
+        bottom: -1px;
+        left: -1px;
+        right: -1px;
+        height: 50px;
+        background: var(--n-0);
+        clip-path: polygon(
+          0% 100%,
+          100% 100%,
+          100% 0%,
+          calc(48px * 0.81) 0%,
+          0% 100%
+        );
+        pointer-events: none;
+        z-index: 2;
+        transform: translateZ(0);
+        will-change: transform;
+      }
+      .prop-card-photo-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 45%,
+          rgba(35, 31, 32, 0.55) 100%
+        );
+        pointer-events: none;
+      }
+      .prop-card-badges {
+        position: absolute;
+        top: var(--sp3);
+        left: var(--sp3);
+        right: var(--sp3);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 3;
+      }
+      .prop-type-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: rgba(35, 31, 32, 0.7);
+        backdrop-filter: blur(8px);
+        color: var(--n-0);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .prop-save-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(35, 31, 32, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui);
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .prop-save-btn:hover,
+      .prop-save-btn.saved {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .prop-card-body {
+        padding: var(--sp3) var(--sp4) var(--sp4);
+        padding-top: 0;
+      }
+      .prop-project {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--n-400);
+        margin-bottom: 4px;
+        font-family: var(--font-display);
+      }
+      .prop-name {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--n-950);
+        margin-bottom: var(--sp2);
+        line-height: 1.3;
+      }
+      .prop-location {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: var(--text-sm);
+        color: var(--n-500);
+      }
+      .prop-location svg {
+        flex-shrink: 0;
+        color: var(--n-400);
+      }
+      .prop-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp2);
+        margin-bottom: var(--sp3);
+      }
+      .prop-price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--n-950);
+        line-height: 1;
+      }
+      .prop-currency {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-500);
+        font-family: var(--font-body);
+      }
+      .prop-chips {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        flex-wrap: wrap;
+        margin-bottom: var(--sp3);
+      }
+      .prop-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: var(--text-xs);
+        font-weight: 500;
+        background: var(--n-50);
+        color: var(--n-700);
+        border: 1px solid var(--n-100);
+      }
+      .prop-chip svg {
+        color: var(--n-400);
+      }
+      .prop-area-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+      }
+      .prop-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: var(--sp3);
+        border-top: 1px solid var(--n-100);
+      }
+      .delivery-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .delivery-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .delivery-ready {
+        background: rgba(22, 163, 74, 0.08);
+        color: #16a34a;
+        border: 1px solid rgba(22, 163, 74, 0.15);
+      }
+      .delivery-soon {
+        background: rgba(217, 119, 6, 0.08);
+        color: #b45309;
+        border: 1px solid rgba(217, 119, 6, 0.15);
+      }
+      .delivery-offplan {
+        background: rgba(100, 116, 139, 0.08);
+        color: #64748b;
+        border: 1px solid rgba(100, 116, 139, 0.15);
+      }
+      .prop-cta {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--accent-fill);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.01em;
+        transition: gap var(--dur-ui) var(--ease-expo);
+      }
+      .prop-card:hover .prop-cta {
+        gap: 8px;
+      }
+
+      /* ============================================================
+         PAGINATION
+      ============================================================ */
+      .pagination-wrap {
+        display: flex;
+        justify-content: center;
+        padding: var(--sp5) var(--gutter) var(--sp7);
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+      }
+      .page-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1.5px solid var(--n-200);
+        background: transparent;
+        font-family: var(--font-data);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-600);
+        cursor: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--dur-ui) var(--ease-expo);
+        font-variant-numeric: tabular-nums;
+      }
+      .page-btn:hover {
+        border-color: var(--n-400);
+        color: var(--n-950);
+      }
+      .page-btn.active {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .page-btn.arrow {
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--n-500);
+      }
+      .page-btn.arrow:disabled,
+      .page-btn.arrow[aria-disabled="true"] {
+        opacity: 0.35;
+        pointer-events: none;
+      }
+      .page-ellipsis {
+        color: var(--n-400);
+        font-size: var(--text-sm);
+        padding: 0 4px;
+      }
+
+      /* ============================================================
+         FOOTER
+      ============================================================ */
+      .site-footer {
+        background: var(--n-950);
+        color: rgba(255, 255, 255, 0.55);
+        font-size: var(--text-sm);
+      }
+      .footer-inner {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: var(--sp7) var(--gutter) var(--sp5);
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.4fr;
+        gap: var(--sp7);
+      }
+      @media (max-width: 900px) {
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 580px) {
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+      .footer-logo svg {
+        width: 160px;
+        height: auto;
+        display: block;
+        margin-bottom: var(--sp4);
+      }
+      .footer-tagline {
+        font-size: var(--text-sm);
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.4);
+        max-width: 300px;
+        margin-bottom: var(--sp4);
+      }
+      .footer-social {
+        display: flex;
+        gap: var(--sp3);
+      }
+      .footer-social-link {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.4);
+        transition: all var(--dur-ui);
+      }
+      .footer-social-link:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        color: var(--n-0);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .footer-col {
+      }
+      .footer-col-heading {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp4);
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--n-0);
+        letter-spacing: 0.05em;
+      }
+      .slab {
+        width: 12px;
+        height: 12px;
+        background: var(--sig-500);
+        clip-path: polygon(
+          calc(12px * 0.81 * 0.3) 0%,
+          100% 0%,
+          calc(100% - 12px * 0.81 * 0.3) 100%,
+          0% 100%
+        );
+        flex-shrink: 0;
+      }
+      .footer-nav {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp2);
+      }
+      .footer-nav a {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: var(--text-sm);
+        transition: color var(--dur-ui);
+      }
+      .footer-nav a:hover {
+        color: var(--n-0);
+      }
+      .footer-contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--sp2);
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: var(--sp3);
+        font-size: var(--text-sm);
+        line-height: 1.5;
+      }
+      .footer-contact-item svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        opacity: 0.5;
+      }
+      .footer-contact-item a {
+        transition: color var(--dur-ui);
+      }
+      .footer-contact-item a:hover {
+        color: var(--n-0);
+      }
+      .footer-bottom {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: var(--sp4) var(--gutter);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp3);
+        flex-wrap: wrap;
+      }
+      .footer-copy {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: var(--text-xs);
+      }
+      .footer-copy strong {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .footer-legal {
+        display: flex;
+        gap: var(--sp4);
+      }
+      .footer-legal a {
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.25);
+        transition: color var(--dur-ui);
+      }
+      .footer-legal a:hover {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* ============================================================
+         PAGE BREAK ANIMATION (card entry)
+      ============================================================ */
+      @keyframes card-in {
+        from {
+          opacity: 0;
+          transform: translate(calc(32px * 0.81 * -1), 32px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+      .prop-card {
+        animation: card-in 0.45s var(--ease-expo) both;
+      }
+      .prop-card:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .prop-card:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .prop-card:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .prop-card:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .prop-card:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .prop-card:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .prop-card:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .prop-card:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .prop-card:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .prop-card:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+      .prop-card:nth-child(11) {
+        animation-delay: 0.44s;
+      }
+      .prop-card:nth-child(12) {
+        animation-delay: 0.48s;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .prop-card {
+          animation: none;
+        }
+      }
+
+      /* ============================================================
+         EMPTY / LOADING STATES
+      ============================================================ */
+      .no-results {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: var(--sp7) var(--sp5);
+        color: var(--n-400);
+      }
+      .no-results svg {
+        margin: 0 auto var(--sp4);
+        opacity: 0.3;
+      }
+      .no-results p {
+        font-size: var(--text-base);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="c-dot" aria-hidden="true"></div>
+    <div id="c-ring" aria-hidden="true"></div>
+
+    <!-- ── Mobile nav ── -->
+    <nav class="mob" id="mob" aria-label="Mobile navigation" aria-hidden="true">
+      <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
+      <a href="index.html">Home</a>
+      <a href="properties.html" class="active">Properties</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════
+         SITE HEADER
+    ════════════════════════════════════════════════════ -->
+    <header class="site-header" id="siteHdr">
+      <div class="hdr-inner">
+        <a href="index.html" class="logo" aria-label="Akar Town">
+          <svg
+            width="300"
+            viewBox="0 0 2750 380"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+              fill="white"
+            />
+            <path
+              d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+              fill="#FF0000"
+            />
+            <path
+              d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+              fill="white"
+            />
+            <path
+              d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
+              fill="white"
+            />
+            <path
+              d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+              fill="white"
+            />
+            <path
+              d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
+              fill="white"
+            />
+            <path
+              d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
+              fill="white"
+            />
+            <path
+              d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+              fill="white"
+            />
+            <path
+              d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+              fill="white"
+            />
+            <path
+              d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+              fill="white"
+            />
+          </svg>
+        </a>
+        <nav class="main-nav" aria-label="Primary navigation">
+          <a href="index.html">Home</a>
+          <a href="properties.html" class="active">Properties</a>
+          <a href="projects.html">Projects</a>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="hdr-right">
+          <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
+          <a href="properties.html" class="btn btn-accent">Find Property</a>
+          <button
+            class="hamburger"
+            id="hbgBtn"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mob"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ════════════════════════════════════════════════════
+           PAGE HERO
+      ════════════════════════════════════════════════════ -->
+      <section class="page-hero on-ink" aria-label="Properties Hero">
+        <div class="page-hero-inner">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-sep" aria-hidden="true"></span>
+            <span class="breadcrumb-current" aria-current="page"
+              >Properties</span
+            >
+          </nav>
+          <div class="hero-eyebrow" aria-hidden="true">
+            <span class="hero-eyebrow-slab"></span>
+            <span class="hero-eyebrow-text">Browse Listings</span>
+          </div>
+          <h1>Find Your <span class="mark">Property</span></h1>
+          <p class="page-hero-sub">
+            544 premium properties across Egypt's most sought-after locations —
+            from studios to sky villas.
+          </p>
+          <div class="hero-meta">
+            <div class="hero-count-badge">
+              <span class="hero-count num">544</span> properties available
+            </div>
+            <div class="hero-count-badge">
+              <span class="hero-count num">6</span> prime locations
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           FILTER BAR — sticky
+      ════════════════════════════════════════════════════ -->
+      <div
+        class="filter-bar"
+        id="filterBar"
+        role="search"
+        aria-label="Property filters"
+      >
+        <div class="filter-bar-inner">
+          <div class="filter-pills" role="group" aria-label="Property type">
+            <button class="pill active" data-type="all" aria-pressed="true">
+              All
+            </button>
+            <button class="pill" data-type="studio" aria-pressed="false">
+              Studio
+            </button>
+            <button class="pill" data-type="1br" aria-pressed="false">
+              1 BR
+            </button>
+            <button class="pill" data-type="2br" aria-pressed="false">
+              2 BR
+            </button>
+            <button class="pill" data-type="3br" aria-pressed="false">
+              3 BR
+            </button>
+            <button class="pill" data-type="villa" aria-pressed="false">
+              Villa
+            </button>
+            <button class="pill" data-type="sky-villa" aria-pressed="false">
+              Sky Villa
+            </button>
+          </div>
+          <div class="filter-bar-right">
+            <select class="sort-select" id="sortSelect" aria-label="Sort by">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price ↑</option>
+              <option value="price-desc">Price ↓</option>
+              <option value="newest">Newest</option>
+              <option value="area">By Area</option>
+            </select>
+            <button
+              class="adv-filter-btn"
+              id="advToggle"
+              aria-expanded="false"
+              aria-controls="advPanel"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </svg>
+              Filters
+              <span
+                class="filter-badge num"
+                id="filterCount"
+                aria-label="2 filters active"
+                >2</span
+              >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════
+           ADVANCED FILTER PANEL
+      ════════════════════════════════════════════════════ -->
+      <div class="adv-panel-wrap" id="advPanel" aria-hidden="true">
+        <div class="adv-panel">
+          <div class="adv-grid">
+            <!-- Location -->
+            <div>
+              <p class="adv-group-label">Location</p>
+              <div class="adv-checkboxes">
+                <label class="adv-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="location"
+                    value="new-cairo"
+                    checked
+                  />
+                  New Cairo
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="location" value="north-coast" />
+                  North Coast
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="location" value="sheikh-zayed" />
+                  Sheikh Zayed
+                </label>
+                <label class="adv-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="location"
+                    value="new-capital"
+                    checked
+                  />
+                  New Capital
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="location" value="ain-sokhna" />
+                  Ain Sokhna
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="location" value="6th-october" />
+                  6th of October
+                </label>
+              </div>
+            </div>
+
+            <!-- Price Range -->
+            <div>
+              <p class="adv-group-label">Price Range (EGP)</p>
+              <div class="range-wrap">
+                <div class="range-inputs">
+                  <input
+                    type="text"
+                    class="range-input"
+                    id="priceMin"
+                    value="1,800,000"
+                    aria-label="Minimum price"
+                  />
+                  <span class="range-sep">—</span>
+                  <input
+                    type="text"
+                    class="range-input"
+                    id="priceMax"
+                    value="22,000,000"
+                    aria-label="Maximum price"
+                  />
+                </div>
+                <input
+                  type="range"
+                  class="range-slider"
+                  min="1800000"
+                  max="22000000"
+                  value="1800000"
+                  id="priceSliderMin"
+                  aria-label="Price range minimum"
+                />
+                <input
+                  type="range"
+                  class="range-slider"
+                  min="1800000"
+                  max="22000000"
+                  value="22000000"
+                  id="priceSliderMax"
+                  aria-label="Price range maximum"
+                />
+              </div>
+            </div>
+
+            <!-- Area -->
+            <div>
+              <p class="adv-group-label">Area (m²)</p>
+              <div class="range-wrap">
+                <div class="range-inputs">
+                  <input
+                    type="text"
+                    class="range-input"
+                    id="areaMin"
+                    value="42"
+                    aria-label="Minimum area"
+                  />
+                  <span class="range-sep">—</span>
+                  <input
+                    type="text"
+                    class="range-input"
+                    id="areaMax"
+                    value="580"
+                    aria-label="Maximum area"
+                  />
+                </div>
+                <input
+                  type="range"
+                  class="range-slider"
+                  min="42"
+                  max="580"
+                  value="42"
+                  id="areaSliderMin"
+                  aria-label="Area minimum"
+                />
+                <input
+                  type="range"
+                  class="range-slider"
+                  min="42"
+                  max="580"
+                  value="580"
+                  id="areaSliderMax"
+                  aria-label="Area maximum"
+                />
+              </div>
+            </div>
+
+            <!-- Bedrooms -->
+            <div>
+              <p class="adv-group-label">Bedrooms</p>
+              <div
+                class="bed-pills"
+                role="group"
+                aria-label="Number of bedrooms"
+              >
+                <button
+                  class="bed-pill active"
+                  data-bed="any"
+                  aria-pressed="true"
+                >
+                  Any
+                </button>
+                <button class="bed-pill" data-bed="studio" aria-pressed="false">
+                  Studio
+                </button>
+                <button class="bed-pill" data-bed="1" aria-pressed="false">
+                  1
+                </button>
+                <button class="bed-pill" data-bed="2" aria-pressed="false">
+                  2
+                </button>
+                <button class="bed-pill" data-bed="3" aria-pressed="false">
+                  3
+                </button>
+                <button class="bed-pill" data-bed="4+" aria-pressed="false">
+                  4+
+                </button>
+              </div>
+            </div>
+
+            <!-- Delivery -->
+            <div>
+              <p class="adv-group-label">Delivery</p>
+              <div class="adv-checkboxes">
+                <label class="adv-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="delivery"
+                    value="ready"
+                    checked
+                  />
+                  Ready Now
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="delivery" value="q4-2026" /> Q4
+                  2026
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="delivery" value="q2-2027" /> Q2
+                  2027
+                </label>
+                <label class="adv-checkbox-label">
+                  <input type="checkbox" name="delivery" value="off-plan" />
+                  Off-Plan
+                </label>
+              </div>
+            </div>
+
+            <!-- Finishing -->
+            <div>
+              <p class="adv-group-label">Finishing</p>
+              <div class="fin-pills" role="group" aria-label="Finishing level">
+                <button
+                  class="fin-pill active"
+                  data-fin="standard"
+                  aria-pressed="true"
+                >
+                  Standard
+                </button>
+                <button class="fin-pill" data-fin="luxury" aria-pressed="false">
+                  Luxury
+                </button>
+                <button
+                  class="fin-pill active"
+                  data-fin="ultra"
+                  aria-pressed="true"
+                >
+                  Ultra
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="adv-panel-footer">
+            <button class="btn-clear" id="clearFilters">Clear All</button>
+            <button class="btn-apply" id="applyFilters">Apply Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════
+           RESULTS
+      ════════════════════════════════════════════════════ -->
+      <section class="results-area" aria-label="Property listings">
+        <div class="results-header">
+          <div class="results-title">
+            Showing
+            <span class="num" id="resultsCount">9</span>&nbsp;of&nbsp;<span
+              class="num"
+              >544</span
+            >
+            properties
+          </div>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button
+              class="view-btn active"
+              id="viewGrid"
+              aria-pressed="true"
+              aria-label="Grid view"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+              </svg>
+            </button>
+            <button
+              class="view-btn"
+              id="viewList"
+              aria-pressed="false"
+              aria-label="List view"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="prop-grid" id="propGrid">
+          <!-- Cards injected by JS -->
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           PAGINATION
+      ════════════════════════════════════════════════════ -->
+      <nav class="pagination-wrap" aria-label="Pagination">
+        <div class="pagination" id="pagination">
+          <button
+            class="page-btn arrow"
+            id="prevPage"
+            aria-label="Previous page"
+            aria-disabled="true"
+          >
+            ←
+          </button>
+          <button class="page-btn active num" data-page="1" aria-current="page">
+            1
+          </button>
+          <button class="page-btn num" data-page="2">2</button>
+          <button class="page-btn num" data-page="3">3</button>
+          <span class="page-ellipsis" aria-hidden="true">…</span>
+          <button class="page-btn num" data-page="6">6</button>
+          <button class="page-btn arrow" id="nextPage" aria-label="Next page">
+            →
+          </button>
+        </div>
+      </nav>
+    </main>
+
+    <!-- ════════════════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════════════════ -->
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="footer-inner">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="Akar Town">
+            <svg
+              width="180"
+              viewBox="0 0 2750 380"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+                fill="white"
+              />
+              <path
+                d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+                fill="#FF0000"
+              />
+              <path
+                d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+                fill="white"
+              />
+              <path
+                d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
+                fill="white"
+              />
+              <path
+                d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+                fill="white"
+              />
+              <path
+                d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
+                fill="white"
+              />
+              <path
+                d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
+                fill="white"
+              />
+              <path
+                d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+                fill="white"
+              />
+              <path
+                d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+                fill="white"
+              />
+              <path
+                d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+                fill="white"
+              />
+            </svg>
+          </a>
+          <p class="footer-tagline">
+            Egypt's most trusted real estate partner — connecting families with
+            premium developments across the country's finest addresses.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="footer-social-link" aria-label="Facebook">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Instagram">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                  cx="17.5"
+                  cy="6.5"
+                  r="1"
+                  fill="currentColor"
+                  stroke="none"
+                />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="WhatsApp">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <!-- Navigate -->
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Navigate</span>
+          </div>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <!-- Areas -->
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Areas</span>
+          </div>
+          <ul class="footer-nav">
+            <li><a href="properties.html?area=new-cairo">New Cairo</a></li>
+            <li><a href="properties.html?area=new-capital">New Capital</a></li>
+            <li>
+              <a href="properties.html?area=sheikh-zayed">Sheikh Zayed</a>
+            </li>
+            <li><a href="properties.html?area=north-coast">North Coast</a></li>
+            <li><a href="properties.html?area=ain-sokhna">Ain Sokhna</a></li>
+            <li>
+              <a href="properties.html?area=6th-october">6th of October</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Contact -->
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Contact</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.9-.9a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+            <a href="tel:+201234567890">+20 123 456 7890</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <a href="mailto:hello@akartown.com">hello@akartown.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          © 2026 <strong>Akar Town</strong>. All rights reserved.
+        </p>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Cookie Settings</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      /* ──────────────────────────────────────────────────────────
+       PROPERTY DATA — 12 mock listings
+    ────────────────────────────────────────────────────────── */
+      const PROPERTIES = [
+        {
+          id: 1,
+          type: "2br",
+          typeLabel: "2 BR",
+          project: "Azha Residence",
+          name: "Garden View Apartment",
+          location: "New Cairo",
+          price: 4750000,
+          area: 148,
+          beds: 2,
+          baths: 2,
+          delivery: "ready",
+          deliveryLabel: "Ready Now",
+          photo:
+            "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80",
+        },
+        {
+          id: 2,
+          type: "studio",
+          typeLabel: "Studio",
+          project: "Capital Heights",
+          name: "Loft Studio Unit",
+          location: "New Capital",
+          price: 1850000,
+          area: 48,
+          beds: 0,
+          baths: 1,
+          delivery: "q4-2026",
+          deliveryLabel: "Q4 2026",
+          photo:
+            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80",
+        },
+        {
+          id: 3,
+          type: "villa",
+          typeLabel: "Villa",
+          project: "Palm Hills",
+          name: "Private Corner Villa",
+          location: "Sheikh Zayed",
+          price: 18500000,
+          area: 420,
+          beds: 4,
+          baths: 4,
+          delivery: "ready",
+          deliveryLabel: "Ready Now",
+          photo:
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+        },
+        {
+          id: 4,
+          type: "3br",
+          typeLabel: "3 BR",
+          project: "Marsa Alam Bay",
+          name: "Seafront Penthouse",
+          location: "North Coast",
+          price: 9200000,
+          area: 240,
+          beds: 3,
+          baths: 3,
+          delivery: "q2-2027",
+          deliveryLabel: "Q2 2027",
+          photo:
+            "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80",
+        },
+        {
+          id: 5,
+          type: "1br",
+          typeLabel: "1 BR",
+          project: "Zed East",
+          name: "Smart Apartment",
+          location: "New Cairo",
+          price: 3100000,
+          area: 95,
+          beds: 1,
+          baths: 1,
+          delivery: "off-plan",
+          deliveryLabel: "Off-Plan",
+          photo:
+            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80",
+        },
+        {
+          id: 6,
+          type: "sky-villa",
+          typeLabel: "Sky Villa",
+          project: "The Waterway",
+          name: "Rooftop Sky Villa",
+          location: "New Cairo",
+          price: 22000000,
+          area: 580,
+          beds: 5,
+          baths: 5,
+          delivery: "q4-2026",
+          deliveryLabel: "Q4 2026",
+          photo:
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+        },
+        {
+          id: 7,
+          type: "2br",
+          typeLabel: "2 BR",
+          project: "Telal Sokhna",
+          name: "Chalet with Pool Access",
+          location: "Ain Sokhna",
+          price: 5400000,
+          area: 132,
+          beds: 2,
+          baths: 2,
+          delivery: "ready",
+          deliveryLabel: "Ready Now",
+          photo:
+            "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80",
+        },
+        {
+          id: 8,
+          type: "1br",
+          typeLabel: "1 BR",
+          project: "SODIC West",
+          name: "Urban Loft Apartment",
+          location: "6th of October",
+          price: 2650000,
+          area: 82,
+          beds: 1,
+          baths: 1,
+          delivery: "q2-2027",
+          deliveryLabel: "Q2 2027",
+          photo:
+            "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80",
+        },
+        {
+          id: 9,
+          type: "3br",
+          typeLabel: "3 BR",
+          project: "O West",
+          name: "Duplex with Garden",
+          location: "6th of October",
+          price: 7800000,
+          area: 210,
+          beds: 3,
+          baths: 2,
+          delivery: "off-plan",
+          deliveryLabel: "Off-Plan",
+          photo:
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        },
+        {
+          id: 10,
+          type: "studio",
+          typeLabel: "Studio",
+          project: "Taj City",
+          name: "Compact Studio Flat",
+          location: "New Cairo",
+          price: 1980000,
+          area: 42,
+          beds: 0,
+          baths: 1,
+          delivery: "ready",
+          deliveryLabel: "Ready Now",
+          photo:
+            "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80",
+        },
+        {
+          id: 11,
+          type: "villa",
+          typeLabel: "Villa",
+          project: "Marassi",
+          name: "Mediterranean Villa",
+          location: "North Coast",
+          price: 15200000,
+          area: 360,
+          beds: 4,
+          baths: 3,
+          delivery: "q4-2026",
+          deliveryLabel: "Q4 2026",
+          photo:
+            "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80",
+        },
+        {
+          id: 12,
+          type: "2br",
+          typeLabel: "2 BR",
+          project: "Compound 90",
+          name: "Corner Unit, Club View",
+          location: "New Capital",
+          price: 4100000,
+          area: 126,
+          beds: 2,
+          baths: 2,
+          delivery: "q2-2027",
+          deliveryLabel: "Q2 2027",
+          photo:
+            "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80",
+        },
+      ];
+
+      /* ──────────────────────────────────────────────────────────
+       STATE
+    ────────────────────────────────────────────────────────── */
+      const PER_PAGE = 9;
+      let currentPage = 1;
+      let activeType = "all";
+      let savedIds = new Set();
+
+      /* ──────────────────────────────────────────────────────────
+       HELPERS
+    ────────────────────────────────────────────────────────── */
+      function fmtPrice(n) {
+        return n.toLocaleString("en-EG");
+      }
+
+      function deliveryClass(d) {
+        if (d === "ready") return "delivery-ready";
+        if (d === "q4-2026" || d === "q2-2027") return "delivery-soon";
+        return "delivery-offplan";
+      }
+
+      function bedLabel(n) {
+        if (n === 0) return "Studio";
+        return n + (n === 1 ? " Bed" : " Beds");
+      }
+
+      function pinIcon() {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
+      }
+
+      function bedIcon() {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4"/><path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3"/><line x1="2" y1="14" x2="22" y2="14"/></svg>`;
+      }
+
+      function bathIcon() {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z"/><path d="M6 12V5a2 2 0 0 1 2-2h3v2.25"/><line x1="2" y1="17" x2="22" y2="17"/></svg>`;
+      }
+
+      function areaIcon() {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
+      }
+
+      function bookmarkIcon(filled) {
+        return filled
+          ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`
+          : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+      }
+
+      /* ──────────────────────────────────────────────────────────
+       RENDER CARDS
+    ────────────────────────────────────────────────────────── */
+      function filtered() {
+        if (activeType === "all") return PROPERTIES;
+        return PROPERTIES.filter((p) => p.type === activeType);
+      }
+
+      function renderCards(page) {
+        const list = filtered();
+        const start = (page - 1) * PER_PAGE;
+        const slice = list.slice(start, start + PER_PAGE);
+        const grid = document.getElementById("propGrid");
+
+        grid.innerHTML = slice
+          .map(
+            (p) => `
+        <article class="prop-card" data-id="${p.id}" aria-label="${p.name}">
+          <div class="prop-card-photo-wrap">
+            <img class="prop-card-photo" src="${p.photo}" alt="${p.name} — ${p.location}" loading="lazy" width="600" height="450">
+            <div class="prop-card-shear" aria-hidden="true"></div>
+            <div class="prop-card-badges" aria-hidden="true">
+              <span class="prop-type-badge">${p.typeLabel}</span>
+              <button class="prop-save-btn${savedIds.has(p.id) ? " saved" : ""}" data-save="${p.id}" aria-label="${savedIds.has(p.id) ? "Remove from saved" : "Save property"}">
+                ${bookmarkIcon(savedIds.has(p.id))}
+              </button>
+            </div>
+          </div>
+          <div class="prop-card-body">
+            <p class="prop-project">${p.project}</p>
+            <h2 class="prop-name">${p.name}</h2>
+            <p class="prop-location">${pinIcon()} ${p.location}</p>
+            <div class="prop-price-row">
+              <span class="prop-price num">${fmtPrice(p.price)}</span>
+              <span class="prop-currency">EGP</span>
+            </div>
+            <div class="prop-chips">
+              <span class="prop-chip">${areaIcon()} <span class="prop-area-val">${p.area}</span> m²</span>
+              ${p.beds > 0 ? `<span class="prop-chip">${bedIcon()} ${p.beds} Bed${p.beds > 1 ? "s" : ""}</span>` : `<span class="prop-chip">${bedIcon()} Studio</span>`}
+              <span class="prop-chip">${bathIcon()} ${p.baths} Bath${p.baths > 1 ? "s" : ""}</span>
+            </div>
+            <div class="prop-card-footer">
+              <span class="delivery-tag ${deliveryClass(p.delivery)}">${p.deliveryLabel}</span>
+              <a href="property-detail.html?id=${p.id}" class="prop-cta" aria-label="View details for ${p.name}">
+                View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      `,
+          )
+          .join("");
+
+        /* results count */
+        document.getElementById("resultsCount").textContent = slice.length;
+
+        /* wire save buttons */
+        grid.querySelectorAll("[data-save]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = parseInt(btn.dataset.save);
+            if (savedIds.has(id)) {
+              savedIds.delete(id);
+            } else {
+              savedIds.add(id);
+            }
+            renderCards(currentPage);
+          });
+        });
+      }
+
+      /* ──────────────────────────────────────────────────────────
+       PAGINATION
+    ────────────────────────────────────────────────────────── */
+      function totalPages() {
+        return Math.ceil(filtered().length / PER_PAGE);
+      }
+
+      function renderPagination() {
+        const total = totalPages();
+        const prev = document.getElementById("prevPage");
+        const next = document.getElementById("nextPage");
+
+        /* disable prev/next */
+        prev.setAttribute(
+          "aria-disabled",
+          currentPage === 1 ? "true" : "false",
+        );
+        next.setAttribute(
+          "aria-disabled",
+          currentPage === total ? "true" : "false",
+        );
+
+        /* rebuild number buttons */
+        const pagination = document.getElementById("pagination");
+        /* remove old number buttons */
+        pagination.querySelectorAll("[data-page]").forEach((b) => b.remove());
+        pagination
+          .querySelectorAll(".page-ellipsis")
+          .forEach((b) => b.remove());
+
+        const fragment = document.createDocumentFragment();
+        const TOTAL_DISPLAY = Math.min(total, 6);
+
+        for (let i = 1; i <= TOTAL_DISPLAY; i++) {
+          if (
+            TOTAL_DISPLAY > 4 &&
+            i === TOTAL_DISPLAY - 1 &&
+            currentPage < TOTAL_DISPLAY - 2
+          ) {
+            const ell = document.createElement("span");
+            ell.className = "page-ellipsis";
+            ell.setAttribute("aria-hidden", "true");
+            ell.textContent = "…";
+            fragment.appendChild(ell);
+            const lastBtn = document.createElement("button");
+            lastBtn.className =
+              "page-btn num" + (currentPage === TOTAL_DISPLAY ? " active" : "");
+            lastBtn.dataset.page = TOTAL_DISPLAY;
+            if (currentPage === TOTAL_DISPLAY)
+              lastBtn.setAttribute("aria-current", "page");
+            lastBtn.textContent = TOTAL_DISPLAY;
+            fragment.appendChild(lastBtn);
+            break;
+          }
+          const btn = document.createElement("button");
+          btn.className = "page-btn num" + (i === currentPage ? " active" : "");
+          btn.dataset.page = i;
+          if (i === currentPage) btn.setAttribute("aria-current", "page");
+          btn.textContent = i;
+          fragment.appendChild(btn);
+        }
+
+        /* insert before next button */
+        next.before(...fragment.childNodes);
+
+        /* wire clicks */
+        pagination.querySelectorAll("[data-page]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentPage = parseInt(btn.dataset.page);
+            renderCards(currentPage);
+            renderPagination();
+            document
+              .querySelector(".results-area")
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      }
+
+      /* ──────────────────────────────────────────────────────────
+       TYPE PILLS
+    ────────────────────────────────────────────────────────── */
+      document.querySelectorAll(".filter-pills .pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".filter-pills .pill").forEach((p) => {
+            p.classList.remove("active");
+            p.setAttribute("aria-pressed", "false");
+          });
+          pill.classList.add("active");
+          pill.setAttribute("aria-pressed", "true");
+          activeType = pill.dataset.type;
+          currentPage = 1;
+          renderCards(1);
+          renderPagination();
+        });
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       SORT
+    ────────────────────────────────────────────────────────── */
+      document
+        .getElementById("sortSelect")
+        .addEventListener("change", function () {
+          const val = this.value;
+          if (val === "price-asc") PROPERTIES.sort((a, b) => a.price - b.price);
+          else if (val === "price-desc")
+            PROPERTIES.sort((a, b) => b.price - a.price);
+          else if (val === "area") PROPERTIES.sort((a, b) => b.area - a.area);
+          else if (val === "newest") PROPERTIES.sort((a, b) => b.id - a.id);
+          else PROPERTIES.sort((a, b) => a.id - b.id);
+          currentPage = 1;
+          renderCards(1);
+          renderPagination();
+        });
+
+      /* ──────────────────────────────────────────────────────────
+       PREV / NEXT
+    ────────────────────────────────────────────────────────── */
+      document.getElementById("prevPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderCards(currentPage);
+          renderPagination();
+          document
+            .querySelector(".results-area")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+      document.getElementById("nextPage").addEventListener("click", () => {
+        if (currentPage < totalPages()) {
+          currentPage++;
+          renderCards(currentPage);
+          renderPagination();
+          document
+            .querySelector(".results-area")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       ADVANCED PANEL TOGGLE
+    ────────────────────────────────────────────────────────── */
+      const advToggle = document.getElementById("advToggle");
+      const advPanel = document.getElementById("advPanel");
+      advToggle.addEventListener("click", () => {
+        const open = advPanel.classList.toggle("open");
+        advToggle.classList.toggle("active", open);
+        advToggle.setAttribute("aria-expanded", open);
+        advPanel.setAttribute("aria-hidden", !open);
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       BED PILLS
+    ────────────────────────────────────────────────────────── */
+      document.querySelectorAll(".bed-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".bed-pill").forEach((p) => {
+            p.classList.remove("active");
+            p.setAttribute("aria-pressed", "false");
+          });
+          pill.classList.add("active");
+          pill.setAttribute("aria-pressed", "true");
+        });
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       FINISHING PILLS
+    ────────────────────────────────────────────────────────── */
+      document.querySelectorAll(".fin-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          pill.classList.toggle("active");
+          pill.setAttribute("aria-pressed", pill.classList.contains("active"));
+          updateFilterBadge();
+        });
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       FILTER BADGE COUNT
+    ────────────────────────────────────────────────────────── */
+      function updateFilterBadge() {
+        let count = 0;
+        document
+          .querySelectorAll(".adv-checkboxes input:checked")
+          .forEach(() => count++);
+        document.querySelectorAll(".fin-pill.active").forEach(() => count++);
+        const bedActive = document.querySelector(".bed-pill.active");
+        if (bedActive && bedActive.dataset.bed !== "any") count++;
+        document.getElementById("filterCount").textContent = count;
+      }
+
+      document.querySelectorAll(".adv-checkboxes input").forEach((cb) => {
+        cb.addEventListener("change", updateFilterBadge);
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       CLEAR / APPLY
+    ────────────────────────────────────────────────────────── */
+      document.getElementById("clearFilters").addEventListener("click", () => {
+        document.querySelectorAll(".adv-checkboxes input").forEach((cb) => {
+          cb.checked = false;
+        });
+        document.querySelectorAll(".bed-pill").forEach((p) => {
+          p.classList.remove("active");
+          p.setAttribute("aria-pressed", "false");
+        });
+        document
+          .querySelector('.bed-pill[data-bed="any"]')
+          .classList.add("active");
+        document
+          .querySelector('.bed-pill[data-bed="any"]')
+          .setAttribute("aria-pressed", "true");
+        document.querySelectorAll(".fin-pill").forEach((p) => {
+          p.classList.remove("active");
+          p.setAttribute("aria-pressed", "false");
+        });
+        document.getElementById("priceMin").value = "1,800,000";
+        document.getElementById("priceMax").value = "22,000,000";
+        document.getElementById("areaMin").value = "42";
+        document.getElementById("areaMax").value = "580";
+        document.getElementById("filterCount").textContent = "0";
+      });
+
+      document.getElementById("applyFilters").addEventListener("click", () => {
+        advPanel.classList.remove("open");
+        advToggle.classList.remove("active");
+        advToggle.setAttribute("aria-expanded", "false");
+        advPanel.setAttribute("aria-hidden", "true");
+        updateFilterBadge();
+      });
+
+      /* ──────────────────────────────────────────────────────────
+       HEADER SCROLL
+    ────────────────────────────────────────────────────────── */
+      (function () {
+        const hdr = document.getElementById("siteHdr");
+        let ticking = false;
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              requestAnimationFrame(() => {
+                hdr.classList.toggle("scrolled", window.scrollY > 20);
+                ticking = false;
+              });
+              ticking = true;
+            }
+          },
+          { passive: true },
+        );
+        /* trigger immediately in case page is loaded scrolled */
+        hdr.classList.toggle("scrolled", window.scrollY > 20);
+      })();
+
+      /* ──────────────────────────────────────────────────────────
+       HAMBURGER
+    ────────────────────────────────────────────────────────── */
+      (function () {
+        const btn = document.getElementById("hbgBtn");
+        const mob = document.getElementById("mob");
+        const x = document.getElementById("mobX");
+        function open() {
+          mob.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+          mob.setAttribute("aria-hidden", "false");
+        }
+        function close() {
+          mob.classList.remove("open");
+          btn.setAttribute("aria-expanded", "false");
+          mob.setAttribute("aria-hidden", "true");
+        }
+        btn.addEventListener("click", open);
+        x.addEventListener("click", close);
+        mob
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", close));
+      })();
+
+      /* ──────────────────────────────────────────────────────────
+       CURSOR
+    ────────────────────────────────────────────────────────── */
+      (function () {
+        const dot = document.getElementById("c-dot");
+        const ring = document.getElementById("c-ring");
+        let mx = 0,
+          my = 0,
+          rx = 0,
+          ry = 0;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          dot.style.left = mx + "px";
+          dot.style.top = my + "px";
+        });
+        (function tick() {
+          rx += (mx - rx) * 0.1;
+          ry += (my - ry) * 0.1;
+          ring.style.left = rx + "px";
+          ring.style.top = ry + "px";
+          requestAnimationFrame(tick);
+        })();
+        document.querySelectorAll("a, button, .prop-card").forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            document.body.classList.add("ch"),
+          );
+          el.addEventListener("mouseleave", () =>
+            document.body.classList.remove("ch"),
+          );
+        });
+      })();
+
+      /* ──────────────────────────────────────────────────────────
+         VIEW TOGGLE
+      ────────────────────────────────────────────────────────── */
+      (function () {
+        const grid = document.getElementById("propGrid");
+        const btnGrid = document.getElementById("viewGrid");
+        const btnList = document.getElementById("viewList");
+
+        btnGrid.addEventListener("click", () => {
+          grid.classList.remove("list-view");
+          btnGrid.classList.add("active");
+          btnGrid.setAttribute("aria-pressed", "true");
+          btnList.classList.remove("active");
+          btnList.setAttribute("aria-pressed", "false");
+        });
+
+        btnList.addEventListener("click", () => {
+          grid.classList.add("list-view");
+          btnList.classList.add("active");
+          btnList.setAttribute("aria-pressed", "true");
+          btnGrid.classList.remove("active");
+          btnGrid.setAttribute("aria-pressed", "false");
+        });
+      })();
+
+      /* ──────────────────────────────────────────────────────────
+       INIT
+    ────────────────────────────────────────────────────────── */
+      renderCards(1);
+      renderPagination();
+    </script>
+  </body>
+</html>
