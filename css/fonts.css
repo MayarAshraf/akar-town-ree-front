@@ -1,124 +1,19 @@
 /* ============================================================
    Akar Town — font stack
-   Self-hosted woff2 files → /fonts/
-   Metrics read from actual woff2 files with fontTools.
+   Loaded via Google Fonts CDN (see <head> in index.html).
    ============================================================ */
 
 @layer tokens {
 
-/* ---------- LATIN ---------- */
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('/fonts/archivo-latin-wght-normal.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/ibm-plex-sans-latin-wght-normal.woff2') format('woff2-variations');
-  font-weight: 100 700;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ---------- ARABIC ---------- */
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
-                 U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200E, U+2010-2011,
-                 U+204F, U+2E41, U+FBB2-FBC2;
-}
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('/fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
-                 U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200E, U+2010-2011,
-                 U+204F, U+2E41, U+FBB2-FBC2;
-}
-
-/* Display Arabic — optional (see docs/typography.md §3).
-   Delete this block to fall back to IBM Plex Sans Arabic 600 with no other edits. */
-@font-face {
-  font-family: 'Noto Kufi Arabic';
-  src: url('/fonts/noto-kufi-arabic-subset.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0600-06FF, U+0750-077F, U+FE70-FEFF, U+0660-0669, U+200C-200F;
-}
-
-/* ---------- FALLBACK METRIC OVERRIDES ----------
-   Computed against Arial (upm 2048, xHeight 1062) so font-display: swap
-   causes zero reflow. Required for CLS ≤ 0.05. */
-
-@font-face {
-  font-family: 'Archivo Fallback';
-  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
-  ascent-override: 87.8%;
-  descent-override: 21.0%;
-  line-gap-override: 0%;
-  size-adjust: 101.4%;
-}
-@font-face {
-  font-family: 'Plex Sans Fallback';
-  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
-  ascent-override: 102.5%;
-  descent-override: 27.5%;
-  line-gap-override: 0%;
-  size-adjust: 99.5%;
-}
-@font-face {
-  font-family: 'Plex Arabic Fallback';
-  src: local('Segoe UI'), local('Tahoma'), local('Geeza Pro'), local('Noto Sans Arabic');
-  ascent-override: 108.5%;
-  descent-override: 41.5%;
-  line-gap-override: 0%;
-  size-adjust: 99.5%;
-}
-@font-face {
-  font-family: 'Kufi Fallback';
-  src: local('Segoe UI'), local('Tahoma'), local('Geeza Pro'), local('Noto Sans Arabic');
-  ascent-override: 128.2%;
-  descent-override: 61.5%;
-  line-gap-override: 0%;
-  size-adjust: 103.4%;
-}
-
 /* ---------- TOKENS ---------- */
 
 :root {
-  --font-display-ltr: 'Archivo', 'Archivo Fallback', system-ui, sans-serif;
-  --font-display-rtl: 'Noto Kufi Arabic', 'Kufi Fallback',
-                      'IBM Plex Sans Arabic', 'Plex Arabic Fallback', system-ui, sans-serif;
+  --font-display-ltr: 'Archivo', system-ui, sans-serif;
+  --font-display-rtl: 'Noto Kufi Arabic', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-display:     var(--font-display-ltr);
 
-  --font-body-ltr: 'IBM Plex Sans', 'Plex Sans Fallback', system-ui, sans-serif;
-  --font-body-rtl: 'IBM Plex Sans Arabic', 'Plex Arabic Fallback', system-ui, sans-serif;
+  --font-body-ltr: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-body-rtl: 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-body:     var(--font-body-ltr);
 
   --font-data: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
@@ -128,8 +23,6 @@
   --fw-semibold: 600;
   --fw-bold:     700;
 
-  /* Numeric only — never `normal`. Noto Kufi content box is 1.897em vs
-     Archivo's 1.088em; `normal` would make Arabic headlines 74% taller. */
   --lh-display: 0.95;
   --lh-heading: 1.15;
   --lh-body:    1.6;

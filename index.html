@@ -9,13 +9,12 @@
       content="Premium developments redefining modern living across Egypt's most sought-after locations."
     />
 
-    <!-- Fonts — self-hosted, zero third-party connection -->
+    <!-- Fonts — Google Fonts CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      href="/fonts/archivo-latin-wght-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@100..700&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Kufi+Arabic:wght@100..900&display=swap"
     />
     <link rel="stylesheet" href="css/fonts.css" />
 
@@ -241,21 +240,28 @@
 
       /* ==========================================================
        GLOBAL NUMERIC TREATMENT
-       All elements displaying numbers use IBM Plex Mono with the
-       same OpenType features as the hero — tabular figures + slashed zero.
+       All elements displaying numbers use Playfair Display with
+       tabular figures + slashed zero OpenType features.
     ========================================================== */
       .fnd-step-val,
       .fnd-price-val,
+      .fnd-price-input,
       .fnd-area-inp,
+      .fnd-area-sep,
+      .fnd-area-unit,
       .fnd-row-val,
+      .fnd-chip-num,
+      .fnd-room-s,
       .props-det-val,
       .props-det-count,
       .ibt-n,
       .hs-num,
       .hn-counter,
+      .iv,
       .loc-prop-count,
       .loc-num,
-      .loc-stat-val {
+      .loc-stat-val,
+      .proj-card-price {
         font-family: var(--font-data);
         font-variant-numeric: tabular-nums;
         font-feature-settings:
@@ -946,11 +952,6 @@
         color: var(--n-500);
       }
       .iv {
-        font-family: var(--font-data);
-        font-variant-numeric: tabular-nums;
-        font-feature-settings:
-          "tnum" 1,
-          "zero" 1;
         font-size: 1.35rem;
         font-weight: 500;
         color: var(--n-0);
@@ -1093,7 +1094,7 @@
        FIND YOUR SPACE — SECTION
       ========================================================== */
       .sec-finder {
-        background: var(--mist, var(--n-100));
+        background: var(--n-50);
         padding: clamp(3rem, 5vw, 4.5rem) 0;
         position: relative;
         overflow: hidden;
@@ -1340,13 +1341,11 @@
         border-bottom-color: var(--sig-600);
       }
       .fnd-area-sep {
-        font-family: var(--font-data);
         font-size: var(--text-sm);
         color: var(--n-400);
         user-select: none;
       }
       .fnd-area-unit {
-        font-family: var(--font-data);
         font-size: 0.72rem;
         color: var(--n-500);
         letter-spacing: 0.04em;
@@ -1387,7 +1386,6 @@
         margin-left: 4px;
       }
       .fnd-price-input {
-        font-family: var(--font-data);
         font-size: 1.25rem;
         font-weight: 500;
         color: var(--n-950);
@@ -1460,7 +1458,6 @@
         pointer-events: none;
       }
       .fnd-chip-num {
-        font-family: var(--font-data);
         font-size: 1rem;
         font-weight: 500;
         line-height: 1.1;
@@ -1568,7 +1565,6 @@
         letter-spacing: 0.04em;
       }
       .fnd-room-s {
-        font-family: var(--font-data);
         font-size: clamp(0.38rem, 0.9vw, 0.52rem);
         color: var(--n-500);
         text-align: center;
@@ -1925,11 +1921,11 @@
 
       /* ==========================================================
          SECTION 4 — LOCATIONS EXPLORER
-         Expanding row strips on dark --ink ground
+         Expanding row strips on --paper ground
       ========================================================== */
       .sec-locs {
-        background: var(--ink);
-        color: var(--n-0);
+        background: var(--n-50);
+        color: var(--n-950);
         padding: clamp(2.5rem, 5vw, 3.5rem) 0;
         overflow: hidden;
       }
@@ -1953,7 +1949,7 @@
         list-style: none;
         margin: 0;
         padding: 0;
-        border-top: 1px solid var(--n-800);
+        border-top: 1px solid var(--n-200);
       }
 
       /* Individual row */
@@ -1961,7 +1957,7 @@
         position: relative;
         height: 88px;
         overflow: hidden;
-        border-bottom: 1px solid var(--n-800);
+        border-bottom: 1px solid var(--n-200);
         cursor: pointer;
         transition: height 0.65s var(--ease-expo);
         isolation: isolate;
@@ -2043,7 +2039,7 @@
       .loc-num {
         font-size: clamp(2rem, 4.5vw, 4.5rem);
         font-weight: var(--fw-bold);
-        color: var(--n-800);
+        color: var(--n-200);
         line-height: 1;
         letter-spacing: -0.05em;
         flex-shrink: 0;
@@ -2062,7 +2058,7 @@
         font-weight: var(--fw-bold);
         font-size: clamp(1rem, 1vw + 0.4rem, 1.35rem);
         letter-spacing: -0.01em;
-        color: var(--n-100);
+        color: var(--n-800);
         transition:
           color 0.3s ease,
           transform 0.45s var(--ease-expo);
@@ -2077,9 +2073,9 @@
       .loc-tag {
         font-size: var(--text-xs);
         font-weight: var(--fw-semibold);
-        color: var(--n-300);
+        color: var(--n-600);
         padding: 3px 12px;
-        border: 1px solid var(--n-700);
+        border: 1px solid var(--n-300);
         border-radius: 100px;
         white-space: nowrap;
         transition:
@@ -2100,7 +2096,7 @@
           "zero" 1;
         font-size: var(--text-sm);
         font-weight: var(--fw-medium);
-        color: var(--n-400);
+        color: var(--n-500);
         white-space: nowrap;
         transition: color 0.3s ease;
       }
@@ -2113,7 +2109,7 @@
       .loc-arrow {
         width: 32px;
         height: 32px;
-        border: 1px solid var(--n-800);
+        border: 1px solid var(--n-300);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -2123,7 +2119,7 @@
           border-color 0.3s ease,
           background 0.3s ease,
           transform 0.45s var(--ease-expo);
-        color: var(--n-600);
+        color: var(--n-500);
       }
       .loc-arrow svg {
         width: 14px;
@@ -2226,7 +2222,7 @@
       }
       .loc-divider hr {
         border: none;
-        border-top: 1px solid var(--n-800);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
         margin: 0;
       }
       .loc-item:hover .loc-divider,
@@ -2240,7 +2236,7 @@
         margin: 0 auto;
         padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 2.5rem);
         padding-bottom: 0;
-        border-top: 1px solid var(--n-800);
+        border-top: 1px solid var(--n-200);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -2248,7 +2244,7 @@
       }
       .locs-footer-text {
         font-size: var(--text-sm);
-        color: var(--n-500);
+        color: var(--n-600);
       }
       .locs-cta {
         display: inline-flex;
@@ -2257,10 +2253,10 @@
         font-family: var(--font-display);
         font-weight: var(--fw-semibold);
         font-size: var(--text-sm);
-        color: var(--n-0);
+        color: var(--n-950);
         text-decoration: none;
         padding: 0.6rem 1.4rem;
-        border: 1px solid var(--n-700);
+        border: 1px solid var(--n-300);
         border-radius: 100px;
         transition:
           background 0.25s ease,
@@ -2402,11 +2398,6 @@
         text-overflow: ellipsis;
       }
       .proj-card-price {
-        font-family: var(--font-data);
-        font-variant-numeric: tabular-nums;
-        font-feature-settings:
-          "tnum" 1,
-          "zero" 1;
         font-size: var(--text-sm);
         font-weight: var(--fw-semibold);
         color: var(--ink);
@@ -3851,7 +3842,7 @@
       </section>
 
       <!-- SECTION 4 — LOCATIONS EXPLORER -->
-      <section class="sec-locs on-ink" aria-label="Explore Locations">
+      <section class="sec-locs" aria-label="Explore Locations">
         <div class="locs-header">
           <div class="locs-title-group">
             <div class="fnd-eyebrow">
