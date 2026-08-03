@@ -1,0 +1,4695 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garden View Apartment — Akar Town</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@100..700&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Kufi+Arabic:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/colors.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <style>
+      /* ── TOKENS ── */
+      :root {
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.25rem;
+        --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --dur-ui: 320ms;
+        --dur-scene: 720ms;
+        --container: 1320px;
+        --gutter: clamp(1rem, 4vw, 2.5rem);
+        --hh: 72px;
+        --sp1: 0.5rem;
+        --sp2: 0.75rem;
+        --sp3: 1rem;
+        --sp4: 1.5rem;
+        --sp5: 2rem;
+        --sp6: 3rem;
+        --sp7: 4.5rem;
+        --shear: 39.5deg;
+        --shear-tan: 0.81;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--n-50);
+        color: var(--n-950);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: var(--lh-body);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      button {
+        border: none;
+        background: none;
+        cursor: none;
+        font-family: inherit;
+      }
+
+      /* ── CURSOR ── */
+      #c-dot {
+        position: fixed;
+        z-index: 9999;
+        width: 7px;
+        height: 7px;
+        background: var(--sig-500);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.2s var(--ease-spring),
+          height 0.2s var(--ease-spring);
+      }
+      #c-ring {
+        position: fixed;
+        z-index: 9998;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid rgba(255, 255, 255, 0.28);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s var(--ease-spring),
+          height 0.3s var(--ease-spring),
+          border-color 0.3s;
+      }
+      body.ch #c-dot {
+        width: 11px;
+        height: 11px;
+      }
+      body.ch #c-ring {
+        width: 52px;
+        height: 52px;
+        border-color: rgba(255, 0, 0, 0.4);
+      }
+
+      /* ── .mark ── */
+      @property --dp {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: -20%;
+      }
+      .mark {
+        display: inline;
+        white-space: nowrap;
+        font-style: normal;
+        background:
+          linear-gradient(
+            39.5deg,
+            transparent calc(var(--dp) - 16%),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) - 1%),
+            #fff var(--dp),
+            rgba(255, 255, 255, 0.92) calc(var(--dp) + 1%),
+            transparent calc(var(--dp) + 16%)
+          ),
+          linear-gradient(
+            39.5deg,
+            var(--sig-600) 0%,
+            var(--sig-500) 35%,
+            var(--sig-400) 65%,
+            var(--sig-300) 100%
+          );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--sig-600);
+        animation: diamond-shine 4s linear infinite;
+      }
+      @keyframes diamond-shine {
+        0% {
+          --dp: -20%;
+        }
+        22% {
+          --dp: 120%;
+        }
+        22.1% {
+          --dp: -20%;
+        }
+        100% {
+          --dp: -20%;
+        }
+      }
+
+      /* ── NUMERIC ── */
+      .num,
+      .pd-price,
+      .pd-stat-val,
+      .pd-spec-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings:
+          "tnum" 1,
+          "zero" 1;
+      }
+
+      /* ── LAYOUT ── */
+      .wrap {
+        width: 100%;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        padding: 10px 22px;
+        border-radius: 100px;
+        white-space: nowrap;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        border: none;
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+      }
+      .btn-accent {
+        background: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .btn-accent:hover {
+        transform: translateY(-1px);
+      }
+      .btn-outline-dark {
+        background: transparent;
+        border: 1.5px solid var(--n-200);
+        color: var(--n-700);
+        padding: 10px 22px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+      }
+      .btn-outline-dark:hover {
+        border-color: var(--n-950);
+        color: var(--n-950);
+      }
+
+      /* ── SLAB EYEBROW ── */
+      .eyebrow-wrap {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp3);
+      }
+      .eyebrow-slab {
+        --slab-w: 28px;
+        --slab-h: 4px;
+        width: var(--slab-w);
+        height: var(--slab-h);
+        background: var(--sig-500);
+        clip-path: polygon(
+          calc(var(--slab-h) * 0.81) 0%,
+          100% 0%,
+          calc(100% - var(--slab-h) * 0.81) 100%,
+          0% 100%
+        );
+        flex-shrink: 0;
+      }
+      .eyebrow-text {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--sig-500);
+      }
+      .eyebrow-text--dark {
+        color: var(--n-500);
+      }
+
+      /* ── MOBILE MENU ── */
+      .mob {
+        position: fixed;
+        inset: 0;
+        z-index: 990;
+        background: rgba(35, 31, 32, 0.97);
+        backdrop-filter: blur(28px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp2);
+        transform: translateY(-100%);
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          transform 0.65s var(--ease-expo),
+          visibility 0s 0.65s;
+      }
+      .mob.open {
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+          transform 0.65s var(--ease-expo),
+          visibility 0s 0s;
+      }
+      .mob a {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 7vw, 3.5rem);
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: -0.01em;
+        padding: var(--sp1) var(--sp6);
+        transition: color var(--dur-ui);
+      }
+      .mob a.active,
+      .mob a:hover {
+        color: var(--n-0);
+      }
+      .mob-x {
+        position: absolute;
+        top: var(--sp4);
+        right: var(--sp5);
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.3);
+        padding: var(--sp2);
+        transition: color var(--dur-ui);
+        cursor: none;
+      }
+      .mob-x:hover {
+        color: var(--n-0);
+      }
+
+      /* ── HEADER ── */
+      .site-header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 1000;
+        height: var(--hh);
+        color: var(--n-0);
+        transition:
+          height var(--dur-ui) var(--ease-expo),
+          background var(--dur-scene) var(--ease-expo),
+          box-shadow var(--dur-scene);
+      }
+      .hdr-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp5);
+        height: 100%;
+        width: 100%;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      .site-header.scrolled {
+        height: 60px;
+        background: rgba(35, 31, 32, 0.8);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.07),
+          0 4px 28px rgba(0, 0, 0, 0.35);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        flex-shrink: 0;
+        cursor: none;
+      }
+      .logo-icon {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+      }
+      .logo-words {
+        line-height: 1;
+      }
+      .logo-name {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        color: var(--n-0);
+      }
+      .logo-sub {
+        display: block;
+        font-size: 0.58rem;
+        font-weight: 500;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.32);
+        margin-top: 4px;
+      }
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .main-nav a {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.52);
+        padding: 8px 14px;
+        border-radius: 100px;
+        transition:
+          color var(--dur-ui),
+          background var(--dur-ui);
+      }
+      .main-nav a:hover {
+        color: var(--n-0);
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .main-nav a.active {
+        color: var(--n-0);
+      }
+      .hdr-right {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        flex-shrink: 0;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 28px;
+        height: 28px;
+        cursor: none;
+        flex-shrink: 0;
+      }
+      .hamburger span {
+        display: block;
+        width: 100%;
+        height: 1.5px;
+        background: var(--n-0);
+        border-radius: 1px;
+        transition: all 0.38s var(--ease-expo);
+        transform-origin: center;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+      @media (max-width: 900px) {
+        .main-nav {
+          display: none;
+        }
+        .hdr-right .btn-ghost {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+       STICKY UNIT BAR
+    ══════════════════════════════════════════════════ */
+      .pd-sticky-bar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        z-index: 990;
+        background: var(--n-0);
+        border-bottom: 1px solid var(--n-100);
+        box-shadow: 0 4px 24px rgba(35, 31, 32, 0.08);
+        transform: translateY(-100%);
+        opacity: 0;
+        transition:
+          transform 0.35s var(--ease-expo),
+          opacity 0.3s ease;
+        pointer-events: none;
+      }
+      .pd-sticky-bar.visible {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .pd-sticky-bar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp4);
+        height: 60px;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      .pd-sticky-left {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+      .pd-sticky-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: var(--text-sm);
+        color: var(--n-950);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: -0.01em;
+      }
+      .pd-sticky-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--sp3);
+        font-size: 11px;
+        color: var(--n-500);
+      }
+      .pd-sticky-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .pd-sticky-meta svg {
+        opacity: 0.6;
+        flex-shrink: 0;
+      }
+      .pd-sticky-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        color: var(--n-700);
+      }
+      .pd-sticky-right {
+        display: flex;
+        align-items: center;
+        gap: var(--sp4);
+        flex-shrink: 0;
+      }
+      .pd-sticky-price {
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+      }
+      .pd-sticky-price-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--n-950);
+        line-height: 1;
+      }
+      .pd-sticky-price-cur {
+        font-size: var(--text-xs);
+        color: var(--n-500);
+        font-weight: 500;
+      }
+      @media (max-width: 640px) {
+        .pd-sticky-meta {
+          display: none;
+        }
+        .pd-sticky-price {
+          display: none;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════ */
+      .pd-hero {
+        position: relative;
+        min-height: 92vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-top: var(--hh);
+        overflow: hidden;
+      }
+      .pd-hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .pd-hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      /* Hero Swiper fills the bg container */
+      .hero-swiper {
+        width: 100%;
+        height: 100%;
+      }
+      .hero-swiper .swiper-slide {
+        overflow: hidden;
+      }
+      .hero-swiper .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+      .pd-hero-scrim {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: linear-gradient(
+          to top,
+          rgba(35, 31, 32, 0.97) 0%,
+          rgba(35, 31, 32, 0.8) 45%,
+          rgba(35, 31, 32, 0.55) 100%
+        );
+      }
+      .pd-hero-body {
+        position: relative;
+        z-index: 20;
+        padding: var(--sp7) var(--gutter) var(--sp7);
+        padding-top: 0;
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--sp6);
+        align-items: end;
+      }
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp4);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .breadcrumb a {
+        color: rgba(255, 255, 255, 0.4);
+        transition: color var(--dur-ui);
+      }
+      .breadcrumb a:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .breadcrumb-sep {
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+      }
+      .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .pd-hero-project {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: var(--sp2);
+      }
+      .pd-hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        font-weight: 700;
+        color: var(--n-0);
+        line-height: 1.04;
+        letter-spacing: -0.025em;
+        margin-bottom: var(--sp4);
+      }
+      .pd-hero-stats {
+        display: flex;
+        gap: var(--sp3);
+        flex-wrap: wrap;
+        margin-bottom: var(--sp4);
+      }
+      .pd-hero-stat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 8px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 100px;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .pd-hero-stat svg {
+        opacity: 0.6;
+        flex-shrink: 0;
+      }
+      .pd-hero-stat-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        font-size: var(--text-xs);
+      }
+      .pd-hero-stat-lbl {
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.5);
+        margin-left: 2px;
+      }
+      .pd-hero-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp2);
+        margin-bottom: var(--sp4);
+      }
+      .pd-price {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-size: clamp(1rem, 2.5vw, 2rem);
+        font-weight: 700;
+        color: var(--n-0);
+        line-height: 1;
+      }
+      .pd-currency {
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 400;
+      }
+      .delivery-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .delivery-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .delivery-ready {
+        background: rgba(22, 163, 74, 0.15);
+        color: #16a34a;
+        border: 1px solid rgba(22, 163, 74, 0.25);
+      }
+      .delivery-soon {
+        background: rgba(217, 119, 6, 0.1);
+        color: #b45309;
+        border: 1px solid rgba(217, 119, 6, 0.2);
+      }
+      .delivery-offplan {
+        background: rgba(100, 116, 139, 0.1);
+        color: #64748b;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+      }
+      .pd-hero-actions {
+        display: flex;
+        gap: var(--sp3);
+        flex-wrap: wrap;
+      }
+      /* Thumbnail stack */
+      .pd-thumb-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp2);
+        width: 120px;
+        flex-shrink: 0;
+      }
+      .pd-thumb {
+        width: 120px;
+        height: 80px;
+        overflow: hidden;
+        border-radius: 4px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        cursor: none;
+        transition: all var(--dur-ui);
+        position: relative;
+      }
+      .pd-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s var(--ease-expo);
+      }
+      .pd-thumb:hover {
+        border-color: var(--accent-fill);
+      }
+      .pd-thumb:hover img {
+        transform: scale(1.06);
+      }
+      .pd-thumb.active {
+        border-color: var(--accent-fill);
+      }
+      @media (max-width: 900px) {
+        .pd-hero-body {
+          grid-template-columns: 1fr;
+        }
+        .pd-thumb-stack {
+          display: none;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+       FOOTER (dark ink, 4-col)
+    ══════════════════════════════════════════════════ */
+      .site-footer {
+        background: var(--n-950);
+        position: relative;
+        overflow: hidden;
+      }
+      .site-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--sig-500) 0%,
+          color-mix(in oklab, var(--sig-500) 30%, transparent) 55%,
+          transparent 100%
+        );
+      }
+      .footer-inner {
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2.5rem)
+          clamp(2rem, 4vw, 3rem);
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: clamp(2rem, 4vw, 4rem);
+      }
+      .footer-logo {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-tagline {
+        font-size: var(--text-sm);
+        color: var(--n-500);
+        line-height: 1.75;
+        max-width: 30ch;
+        margin: 0 0 2rem;
+      }
+      .footer-social {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .footer-social-link {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--n-800);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--n-500);
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          background 0.2s;
+      }
+      .footer-social-link:hover {
+        border-color: var(--sig-500);
+        color: var(--sig-500);
+        background: color-mix(in oklab, var(--sig-500) 8%, transparent);
+      }
+      .footer-col-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1.5rem;
+      }
+      .footer-col-heading .slab {
+        --slab-w: 20px;
+        --slab-h: 8px;
+        flex-shrink: 0;
+      }
+      .footer-col-heading span {
+        font-family: var(--font-display);
+        font-weight: var(--fw-medium);
+        font-size: 0.7rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--n-500);
+      }
+      .slab {
+        --slab-w: 28px;
+        --slab-h: 4px;
+        width: var(--slab-w);
+        height: var(--slab-h);
+        background: var(--sig-500);
+        clip-path: polygon(
+          calc(var(--slab-h) * 0.81) 0%,
+          100% 0%,
+          calc(100% - var(--slab-h) * 0.81) 100%,
+          0% 100%
+        );
+        flex-shrink: 0;
+      }
+      .footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .footer-nav a {
+        font-size: var(--text-sm);
+        color: var(--n-400);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        transition:
+          color 0.18s,
+          gap 0.22s var(--ease-expo);
+      }
+      .footer-nav a::before {
+        content: "";
+        display: inline-block;
+        width: 0;
+        height: 1px;
+        background: var(--sig-500);
+        transition:
+          width 0.22s var(--ease-expo),
+          margin-right 0.22s;
+        flex-shrink: 0;
+      }
+      .footer-nav a:hover {
+        color: var(--n-0);
+      }
+      .footer-nav a:hover::before {
+        width: 10px;
+        margin-right: 0.45rem;
+      }
+      .footer-contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+        color: var(--n-400);
+        font-size: var(--text-sm);
+        line-height: 1.65;
+      }
+      .footer-contact-item svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: var(--n-600);
+      }
+      .footer-contact-item a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.18s;
+      }
+      .footer-contact-item a:hover {
+        color: var(--n-0);
+      }
+      .footer-bottom {
+        border-top: 1px solid var(--n-800);
+        max-width: var(--container, 1320px);
+        margin: 0 auto;
+        padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .footer-copy {
+        font-size: 0.78rem;
+        color: var(--n-700);
+      }
+      .footer-copy strong {
+        color: var(--n-500);
+        font-weight: var(--fw-regular);
+      }
+      .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-legal a {
+        font-size: 0.78rem;
+        color: var(--n-700);
+        text-decoration: none;
+        transition: color 0.18s;
+      }
+      .footer-legal a:hover {
+        color: var(--n-300);
+      }
+      @media (max-width: 1024px) {
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+        .footer-brand {
+          grid-column: 1 / -1;
+        }
+      }
+      @media (max-width: 600px) {
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+        .footer-brand {
+          grid-column: auto;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+       GALLERY — Swiper cards deck
+    ══════════════════════════════════════════════════ */
+      .pd-gallery {
+        background: var(--n-50);
+        padding: var(--sp7) 0;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+      }
+      .pd-gallery-inner {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: var(--sp7);
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .pd-gallery-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pd-gallery-meta {
+        color: var(--n-950);
+      }
+      .pd-gallery-heading {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
+        color: var(--n-950);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--sp3);
+      }
+      .pd-gallery-sub {
+        font-size: var(--text-sm);
+        color: var(--n-500);
+        line-height: 1.7;
+        max-width: 340px;
+        margin-bottom: var(--sp5);
+      }
+      .pd-gallery-nav {
+        display: flex;
+        gap: var(--sp2);
+      }
+      .gal-nav-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid var(--n-200);
+        background: var(--n-0);
+        color: var(--n-600);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+      }
+      .gal-nav-btn:hover {
+        border-color: var(--accent-fill);
+        background: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .pd-gallery-fraction {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-size: var(--text-sm);
+        color: var(--n-400);
+        margin-top: var(--sp3);
+        letter-spacing: 0.06em;
+      }
+      /* Swiper cards container */
+      .gal-swiper-wrap {
+        position: relative;
+        padding: var(--sp5) var(--sp5) var(--sp5) 0;
+      }
+      .gallery-swiper {
+        width: 100%;
+        max-width: 520px;
+        height: 360px;
+        margin: 0 auto;
+      }
+      .gallery-swiper .swiper-slide {
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        cursor: none;
+      }
+      .gallery-swiper .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .gal-slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(35, 31, 32, 0.7) 0%,
+          transparent 55%
+        );
+        pointer-events: none;
+      }
+      .gal-slide-info {
+        position: absolute;
+        bottom: var(--sp4);
+        left: var(--sp4);
+        right: var(--sp4);
+        z-index: 2;
+      }
+      .gal-slide-num {
+        font-family: var(--font-data);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.1em;
+        margin-bottom: 4px;
+      }
+      .gal-slide-label {
+        font-family: var(--font-display);
+        font-size: var(--text-base);
+        font-weight: 600;
+        color: var(--n-0);
+      }
+      @media (max-width: 860px) {
+        .gallery-swiper {
+          max-width: 100%;
+          height: 300px;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+       SPECS BAR
+    ══════════════════════════════════════════════════ */
+      .pd-specs {
+        background: var(--n-950);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        position: relative;
+        z-index: 2;
+      }
+      .pd-specs-grid {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        padding: var(--sp5) var(--gutter);
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 0;
+      }
+      @media (max-width: 1024px) {
+        .pd-specs-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 580px) {
+        .pd-specs-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .pd-spec-item {
+        padding: var(--sp4) var(--sp3);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        text-align: center;
+      }
+      .pd-spec-item:last-child {
+        border-right: none;
+      }
+      .pd-spec-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: var(--sp2);
+        font-family: var(--font-display);
+      }
+      .pd-spec-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--n-0);
+        line-height: 1.3;
+      }
+      .pd-spec-val--accent {
+        color: var(--sig-400);
+      }
+
+      /* ══════════════════════════════════════════════════
+       PINNED SPLIT — about / description
+    ══════════════════════════════════════════════════ */
+      .pd-about {
+        background: var(--n-50);
+        position: relative;
+        z-index: 1;
+      }
+      .pd-pin-wrap {
+        max-width: calc(var(--container) + var(--gutter) * 2);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 45% 55%;
+        min-height: 100vh;
+      }
+      @media (max-width: 860px) {
+        .pd-pin-wrap {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+      }
+      /* sticky image column */
+      .pd-pin-image {
+        position: sticky;
+        top: var(--hh);
+        height: calc(100vh - var(--hh));
+        overflow: hidden;
+      }
+      @media (max-width: 860px) {
+        .pd-pin-image {
+          position: relative;
+          height: 55vw;
+          min-height: 260px;
+        }
+      }
+      .pd-pin-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .pd-pin-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(35, 31, 32, 0.25) 0%,
+          transparent 60%
+        );
+      }
+      /* scrolling content column */
+      .pd-pin-content {
+        padding: var(--sp7) var(--sp6) var(--sp7) var(--sp6);
+      }
+      @media (max-width: 860px) {
+        .pd-pin-content {
+          padding: var(--sp5) var(--gutter);
+        }
+      }
+      .pd-pin-block {
+        padding: var(--sp6) 0;
+        border-bottom: 1px solid var(--n-100);
+        position: relative;
+      }
+      .pd-pin-block:last-child {
+        border-bottom: none;
+      }
+      .pd-pin-block-num {
+        font-family: var(--font-data);
+        font-size: 5rem;
+        font-weight: 700;
+        color: var(--n-100);
+        line-height: 1;
+        position: absolute;
+        top: var(--sp4);
+        right: 0;
+        letter-spacing: -0.04em;
+        user-select: none;
+        z-index: 0;
+      }
+      .pd-pin-block-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp3);
+        position: relative;
+        z-index: 1;
+      }
+      .pd-pin-block-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        font-weight: 700;
+        color: var(--n-950);
+        letter-spacing: -0.02em;
+        margin-bottom: var(--sp4);
+        line-height: 1.15;
+        position: relative;
+        z-index: 1;
+      }
+      .pd-pin-block-text {
+        font-size: var(--text-sm);
+        color: var(--n-600);
+        line-height: 1.8;
+        margin-bottom: var(--sp4);
+      }
+      .pd-feature-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp3);
+      }
+      .pd-feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--sp3);
+        font-size: var(--text-sm);
+        color: var(--n-700);
+      }
+      .pd-feature-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--n-50);
+        border: 1px solid var(--n-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--accent-fill);
+      }
+      .pd-feature-text strong {
+        display: block;
+        font-weight: 600;
+        color: var(--n-950);
+        margin-bottom: 2px;
+      }
+      /* Payment plan table */
+      .pd-payment-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--text-sm);
+      }
+      .pd-payment-table th {
+        text-align: left;
+        padding: var(--sp2) var(--sp3);
+        background: var(--n-50);
+        font-weight: 600;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--n-500);
+        border-bottom: 1px solid var(--n-100);
+      }
+      .pd-payment-table td {
+        padding: var(--sp3);
+        border-bottom: 1px solid var(--n-100);
+        color: var(--n-700);
+        vertical-align: top;
+      }
+      .pd-payment-table td.num {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        color: var(--n-950);
+      }
+      .pd-payment-table tr:last-child td {
+        border-bottom: none;
+        background: rgba(211, 2, 1, 0.04);
+      }
+      .pd-payment-table tr:last-child td.num {
+        color: var(--accent-fill);
+      }
+
+      /* ══════════════════════════════════════════════════
+       VIDEO SECTION
+    ══════════════════════════════════════════════════ */
+      .pd-video {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--n-950);
+      }
+      /* Animated poster — Ken Burns slow zoom until video loads */
+      .pd-video-poster {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=85")
+          center/cover no-repeat;
+        animation: kenburns 18s ease-in-out infinite alternate;
+        transition: opacity 0.8s ease;
+      }
+      .pd-video-poster.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      @keyframes kenburns {
+        0% {
+          transform: scale(1) translateX(0) translateY(0);
+        }
+        50% {
+          transform: scale(1.08) translateX(-1%) translateY(-1%);
+        }
+        100% {
+          transform: scale(1.14) translateX(1.5%) translateY(1%);
+        }
+      }
+      .pd-video-el {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      .pd-video-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(35, 31, 32, 0.35) 0%,
+          rgba(35, 31, 32, 0.6) 50%,
+          rgba(35, 31, 32, 0.5) 100%
+        );
+      }
+      .pd-video-body {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: var(--sp7) var(--gutter);
+        max-width: 780px;
+        margin: 0 auto;
+      }
+      .pd-video-eyebrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp2);
+        margin-bottom: var(--sp4);
+      }
+      .pd-video-heading {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 4rem);
+        font-weight: 700;
+        color: var(--n-0);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin-bottom: var(--sp4);
+      }
+      .pd-video-sub {
+        font-size: var(--text-base);
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.7;
+        margin-bottom: var(--sp5);
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* ══════════════════════════════════════════════════
+       SHARED SECTION HEADER
+    ══════════════════════════════════════════════════ */
+      .sec-header {
+        margin-bottom: var(--sp6);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--sp4);
+        flex-wrap: wrap;
+      }
+      .sec-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 700;
+        color: var(--n-950);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .sec-title--light {
+        color: var(--n-0);
+      }
+      .sec-sub {
+        font-size: var(--text-sm);
+        color: var(--n-500);
+        max-width: 400px;
+        line-height: 1.7;
+        margin-top: var(--sp2);
+      }
+
+      /* ══════════════════════════════════════════════════
+       AMENITIES
+    ══════════════════════════════════════════════════ */
+      .pd-amenities {
+        background: var(--n-50);
+        padding: var(--sp7) 0;
+      }
+      .pd-amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--sp4);
+        margin-top: var(--sp5);
+      }
+      @media (max-width: 860px) {
+        .pd-amenities-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 540px) {
+        .pd-amenities-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* outer card: transparent bg, no z-index — ::before (red) lives here */
+      .amenity-card {
+        position: relative;
+        overflow: visible;
+        border-radius: 14px;
+        cursor: default;
+      }
+      /* rotated red card revealed on hover */
+      .amenity-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        background: var(--accent-fill);
+        transform: rotate(0deg);
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .amenity-card:hover {
+        z-index: 10;
+      }
+      .amenity-card:hover::before {
+        transform: rotate(5deg);
+      }
+      /* inner dark card sits above ::before via z-index:1 */
+      .amenity-card-inner {
+        position: relative;
+        z-index: 1;
+        background: var(--n-950);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: var(--sp3);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--sp3);
+        transition:
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.35s ease;
+      }
+      .amenity-card:hover .amenity-card-inner {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.26);
+      }
+      .amenity-icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--n-50);
+        border: 1px solid var(--n-200);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--n-950);
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
+      }
+      .amenity-card:hover .amenity-icon {
+        background: var(--n-0);
+        border-color: var(--n-300);
+        color: var(--accent-fill);
+      }
+      .amenity-label {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--n-0);
+        letter-spacing: 0.01em;
+        line-height: 1.3;
+      }
+
+      /* ══════════════════════════════════════════════════
+       MASTER PLAN
+    ══════════════════════════════════════════════════ */
+      .pd-masterplan {
+        background: var(--n-50);
+        padding: var(--sp7) 0;
+        padding-top: 0;
+      }
+      .pd-masterplan-inner {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: var(--sp7);
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .pd-masterplan-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pd-masterplan-img-wrap {
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+        cursor: none;
+      }
+      .pd-masterplan-img-wrap img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s var(--ease-expo);
+      }
+      .pd-masterplan-img-wrap:hover img {
+        transform: scale(1.03);
+      }
+      .pd-masterplan-zoom {
+        position: absolute;
+        bottom: var(--sp3);
+        right: var(--sp3);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(35, 31, 32, 0.7);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui);
+      }
+      .pd-masterplan-zoom:hover {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      /* Lightbox */
+      .pd-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        background: rgba(35, 31, 32, 0.96);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.35s,
+          visibility 0s 0.35s;
+      }
+      .pd-lightbox.open {
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 0.35s,
+          visibility 0s 0s;
+      }
+      .pd-lightbox img {
+        max-width: 90vw;
+        max-height: 88vh;
+        object-fit: contain;
+        border-radius: 4px;
+      }
+      .pd-lightbox-close {
+        position: absolute;
+        top: var(--sp4);
+        right: var(--sp5);
+        font-size: 1.6rem;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: none;
+        padding: var(--sp2);
+        transition: color var(--dur-ui);
+        line-height: 1;
+      }
+      .pd-lightbox-close:hover {
+        color: var(--n-0);
+      }
+
+      /* ══════════════════════════════════════════════════
+       LOCATION MAP
+    ══════════════════════════════════════════════════ */
+      .pd-location {
+        background: var(--n-50);
+      }
+      .pd-map-wrap {
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--n-100);
+        margin-top: var(--sp5);
+      }
+      .pd-map-wrap iframe {
+        display: block;
+        width: 100%;
+        height: 460px;
+        border: none;
+      }
+
+      /* ══════════════════════════════════════════════════
+       SIMILAR PROPERTIES
+    ══════════════════════════════════════════════════ */
+      .pd-similar {
+        background: var(--n-50);
+        padding: var(--sp7) 0;
+      }
+      .pd-similar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp4);
+        margin-top: var(--sp5);
+      }
+      @media (max-width: 860px) {
+        .pd-similar-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 540px) {
+        .pd-similar-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* prop-card — identical to properties.html */
+      .prop-card {
+        background: var(--n-0);
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--n-100);
+        transition:
+          transform var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo);
+        cursor: none;
+      }
+      .prop-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(35, 31, 32, 0.1);
+      }
+      .prop-card-photo-wrap {
+        position: relative;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+      }
+      .prop-card-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s var(--ease-expo);
+        display: block;
+      }
+      .prop-card:hover .prop-card-photo {
+        transform: scale(1.04);
+      }
+      .prop-card-shear {
+        position: absolute;
+        bottom: -1px;
+        left: -1px;
+        right: -1px;
+        height: 50px;
+        background: var(--n-0);
+        clip-path: polygon(
+          0% 100%,
+          100% 100%,
+          100% 0%,
+          calc(48px * 0.81) 0%,
+          0% 100%
+        );
+        pointer-events: none;
+        z-index: 2;
+        transform: translateZ(0);
+        will-change: transform;
+      }
+      .prop-card-photo-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 45%,
+          rgba(35, 31, 32, 0.55) 100%
+        );
+        pointer-events: none;
+      }
+      .prop-card-badges {
+        position: absolute;
+        top: var(--sp3);
+        left: var(--sp3);
+        right: var(--sp3);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 3;
+      }
+      .prop-type-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: rgba(35, 31, 32, 0.7);
+        backdrop-filter: blur(8px);
+        color: var(--n-0);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .prop-save-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(35, 31, 32, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui);
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .prop-save-btn:hover,
+      .prop-save-btn.saved {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+        color: var(--n-0);
+      }
+      .prop-card-body {
+        padding: var(--sp3) var(--sp4) var(--sp4);
+        padding-top: 0;
+      }
+      .prop-project {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--n-400);
+        margin-bottom: 4px;
+        font-family: var(--font-display);
+      }
+      .prop-name {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--n-950);
+        margin-bottom: var(--sp2);
+        line-height: 1.3;
+      }
+      .prop-location {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: var(--text-sm);
+        color: var(--n-500);
+      }
+      .prop-location svg {
+        flex-shrink: 0;
+        color: var(--n-400);
+      }
+      .prop-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp2);
+        margin-bottom: var(--sp3);
+      }
+      .prop-price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--n-950);
+        line-height: 1;
+      }
+      .prop-currency {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-500);
+        font-family: var(--font-body);
+      }
+      .prop-chips {
+        display: flex;
+        align-items: center;
+        gap: var(--sp2);
+        flex-wrap: wrap;
+        margin-bottom: var(--sp3);
+      }
+      .prop-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: var(--text-xs);
+        font-weight: 500;
+        background: var(--n-50);
+        color: var(--n-700);
+        border: 1px solid var(--n-100);
+      }
+      .prop-chip svg {
+        color: var(--n-400);
+      }
+      .prop-area-val {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+      }
+      .prop-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: var(--sp3);
+        border-top: 1px solid var(--n-100);
+      }
+      .prop-cta {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--accent-fill);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.01em;
+        transition: gap var(--dur-ui) var(--ease-expo);
+      }
+      .prop-card:hover .prop-cta {
+        gap: 8px;
+      }
+
+      /* ══════════════════════════════════════════════════
+       INQUIRY / CTA FORM
+    ══════════════════════════════════════════════════ */
+      .pd-inquiry {
+        background: var(--n-950);
+        padding: var(--sp7) 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .pd-inquiry::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -100px;
+        width: 480px;
+        height: 480px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(211, 2, 1, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .pd-inquiry-inner {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: var(--sp7);
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .pd-inquiry-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pd-inquiry-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
+        color: var(--n-0);
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+        margin-bottom: var(--sp4);
+      }
+      .pd-inquiry-sub {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.45);
+        line-height: 1.75;
+        margin-bottom: var(--sp6);
+      }
+      .pd-inquiry-contacts {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp4);
+        margin-bottom: var(--sp6);
+      }
+      .pd-inq-contact {
+        display: flex;
+        align-items: center;
+        gap: var(--sp3);
+      }
+      .pd-inq-contact-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--sig-400);
+        flex-shrink: 0;
+      }
+      .pd-inq-contact-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 3px;
+      }
+      .pd-inq-contact-val {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--n-0);
+      }
+      .pd-agent-card {
+        display: flex;
+        align-items: center;
+        gap: var(--sp4);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        padding: var(--sp4);
+      }
+      .pd-agent-avatar {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        flex-shrink: 0;
+      }
+      .pd-agent-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .pd-agent-title {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 3px;
+      }
+      .pd-agent-name {
+        font-family: var(--font-display);
+        font-size: var(--text-base);
+        font-weight: 700;
+        color: var(--n-0);
+      }
+      .pd-agent-role {
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 2px;
+      }
+      /* Form panel */
+      .pd-form {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        padding: var(--sp6);
+      }
+      .pd-form-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--n-0);
+        margin-bottom: var(--sp2);
+      }
+      .pd-form-sub {
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.35);
+        margin-bottom: var(--sp5);
+      }
+      .pd-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp3);
+      }
+      @media (max-width: 540px) {
+        .pd-form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pd-form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .pd-form-field.full {
+        grid-column: 1/-1;
+      }
+      .pd-form-field label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .pd-form-field input,
+      .pd-form-field select,
+      .pd-form-field textarea {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 12px 16px;
+        color: var(--n-0);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        outline: none;
+        transition: all var(--dur-ui);
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .pd-form-field input::placeholder,
+      .pd-form-field textarea::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .pd-form-field input:focus,
+      .pd-form-field select:focus,
+      .pd-form-field textarea:focus {
+        border-color: rgba(211, 2, 1, 0.5);
+        background: rgba(211, 2, 1, 0.04);
+        box-shadow: 0 0 0 3px rgba(211, 2, 1, 0.1);
+      }
+      .pd-form-field select option {
+        background: var(--n-950);
+        color: var(--n-0);
+      }
+      .pd-form-field textarea {
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.6;
+      }
+      .pd-form-footer {
+        margin-top: var(--sp5);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp3);
+        flex-wrap: wrap;
+      }
+      .pd-form-privacy {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.2);
+        line-height: 1.5;
+        max-width: 200px;
+      }
+      .btn-submit {
+        background: var(--accent-fill);
+        color: var(--n-0);
+        padding: 14px 36px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp2);
+      }
+      .btn-submit:hover {
+        transform: translateY(-2px);
+      }
+      .btn-submit svg {
+        transition: transform var(--dur-ui) var(--ease-expo);
+      }
+      .btn-submit:hover svg {
+        transform: translateX(4px);
+      }
+      .pd-form-success {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp4);
+        padding: var(--sp7) var(--sp5);
+        text-align: center;
+      }
+      .pd-form-success.show {
+        display: flex;
+      }
+      .pd-form-fields.hide {
+        display: none;
+      }
+      .pd-form-success-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(22, 163, 74, 0.12);
+        border: 1px solid rgba(22, 163, 74, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #16a34a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="c-dot" aria-hidden="true"></div>
+    <div id="c-ring" aria-hidden="true"></div>
+
+    <!-- ── MOBILE NAV ── -->
+    <nav class="mob" id="mob" aria-label="Mobile navigation" aria-hidden="true">
+      <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
+      <a href="index.html">Home</a>
+      <a href="properties.html" class="active">Properties</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════ -->
+    <header class="site-header" id="siteHdr">
+      <div class="hdr-inner">
+        <a href="index.html" class="logo" aria-label="Akar Town">
+          <svg
+            width="300"
+            viewBox="0 0 2750 380"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+              fill="white"
+            />
+            <path
+              d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+              fill="#FF0000"
+            />
+            <path
+              d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+              fill="white"
+            />
+            <path
+              d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
+              fill="white"
+            />
+            <path
+              d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+              fill="white"
+            />
+            <path
+              d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
+              fill="white"
+            />
+            <path
+              d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
+              fill="white"
+            />
+            <path
+              d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+              fill="white"
+            />
+            <path
+              d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+              fill="white"
+            />
+            <path
+              d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+              fill="white"
+            />
+          </svg>
+        </a>
+        <nav class="main-nav" aria-label="Primary navigation">
+          <a href="index.html">Home</a>
+          <a href="properties.html" class="active">Properties</a>
+          <a href="projects.html">Projects</a>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="hdr-right">
+          <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
+          <a href="properties.html" class="btn btn-accent">Find Property</a>
+          <button
+            class="hamburger"
+            id="hbgBtn"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mob"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sticky unit info bar (appears after hero scrolls away) -->
+    <div class="pd-sticky-bar" id="pdStickyBar" aria-hidden="true">
+      <div class="pd-sticky-bar-inner">
+        <div class="pd-sticky-left">
+          <span class="pd-sticky-name">Garden View Apartment</span>
+          <div class="pd-sticky-meta">
+            <span>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M8 12h8M12 8v8" />
+              </svg>
+              <span class="pd-sticky-val">148</span> m²
+            </span>
+            <span>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" />
+                <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
+                <line x1="2" y1="14" x2="22" y2="14" />
+              </svg>
+              <span class="pd-sticky-val">2</span> Beds
+            </span>
+            <span>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+              </svg>
+              <span class="pd-sticky-val">2</span> Baths
+            </span>
+            <span>Azha Residence · New Cairo</span>
+          </div>
+        </div>
+        <div class="pd-sticky-right">
+          <div class="pd-sticky-price">
+            <span class="pd-sticky-price-val">4,750,000</span>
+            <span class="pd-sticky-price-cur">EGP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- ══════════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-hero" aria-label="Property Hero">
+        <div class="pd-hero-bg" aria-hidden="true">
+          <div class="swiper hero-swiper" id="heroSwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=85"
+                  alt="Living Room"
+                />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=85"
+                  alt="Master Bedroom"
+                />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&q=85"
+                  alt="Second Bedroom"
+                />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1600&q=85"
+                  alt="Kitchen"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="pd-hero-scrim"></div>
+        </div>
+        <div class="pd-hero-body wrap">
+          <div class="pd-hero-left">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+              <a href="index.html">Home</a>
+              <span class="breadcrumb-sep" aria-hidden="true"></span>
+              <a href="properties.html">Properties</a>
+              <span class="breadcrumb-sep" aria-hidden="true"></span>
+              <span class="breadcrumb-current" aria-current="page"
+                >Garden View Apartment</span
+              >
+            </nav>
+            <div class="eyebrow-wrap" aria-hidden="true">
+              <span class="eyebrow-slab"></span>
+              <span class="eyebrow-text">Azha Residence · New Cairo</span>
+            </div>
+            <h1 class="pd-hero-title">
+              Garden <span class="mark">View</span> Apartment
+            </h1>
+            <div class="pd-hero-stats" role="list" aria-label="Property stats">
+              <div class="pd-hero-stat" role="listitem">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M8 12h8M12 8v8" />
+                </svg>
+                <span class="pd-hero-stat-val num">148</span
+                ><span class="pd-hero-stat-lbl">m²</span>
+              </div>
+              <div class="pd-hero-stat" role="listitem">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" />
+                  <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
+                  <line x1="2" y1="14" x2="22" y2="14" />
+                </svg>
+                <span class="pd-hero-stat-val num">2</span
+                ><span class="pd-hero-stat-lbl">Beds</span>
+              </div>
+              <div class="pd-hero-stat" role="listitem">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                  <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+                </svg>
+                <span class="pd-hero-stat-val num">2</span
+                ><span class="pd-hero-stat-lbl">Baths</span>
+              </div>
+              <div class="pd-hero-stat" role="listitem">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <polyline points="16 3 21 3 21 8" />
+                  <line x1="4" y1="20" x2="21" y2="3" />
+                  <polyline points="21 16 21 21 16 21" />
+                  <line x1="15" y1="15" x2="21" y2="21" />
+                </svg>
+                <span class="pd-hero-stat-val">Floor</span
+                ><span class="pd-hero-stat-val num">5</span>
+              </div>
+              <div class="pd-hero-stat" role="listitem">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                </svg>
+                <span class="pd-hero-stat-val">Garden View</span>
+              </div>
+            </div>
+            <div class="pd-hero-price-row">
+              <span class="pd-price num">4,750,000</span>
+              <span class="pd-currency">EGP</span>
+            </div>
+            <div class="pd-hero-actions">
+              <a href="#inquiry" class="btn btn-accent">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.69 19 19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.59 1.21h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+                Request Viewing
+              </a>
+              <button class="btn btn-ghost" id="saveBtn" aria-pressed="false">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                Save Property
+              </button>
+            </div>
+          </div>
+          <!-- Thumbnail stack -->
+          <div class="pd-thumb-stack" aria-label="Property photos">
+            <button class="pd-thumb active" aria-label="Photo 1">
+              <img
+                src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=240&q=80"
+                alt="Living room"
+                loading="lazy"
+              />
+            </button>
+            <button class="pd-thumb" aria-label="Photo 2">
+              <img
+                src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=240&q=80"
+                alt="Master Bedroom"
+                loading="lazy"
+              />
+            </button>
+            <button class="pd-thumb" aria-label="Photo 3">
+              <img
+                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=240&q=80"
+                alt="Second Bedroom"
+                loading="lazy"
+              />
+            </button>
+            <button class="pd-thumb" aria-label="Photo 4">
+              <img
+                src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=240&q=80"
+                alt="Kitchen"
+                loading="lazy"
+              />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       GALLERY
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-gallery" aria-label="Property Gallery">
+        <div class="pd-gallery-inner">
+          <!-- Left: meta -->
+          <div class="pd-gallery-meta">
+            <div class="eyebrow-wrap">
+              <span class="eyebrow-slab" style="background: var(--n-300)"></span
+              ><span class="eyebrow-text eyebrow-text--dark">Unit Types</span>
+            </div>
+            <h2 class="pd-gallery-heading">Every Angle,<br />Every Detail</h2>
+            <p class="pd-gallery-sub">
+              A curated walk through the spaces — from the sun-drenched balcony
+              to the marble-finished kitchen.
+            </p>
+            <div
+              class="pd-gallery-nav"
+              role="group"
+              aria-label="Gallery navigation"
+            >
+              <button
+                class="gal-nav-btn"
+                id="galPrev"
+                aria-label="Previous photo"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </button>
+              <button class="gal-nav-btn" id="galNext" aria-label="Next photo">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
+            <div class="pd-gallery-fraction">
+              <span id="galCurrent" class="num">01</span> /
+              <span class="num">06</span>
+            </div>
+          </div>
+
+          <!-- Right: Swiper deck -->
+          <div class="gal-swiper-wrap">
+            <div class="swiper gallery-swiper" id="gallerySwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85"
+                    alt="Living Room"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">01 / 06</div>
+                    <div class="gal-slide-label">Living Room</div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=85"
+                    alt="Master Bedroom"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">02 / 06</div>
+                    <div class="gal-slide-label">Master Bedroom</div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=700&q=85"
+                    alt="Kitchen"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">03 / 06</div>
+                    <div class="gal-slide-label">Open Kitchen</div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=85"
+                    alt="Second Bedroom"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">04 / 06</div>
+                    <div class="gal-slide-label">Second Bedroom</div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=85"
+                    alt="Balcony"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">05 / 06</div>
+                    <div class="gal-slide-label">Garden Balcony</div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=85"
+                    alt="Bathroom"
+                    loading="lazy"
+                  />
+                  <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <div class="gal-slide-info">
+                    <div class="gal-slide-num num">06 / 06</div>
+                    <div class="gal-slide-label">Master Bathroom</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       SPECS BAR
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-specs" aria-label="Property specifications">
+        <div class="pd-specs-grid">
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Unit Type</div>
+            <div class="pd-spec-val">2-Bed Apartment</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Total Area</div>
+            <div class="pd-spec-val num">148 m²</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Floor</div>
+            <div class="pd-spec-val num">5</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">View</div>
+            <div class="pd-spec-val">Garden &amp; Pool</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Project</div>
+            <div class="pd-spec-val">Azha Residence</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Location</div>
+            <div class="pd-spec-val">New Cairo</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Finishing</div>
+            <div class="pd-spec-val">Luxury</div>
+          </div>
+          <div class="pd-spec-item">
+            <div class="pd-spec-label">Delivery</div>
+            <div class="pd-spec-val pd-spec-val--accent">Ready Now</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       PINNED SPLIT — About
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-about" aria-label="About the property">
+        <div class="pd-pin-wrap">
+          <!-- Sticky image -->
+          <div class="pd-pin-image" id="pdPinImage" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85"
+              alt=""
+            />
+            <div class="pd-pin-image-overlay"></div>
+          </div>
+
+          <!-- Scrolling content blocks -->
+          <div class="pd-pin-content">
+            <!-- Block 01: About -->
+            <div class="pd-pin-block">
+              <span class="pd-pin-block-num num" aria-hidden="true">01</span>
+              <div class="pd-pin-block-eyebrow">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--n-300)"
+                ></span>
+                <span class="eyebrow-text eyebrow-text--dark"
+                  >About the Unit</span
+                >
+              </div>
+              <h2 class="pd-pin-block-title">
+                Refined living in the heart of New Cairo
+              </h2>
+              <p class="pd-pin-block-text">
+                This 148 m² garden-view apartment sits on the 5th floor of Azha
+                Residence — one of New Cairo's most distinguished compounds.
+                Designed for those who value both space and serenity, the unit
+                faces an expansive landscaped garden and resort-style pool.
+              </p>
+              <p class="pd-pin-block-text">
+                The open-plan layout connects the living and dining zones
+                seamlessly, while floor-to-ceiling windows flood every room with
+                natural light. Both bedrooms are en-suite, with the master
+                bedroom featuring a walk-in closet and private balcony access.
+              </p>
+              <p class="pd-pin-block-text">
+                Delivered fully finished with Italian marble flooring, custom
+                built-in wardrobes, and a fully fitted kitchen — ready to move
+                into immediately.
+              </p>
+            </div>
+
+            <!-- Block 02: Features -->
+            <div class="pd-pin-block">
+              <span class="pd-pin-block-num num" aria-hidden="true">02</span>
+              <div class="pd-pin-block-eyebrow">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--n-300)"
+                ></span>
+                <span class="eyebrow-text eyebrow-text--dark"
+                  >Interior Highlights</span
+                >
+              </div>
+              <h2 class="pd-pin-block-title">
+                Crafted with precision, finished with purpose
+              </h2>
+              <ul class="pd-feature-list">
+                <li class="pd-feature-item">
+                  <span class="pd-feature-icon"
+                    ><svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M9 3v18" /></svg
+                  ></span>
+                  <span class="pd-feature-text"
+                    ><strong>Open-Plan Living &amp; Dining</strong>Seamless flow
+                    between spaces, ideal for entertaining and everyday
+                    comfort.</span
+                  >
+                </li>
+                <li class="pd-feature-item">
+                  <span class="pd-feature-icon"
+                    ><svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="2" y="3" width="20" height="14" rx="2" />
+                      <line x1="8" y1="21" x2="16" y2="21" />
+                      <line x1="12" y1="17" x2="12" y2="21" /></svg
+                  ></span>
+                  <span class="pd-feature-text"
+                    ><strong>Smart Home System</strong>Pre-wired for full
+                    automation — lighting, climate, and security from your
+                    phone.</span
+                  >
+                </li>
+                <li class="pd-feature-item">
+                  <span class="pd-feature-icon"
+                    ><svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                      /></svg
+                  ></span>
+                  <span class="pd-feature-text"
+                    ><strong>Italian Marble Flooring</strong>Botticino marble
+                    throughout all living areas and master bedroom.</span
+                  >
+                </li>
+                <li class="pd-feature-item">
+                  <span class="pd-feature-icon"
+                    ><svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <line x1="12" y1="1" x2="12" y2="3" />
+                      <line x1="12" y1="21" x2="12" y2="23" />
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                      <line x1="1" y1="12" x2="3" y2="12" />
+                      <line x1="21" y1="12" x2="23" y2="12" /></svg
+                  ></span>
+                  <span class="pd-feature-text"
+                    ><strong>Floor-to-Ceiling Windows</strong>Double-glazed,
+                    UV-filtered — maximum garden views, minimal heat gain.</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Block 03: Payment Plan -->
+            <div class="pd-pin-block">
+              <span class="pd-pin-block-num num" aria-hidden="true">03</span>
+              <div class="pd-pin-block-eyebrow">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--n-300)"
+                ></span>
+                <span class="eyebrow-text eyebrow-text--dark"
+                  >Payment Plan</span
+                >
+              </div>
+              <h2 class="pd-pin-block-title">
+                Flexible terms to fit your timeline
+              </h2>
+              <p class="pd-pin-block-text">
+                Total price:
+                <strong style="font-family: var(--font-data)"
+                  >4,750,000 EGP</strong
+                >
+                — structured across easy installments.
+              </p>
+              <table class="pd-payment-table" aria-label="Payment schedule">
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>%</th>
+                    <th>Amount (EGP)</th>
+                    <th>Due</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Down Payment</td>
+                    <td class="num">10%</td>
+                    <td class="num">475,000</td>
+                    <td>On Contract</td>
+                  </tr>
+                  <tr>
+                    <td>2nd Installment</td>
+                    <td class="num">10%</td>
+                    <td class="num">475,000</td>
+                    <td>3 Months</td>
+                  </tr>
+                  <tr>
+                    <td>3rd Installment</td>
+                    <td class="num">10%</td>
+                    <td class="num">475,000</td>
+                    <td>6 Months</td>
+                  </tr>
+                  <tr>
+                    <td>4th Installment</td>
+                    <td class="num">10%</td>
+                    <td class="num">475,000</td>
+                    <td>12 Months</td>
+                  </tr>
+                  <tr>
+                    <td>Remaining Balance</td>
+                    <td class="num">60%</td>
+                    <td class="num">2,850,000</td>
+                    <td>On Delivery</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="margin-top: var(--sp4)">
+                <a href="#inquiry" class="btn-outline-dark">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.69 19 19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.59 1.21h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+                    />
+                  </svg>
+                  Discuss Payment Options
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       VIDEO
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-video" aria-label="Property video">
+        <div
+          class="pd-video-poster"
+          id="bgVideoPoster"
+          aria-hidden="true"
+        ></div>
+        <video
+          class="pd-video-el"
+          id="bgVideo"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+        >
+          <source src="banner-video.mp4" type="video/mp4" />
+          <!-- Fallback: replace with your own file -->
+          <source src="assets/videos/banner-video.mp4" type="video/mp4" />
+        </video>
+        <div class="pd-video-scrim" aria-hidden="true"></div>
+        <div class="pd-video-body">
+          <div class="pd-video-eyebrow">
+            <span class="eyebrow-slab"></span>
+            <span class="eyebrow-text">Experience Living</span>
+          </div>
+          <h2 class="pd-video-heading" id="pdVideoHeading">
+            Where Every Detail<br />Tells a Story
+          </h2>
+          <p class="pd-video-sub">
+            Step inside and feel the difference — from the hush of double-glazed
+            windows to the warmth of Italian marble underfoot.
+          </p>
+          <a href="#inquiry" class="btn btn-accent">
+            Schedule a Private Tour
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       AMENITIES
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-amenities" aria-label="Unit amenities">
+        <div class="wrap">
+          <div class="sec-header">
+            <div>
+              <div class="eyebrow-wrap">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--accent-fill)"
+                ></span
+                ><span class="eyebrow-text eyebrow-text--dark"
+                  >What's Included</span
+                >
+              </div>
+              <h2 class="sec-title">Unit Amenities</h2>
+              <p class="sec-sub">
+                Every comfort considered — from the walk-in closet to the smart
+                home hub.
+              </p>
+            </div>
+          </div>
+          <div class="pd-amenities-grid">
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9,22 9,12 15,12 15,22" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Private Balcony</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Built-in Wardrobes</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path d="M12 2a10 10 0 0 1 10 10H12V2z" />
+                    <path d="M12 12a10 10 0 0 1-10 10V12h10z" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Central A/C</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Smart Home System</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Open Kitchen</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    />
+                  </svg>
+                </div>
+                <span class="amenity-label">Laundry Room</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                    />
+                  </svg>
+                </div>
+                <span class="amenity-label">Storage Room</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                    <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+                  </svg>
+                </div>
+                <span class="amenity-label">En-Suite Master</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                    />
+                  </svg>
+                </div>
+                <span class="amenity-label">Walk-in Closet</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <line x1="9" y1="3" x2="9" y2="21" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Double-Glazed Windows</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Premium Flooring</span>
+              </div>
+            </div>
+            <div class="amenity-card gs-anim">
+              <div class="amenity-card-inner">
+                <div class="amenity-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <rect x="1" y="3" width="15" height="13" rx="1" />
+                    <path d="M16 8h4l3 5v3h-7V8z" />
+                    <circle cx="5.5" cy="18.5" r="2.5" />
+                    <circle cx="18.5" cy="18.5" r="2.5" />
+                  </svg>
+                </div>
+                <span class="amenity-label">Private Parking</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       MASTER PLAN
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-masterplan" aria-label="Compound master plan">
+        <div class="wrap">
+          <div class="pd-masterplan-inner">
+            <div>
+              <div class="eyebrow-wrap">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--n-300)"
+                ></span
+                ><span class="eyebrow-text eyebrow-text--dark"
+                  >Compound Layout</span
+                >
+              </div>
+              <h2 class="sec-title" style="margin-bottom: var(--sp3)">
+                Master Plan
+              </h2>
+              <p
+                style="
+                  font-size: var(--text-sm);
+                  color: var(--n-600);
+                  line-height: 1.8;
+                  margin-bottom: var(--sp4);
+                "
+              >
+                Azha Residence spans 42 feddan across New Cairo's Fifth
+                Settlement. The master plan positions residential clusters
+                around a central park spine, with amenities distributed for
+                equal walkability from every unit.
+              </p>
+              <ul
+                style="
+                  list-style: none;
+                  display: flex;
+                  flex-direction: column;
+                  gap: var(--sp2);
+                  margin-bottom: var(--sp5);
+                "
+              >
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: var(--sp2);
+                    font-size: var(--text-sm);
+                    color: var(--n-600);
+                  "
+                >
+                  <span
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: var(--accent-fill);
+                      flex-shrink: 0;
+                    "
+                  ></span
+                  >Total area:
+                  <strong style="color: var(--n-950)">42 Feddan</strong>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: var(--sp2);
+                    font-size: var(--text-sm);
+                    color: var(--n-600);
+                  "
+                >
+                  <span
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: var(--accent-fill);
+                      flex-shrink: 0;
+                    "
+                  ></span
+                  >Built-up area:
+                  <strong style="color: var(--n-950)">22%</strong>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: var(--sp2);
+                    font-size: var(--text-sm);
+                    color: var(--n-600);
+                  "
+                >
+                  <span
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: var(--accent-fill);
+                      flex-shrink: 0;
+                    "
+                  ></span
+                  >Green &amp; open space:
+                  <strong style="color: var(--n-950)">78%</strong>
+                </li>
+                <li
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: var(--sp2);
+                    font-size: var(--text-sm);
+                    color: var(--n-600);
+                  "
+                >
+                  <span
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: var(--accent-fill);
+                      flex-shrink: 0;
+                    "
+                  ></span
+                  >Total units:
+                  <strong
+                    style="color: var(--n-950); font-family: var(--font-data)"
+                    >480</strong
+                  >
+                </li>
+              </ul>
+              <button class="btn-outline-dark" id="dlMasterPlan">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download Master Plan
+              </button>
+            </div>
+            <div class="pd-masterplan-img-wrap" id="masterPlanWrap">
+              <img
+                src="assets/images/master-plan.jpg"
+                alt="Azha Residence Master Plan"
+                loading="lazy"
+              />
+              <button
+                class="pd-masterplan-zoom"
+                id="masterPlanZoom"
+                aria-label="View full master plan"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lightbox -->
+      <div
+        class="pd-lightbox"
+        id="pdLightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Master plan full view"
+      >
+        <button class="pd-lightbox-close" id="lightboxClose" aria-label="Close">
+          ✕
+        </button>
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=90"
+          alt="Master Plan Full View"
+        />
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+       LOCATION MAP
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-location" aria-label="Property location">
+        <div class="wrap">
+          <div class="sec-header">
+            <div>
+              <div class="eyebrow-wrap">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--n-300)"
+                ></span
+                ><span class="eyebrow-text eyebrow-text--dark">Find Us</span>
+              </div>
+              <h2 class="sec-title">Location &amp; Connectivity</h2>
+              <p class="sec-sub">
+                Azha Residence sits at the heart of New Cairo's Fifth Settlement
+                — minutes from every major artery.
+              </p>
+            </div>
+          </div>
+          <div class="pd-map-wrap">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=31.34,30.00,31.46,30.08&layer=mapnik&marker=30.04,31.40"
+              title="Azha Residence location map"
+              loading="lazy"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       SIMILAR UNITS
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-similar" aria-label="Similar properties">
+        <div class="wrap">
+          <div class="sec-header">
+            <div>
+              <div class="eyebrow-wrap">
+                <span
+                  class="eyebrow-slab"
+                  style="background: var(--accent-fill)"
+                ></span
+                ><span class="eyebrow-text eyebrow-text--dark"
+                  >More Like This</span
+                >
+              </div>
+              <h2 class="sec-title">Similar Properties</h2>
+              <p class="sec-sub">
+                More properties that match your preferences in New Cairo.
+              </p>
+            </div>
+            <a href="properties.html" class="btn-outline-dark"
+              >View All Properties
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+          <div class="pd-similar-grid">
+            <!-- Card 1 -->
+            <article class="prop-card gs-anim">
+              <div class="prop-card-photo-wrap">
+                <img
+                  class="prop-card-photo"
+                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80"
+                  alt="Park View Apartment — Mivida"
+                  loading="lazy"
+                  width="600"
+                  height="450"
+                />
+                <div class="prop-card-shear" aria-hidden="true"></div>
+                <div class="prop-card-badges" aria-hidden="true">
+                  <span class="prop-type-badge">2 BR</span>
+                  <button
+                    class="prop-save-btn"
+                    aria-label="Save property"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="prop-card-body">
+                <p class="prop-project">Mivida</p>
+                <h3 class="prop-name">Park View Apartment</h3>
+                <p class="prop-location">
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  New Cairo, Fifth Settlement
+                </p>
+                <div class="prop-price-row">
+                  <span class="prop-price num">6,200,000</span>
+                  <span class="prop-currency">EGP</span>
+                </div>
+                <div class="prop-chips">
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M8 12h8M12 8v8" /></svg
+                    ><span class="prop-area-val">165</span> m²</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" />
+                      <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
+                      <line x1="2" y1="14" x2="22" y2="14" />
+                    </svg>
+                    2 Beds</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                      <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+                    </svg>
+                    2 Baths</span
+                  >
+                </div>
+                <div class="prop-card-footer">
+                  <span class="delivery-tag delivery-ready">Ready Now</span>
+                  <a href="property-detail.html" class="prop-cta"
+                    >View Details
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="prop-card gs-anim">
+              <div class="prop-card-photo-wrap">
+                <img
+                  class="prop-card-photo"
+                  src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80"
+                  alt="Penthouse with Terrace — Katameya Heights"
+                  loading="lazy"
+                  width="600"
+                  height="450"
+                />
+                <div class="prop-card-shear" aria-hidden="true"></div>
+                <div class="prop-card-badges" aria-hidden="true">
+                  <span class="prop-type-badge">3 BR</span>
+                  <button
+                    class="prop-save-btn"
+                    aria-label="Save property"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="prop-card-body">
+                <p class="prop-project">Katameya Heights</p>
+                <h3 class="prop-name">Penthouse with Terrace</h3>
+                <p class="prop-location">
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  New Cairo, Katameya
+                </p>
+                <div class="prop-price-row">
+                  <span class="prop-price num">11,500,000</span>
+                  <span class="prop-currency">EGP</span>
+                </div>
+                <div class="prop-chips">
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M8 12h8M12 8v8" /></svg
+                    ><span class="prop-area-val">240</span> m²</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" />
+                      <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
+                      <line x1="2" y1="14" x2="22" y2="14" />
+                    </svg>
+                    3 Beds</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                      <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+                    </svg>
+                    3 Baths</span
+                  >
+                </div>
+                <div class="prop-card-footer">
+                  <span class="delivery-tag delivery-soon">Q2 2027</span>
+                  <a href="property-detail.html" class="prop-cta"
+                    >View Details
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="prop-card gs-anim">
+              <div class="prop-card-photo-wrap">
+                <img
+                  class="prop-card-photo"
+                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80"
+                  alt="Contemporary 1-Bedroom — Zed East"
+                  loading="lazy"
+                  width="600"
+                  height="450"
+                />
+                <div class="prop-card-shear" aria-hidden="true"></div>
+                <div class="prop-card-badges" aria-hidden="true">
+                  <span class="prop-type-badge">1 BR</span>
+                  <button
+                    class="prop-save-btn"
+                    aria-label="Save property"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="prop-card-body">
+                <p class="prop-project">Zed East</p>
+                <h3 class="prop-name">Contemporary 1-Bedroom</h3>
+                <p class="prop-location">
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  New Cairo, 2nd District
+                </p>
+                <div class="prop-price-row">
+                  <span class="prop-price num">3,850,000</span>
+                  <span class="prop-currency">EGP</span>
+                </div>
+                <div class="prop-chips">
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M8 12h8M12 8v8" /></svg
+                    ><span class="prop-area-val">98</span> m²</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 9V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" />
+                      <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
+                      <line x1="2" y1="14" x2="22" y2="14" />
+                    </svg>
+                    1 Bed</span
+                  >
+                  <span class="prop-chip"
+                    ><svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
+                      <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
+                    </svg>
+                    1 Bath</span
+                  >
+                </div>
+                <div class="prop-card-footer">
+                  <span class="delivery-tag delivery-offplan">Off-Plan</span>
+                  <a href="property-detail.html" class="prop-cta"
+                    >View Details
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+       INQUIRY / CTA FORM
+  ══════════════════════════════════════════════════ -->
+      <section class="pd-inquiry" id="inquiry" aria-label="Inquiry form">
+        <div class="wrap">
+          <div class="pd-inquiry-inner">
+            <!-- Left: info + agent -->
+            <div class="pd-inquiry-info">
+              <div class="eyebrow-wrap">
+                <span class="eyebrow-slab"></span
+                ><span class="eyebrow-text">Get in Touch</span>
+              </div>
+              <h2 class="pd-inquiry-title">
+                Interested in this<br /><em class="mark"> Property?</em>
+              </h2>
+              <p class="pd-inquiry-sub">
+                Our dedicated property consultants are ready to guide you
+                through every step — from first viewing to keys in hand. No
+                pressure, just expert advice.
+              </p>
+              <div class="pd-inquiry-contacts">
+                <div class="pd-inq-contact">
+                  <div class="pd-inq-contact-icon">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.9-.9a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="pd-inq-contact-label">Phone</div>
+                    <div class="pd-inq-contact-val">+20 123 456 7890</div>
+                  </div>
+                </div>
+                <div class="pd-inq-contact">
+                  <div class="pd-inq-contact-icon">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="pd-inq-contact-label">Email</div>
+                    <div class="pd-inq-contact-val">hello@akartown.com</div>
+                  </div>
+                </div>
+                <div class="pd-inq-contact">
+                  <div class="pd-inq-contact-icon">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="pd-inq-contact-label">WhatsApp</div>
+                    <div class="pd-inq-contact-val">+20 123 456 7890</div>
+                  </div>
+                </div>
+              </div>
+              <div class="pd-agent-card">
+                <div class="pd-agent-avatar">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80"
+                    alt="Ahmed Hassan"
+                  />
+                </div>
+                <div>
+                  <div class="pd-agent-title">Your Consultant</div>
+                  <div class="pd-agent-name">Ahmed Hassan</div>
+                  <div class="pd-agent-role">
+                    Senior Property Advisor · New Cairo
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: form -->
+            <div class="pd-form" id="inquiryFormWrap">
+              <div class="pd-form-fields" id="pdFormFields">
+                <div class="pd-form-title">Request a Viewing</div>
+                <p class="pd-form-sub">
+                  Fill in your details and we'll confirm your slot within 24
+                  hours.
+                </p>
+                <form class="pd-form-grid" id="pdForm" novalidate>
+                  <div class="pd-form-field">
+                    <label for="inqName">Full Name</label>
+                    <input
+                      type="text"
+                      id="inqName"
+                      name="name"
+                      placeholder="Your full name"
+                      autocomplete="name"
+                    />
+                  </div>
+                  <div class="pd-form-field">
+                    <label for="inqPhone">Phone</label>
+                    <input
+                      type="tel"
+                      id="inqPhone"
+                      name="phone"
+                      placeholder="+20 1xx xxx xxxx"
+                      autocomplete="tel"
+                    />
+                  </div>
+                  <div class="pd-form-field">
+                    <label for="inqEmail">Email Address</label>
+                    <input
+                      type="email"
+                      id="inqEmail"
+                      name="email"
+                      placeholder="you@example.com"
+                      autocomplete="email"
+                    />
+                  </div>
+                  <div class="pd-form-field">
+                    <label for="inqDate">Preferred Viewing Date</label>
+                    <input type="date" id="inqDate" name="date" />
+                  </div>
+                  <div class="pd-form-field full">
+                    <label for="inqMessage">Message (Optional)</label>
+                    <textarea
+                      id="inqMessage"
+                      name="message"
+                      placeholder="Any specific requirements or questions about this unit…"
+                    ></textarea>
+                  </div>
+                  <div class="pd-form-footer full">
+                    <p class="pd-form-privacy">
+                      Your information is kept private and never shared with
+                      third parties.
+                    </p>
+                    <button type="submit" class="btn-submit">
+                      Send Request
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="pd-form-success" id="pdFormSuccess">
+                <div class="pd-form-success-icon">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div
+                  style="
+                    color: var(--n-0);
+                    font-family: var(--font-display);
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                  "
+                >
+                  Request Sent!
+                </div>
+                <p
+                  style="
+                    color: rgba(255, 255, 255, 0.45);
+                    font-size: var(--text-sm);
+                    line-height: 1.75;
+                    max-width: 300px;
+                    margin: 0 auto;
+                  "
+                >
+                  Thank you — we'll confirm your viewing within 24 hours. Our
+                  consultant will reach out shortly.
+                </p>
+                <button
+                  id="formResetBtn"
+                  style="
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    color: rgba(255, 255, 255, 0.7);
+                    padding: 10px 24px;
+                    border-radius: 100px;
+                    font-family: var(--font-body);
+                    font-size: var(--text-sm);
+                    cursor: none;
+                    transition: all var(--dur-ui);
+                  "
+                >
+                  Submit Another
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="Akar Town">
+            <svg
+              width="180"
+              viewBox="0 0 2750 380"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+                fill="white"
+              />
+              <path
+                d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+                fill="#FF0000"
+              />
+              <path
+                d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+                fill="white"
+              />
+              <path
+                d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+                fill="white"
+              />
+              <path
+                d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+                fill="white"
+              />
+              <path
+                d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+                fill="white"
+              />
+              <path
+                d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+                fill="white"
+              />
+            </svg>
+          </a>
+          <p class="footer-tagline">
+            Egypt's most trusted real estate partner — connecting families with
+            premium developments across the country's finest addresses.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="footer-social-link" aria-label="Facebook"
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                /></svg
+            ></a>
+            <a href="#" class="footer-social-link" aria-label="Instagram"
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                  cx="17.5"
+                  cy="6.5"
+                  r="1"
+                  fill="currentColor"
+                  stroke="none"
+                /></svg
+            ></a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn"
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"
+                />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" /></svg
+            ></a>
+            <a href="#" class="footer-social-link" aria-label="WhatsApp"
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
+                /></svg
+            ></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Navigate</span>
+          </div>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Areas</span>
+          </div>
+          <ul class="footer-nav">
+            <li><a href="properties.html?area=new-cairo">New Cairo</a></li>
+            <li><a href="properties.html?area=new-capital">New Capital</a></li>
+            <li>
+              <a href="properties.html?area=sheikh-zayed">Sheikh Zayed</a>
+            </li>
+            <li><a href="properties.html?area=north-coast">North Coast</a></li>
+            <li><a href="properties.html?area=ain-sokhna">Ain Sokhna</a></li>
+            <li>
+              <a href="properties.html?area=6th-october">6th of October</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span>Contact</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.9-.9a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+            <a href="tel:+201234567890">+20 123 456 7890</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <a href="mailto:hello@akartown.com">hello@akartown.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          © 2026 <strong>Akar Town</strong>. All rights reserved.
+        </p>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="#">Privacy Policy</a><a href="#">Terms of Use</a
+          ><a href="#">Cookie Settings</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+      /* ── Header scroll ── */
+      (function () {
+        const hdr = document.getElementById("siteHdr");
+        window.addEventListener(
+          "scroll",
+          () => hdr.classList.toggle("scrolled", scrollY > 20),
+          { passive: true },
+        );
+        hdr.classList.toggle("scrolled", scrollY > 20);
+      })();
+
+      /* ── Sticky unit bar ── */
+      (function () {
+        const bar = document.getElementById("pdStickyBar");
+        const hero = document.querySelector(".pd-hero");
+        if (!bar || !hero) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            const show = !entry.isIntersecting;
+            bar.classList.toggle("visible", show);
+            bar.setAttribute("aria-hidden", String(!show));
+          },
+          { threshold: 0, rootMargin: "-72px 0px 0px 0px" },
+        );
+        observer.observe(hero);
+      })();
+
+      /* ── Hamburger ── */
+      (function () {
+        const btn = document.getElementById("hbgBtn"),
+          mob = document.getElementById("mob"),
+          x = document.getElementById("mobX");
+        const open = () => {
+          mob.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+          mob.setAttribute("aria-hidden", "false");
+        };
+        const close = () => {
+          mob.classList.remove("open");
+          btn.setAttribute("aria-expanded", "false");
+          mob.setAttribute("aria-hidden", "true");
+        };
+        btn.addEventListener("click", open);
+        x.addEventListener("click", close);
+        mob
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", close));
+      })();
+
+      /* ── Hero Swiper ── */
+      (function () {
+        const thumbs = document.querySelectorAll(".pd-thumb");
+        const heroSwiper = new Swiper("#heroSwiper", {
+          loop: true,
+          effect: "fade",
+          fadeEffect: { crossFade: true },
+          speed: 900,
+          autoplay: { delay: 4500, disableOnInteraction: false },
+          on: {
+            slideChange: function () {
+              const idx = this.realIndex;
+              thumbs.forEach((t, i) => t.classList.toggle("active", i === idx));
+            },
+          },
+        });
+        thumbs.forEach((t, i) => {
+          t.addEventListener("click", () => heroSwiper.slideToLoop(i));
+        });
+      })();
+
+      /* ── Save button ── */
+      document.getElementById("saveBtn").addEventListener("click", function () {
+        const saved = this.getAttribute("aria-pressed") === "true";
+        this.setAttribute("aria-pressed", !saved);
+        this.innerHTML = saved
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Save Property'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Saved';
+      });
+
+      /* ── GSAP ScrollTrigger ── */
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* Pin blocks stagger in */
+      gsap.utils.toArray(".pd-pin-block").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: calc(-26 * 0.81), y: 26 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
+
+      /* Video heading split slide */
+      gsap.fromTo(
+        "#pdVideoHeading",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-video", start: "top 70%" },
+        },
+      );
+
+      /* Generic section entry — any .gs-anim element */
+      gsap.utils.toArray(".gs-anim").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: -21, y: 26 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.75,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
+
+      /* ── Download Master Plan ── */
+      (function () {
+        const btn = document.getElementById("dlMasterPlan");
+        if (!btn) return;
+        const imgUrl =
+          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=90";
+        btn.addEventListener("click", () => {
+          fetch(imgUrl)
+            .then((r) => r.blob())
+            .then((blob) => {
+              const a = document.createElement("a");
+              a.href = URL.createObjectURL(blob);
+              a.download = "azha-residence-masterplan.jpg";
+              a.click();
+              URL.revokeObjectURL(a.href);
+            })
+            .catch(() => window.open(imgUrl, "_blank"));
+        });
+      })();
+
+      /* ── Lightbox ── */
+      (function () {
+        const lb = document.getElementById("pdLightbox");
+        const zoomBtn = document.getElementById("masterPlanZoom");
+        const closeBtn = document.getElementById("lightboxClose");
+        if (!lb || !zoomBtn || !closeBtn) return;
+        const openLb = () => {
+          lb.classList.add("open");
+          document.body.style.overflow = "hidden";
+        };
+        const closeLb = () => {
+          lb.classList.remove("open");
+          document.body.style.overflow = "";
+        };
+        zoomBtn.addEventListener("click", openLb);
+        closeBtn.addEventListener("click", closeLb);
+        lb.addEventListener("click", (e) => {
+          if (e.target === lb) closeLb();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && lb.classList.contains("open")) closeLb();
+        });
+      })();
+
+      /* ── Inquiry form ── */
+      (function () {
+        const form = document.getElementById("pdForm");
+        const resetBtn = document.getElementById("formResetBtn");
+        if (!form) return;
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          document.getElementById("pdFormFields").classList.add("hide");
+          document.getElementById("pdFormSuccess").classList.add("show");
+        });
+        if (resetBtn) {
+          resetBtn.addEventListener("click", function () {
+            document.getElementById("pdFormSuccess").classList.remove("show");
+            document.getElementById("pdFormFields").classList.remove("hide");
+            form.reset();
+          });
+        }
+      })();
+
+      /* ── Similar cards save toggle ── */
+      document.querySelectorAll(".sim-card-save").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const saved = this.getAttribute("aria-pressed") === "true";
+          this.setAttribute("aria-pressed", String(!saved));
+          this.innerHTML = saved
+            ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
+            : '<svg width="13" height="13" viewBox="0 0 24 24" fill="var(--accent-fill)" stroke="var(--accent-fill)" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+        });
+      });
+
+      /* ── Inquiry section entry animation ── */
+      gsap.fromTo(
+        ".pd-inquiry-info",
+        { opacity: 0, x: -28, y: 28 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-inquiry", start: "top 75%" },
+        },
+      );
+      gsap.fromTo(
+        ".pd-form",
+        { opacity: 0, x: 28, y: 28 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          delay: 0.15,
+          scrollTrigger: { trigger: ".pd-inquiry", start: "top 75%" },
+        },
+      );
+
+      function calc(v) {
+        return v;
+      } /* helper to keep GSAP calls clean */
+
+      /* ── Gallery Swiper ── */
+      (function () {
+        const swiper = new Swiper("#gallerySwiper", {
+          effect: "cards",
+          grabCursor: true,
+          rewind: true,
+          autoplay: { delay: 3000, disableOnInteraction: false },
+          cardsEffect: {
+            perSlideOffset: 10,
+            perSlideRotate: 3,
+            rotate: true,
+            slideShadows: true,
+          },
+          on: {
+            slideChange: function () {
+              document.getElementById("galCurrent").textContent = String(
+                this.activeIndex + 1,
+              ).padStart(2, "0");
+            },
+          },
+        });
+        document
+          .getElementById("galPrev")
+          .addEventListener("click", () => swiper.slidePrev());
+        document
+          .getElementById("galNext")
+          .addEventListener("click", () => swiper.slideNext());
+      })();
+
+      /* ── Video scroll-triggered autoplay ── */
+      (function () {
+        const video = document.getElementById("bgVideo");
+        const poster = document.getElementById("bgVideoPoster");
+        if (!video) return;
+        /* Hide poster once video is actually playing */
+        video.addEventListener("playing", () => {
+          if (poster) poster.classList.add("hidden");
+        });
+        video.addEventListener("pause", () => {
+          if (poster) poster.classList.remove("hidden");
+        });
+        const section = video.closest("section");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                video.play().catch(() => {});
+              } else {
+                video.pause();
+              }
+            });
+          },
+          { threshold: 0.2 },
+        );
+        observer.observe(section || video);
+      })();
+
+      /* ── Cursor ── */
+      (function () {
+        const dot = document.getElementById("c-dot"),
+          ring = document.getElementById("c-ring");
+        let mx = 0,
+          my = 0,
+          rx = 0,
+          ry = 0;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          dot.style.left = mx + "px";
+          dot.style.top = my + "px";
+        });
+        (function tick() {
+          rx += (mx - rx) * 0.1;
+          ry += (my - ry) * 0.1;
+          ring.style.left = rx + "px";
+          ring.style.top = ry + "px";
+          requestAnimationFrame(tick);
+        })();
+        document.querySelectorAll("a,button").forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            document.body.classList.add("ch"),
+          );
+          el.addEventListener("mouseleave", () =>
+            document.body.classList.remove("ch"),
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>
