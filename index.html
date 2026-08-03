@@ -1054,6 +1054,7 @@
         .info-glass {
           flex-wrap: wrap;
           padding: 16px 20px;
+          gap: 0;
         }
         .isep {
           display: none;
@@ -1068,6 +1069,9 @@
           justify-content: center;
           padding: var(--sp3) var(--sp3) var(--sp2);
         }
+        .il {
+          letter-spacing: 0.1em;
+        }
       }
       @media (max-width: 520px) {
         .swiper-slide {
@@ -1081,6 +1085,34 @@
         }
         .hn-progress {
           display: none;
+        }
+      }
+      @media (max-width: 480px) {
+        .hero-info {
+          padding-left: var(--sp3);
+          padding-right: var(--sp3);
+        }
+        .info-glass {
+          padding: 10px 14px;
+        }
+        .ic {
+          width: 100%;
+          padding: 10px 8px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .ic:last-child,
+        .ic-cta {
+          border-bottom: none;
+        }
+        .il {
+          font-size: 10px;
+          letter-spacing: 0.08em;
+        }
+        .iv {
+          font-size: 1.15rem;
+        }
+        .ic-cta {
+          padding: 12px 8px 8px;
         }
       }
       @media (prefers-reduced-motion: reduce) {
