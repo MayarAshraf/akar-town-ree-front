@@ -2359,6 +2359,45 @@
         justify-content: center;
         color: #16a34a;
       }
+
+      /* ── Hero title truncation tooltip ── */
+      .pd-hero-title[data-tooltip] {
+        position: relative;
+        cursor: default;
+      }
+      .pd-hero-title[data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 0;
+        max-width: min(500px, 90vw);
+        padding: 10px 16px;
+        background: rgba(15, 13, 14, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 6px;
+        color: var(--n-0);
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: 0;
+        white-space: normal;
+        word-break: break-word;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+        z-index: 200;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      }
+      .pd-hero-title[data-tooltip]:hover::after {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
   </head>
   <body>
@@ -5007,6 +5046,17 @@
             document.body.classList.remove("ch"),
           );
         });
+      })();
+
+      /* ── Hero title truncation with tooltip ── */
+      (function () {
+        var MAX_CHARS = 90;
+        var titleEl = document.querySelector(".pd-hero-title");
+        if (!titleEl) return;
+        var fullText = titleEl.textContent.replace(/\s+/g, " ").trim();
+        if (fullText.length <= MAX_CHARS) return;
+        titleEl.textContent = fullText.slice(0, MAX_CHARS).trimEnd() + "…";
+        titleEl.setAttribute("data-tooltip", fullText);
       })();
     </script>
   </body>
