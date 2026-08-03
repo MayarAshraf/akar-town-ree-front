@@ -3237,11 +3237,9 @@
 
             <!-- Type pills -->
             <div class="fnd-pills" role="group" aria-label="Property type">
-              <button class="fnd-pill" data-plan="studio">Studio</button>
-              <button class="fnd-pill" data-plan="1br">1 BR</button>
-              <button class="fnd-pill active" data-plan="2br">2 BR</button>
+              <button class="fnd-pill active" data-plan="1br">1 BR</button>
+              <button class="fnd-pill" data-plan="2br">2 BR</button>
               <button class="fnd-pill" data-plan="3br">3 BR</button>
-              <button class="fnd-pill" data-plan="villa">Villa</button>
             </div>
 
             <!-- Filter rows -->
@@ -3318,48 +3316,6 @@
                 </div>
               </div>
 
-              <!-- Area Range -->
-              <div class="fnd-row">
-                <svg
-                  class="fnd-row-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  aria-hidden="true"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="1" />
-                  <path d="M3 9h18M9 3v18" />
-                </svg>
-                <span class="fnd-row-label">Area Range</span>
-                <div
-                  class="fnd-area-range"
-                  role="group"
-                  aria-label="Area range in square metres"
-                >
-                  <input
-                    class="fnd-area-inp"
-                    id="areaMin"
-                    type="number"
-                    min="30"
-                    max="999"
-                    value="120"
-                    aria-label="Minimum area"
-                  />
-                  <span class="fnd-area-sep">–</span>
-                  <input
-                    class="fnd-area-inp"
-                    id="areaMax"
-                    type="number"
-                    min="30"
-                    max="999"
-                    value="200"
-                    aria-label="Maximum area"
-                  />
-                  <span class="fnd-area-unit">m²</span>
-                </div>
-              </div>
-
               <!-- Finishing -->
               <div class="fnd-row">
                 <svg
@@ -3403,7 +3359,7 @@
                     type="text"
                     id="fndPrice"
                     class="fnd-price-input"
-                    value="5,800,000"
+                    value="3,500,000"
                     aria-label="Price in EGP"
                     inputmode="numeric"
                     autocomplete="off"
@@ -4712,114 +4668,123 @@
        FIND YOUR SPACE — configurator
       ══════════════════════════════════════════════════ */
       (function () {
-        /* ── Plan data ── */
-        const PLANS = {
-          studio: {
-            beds: 0,
-            baths: 1,
-            areaMin: 40,
-            areaMax: 60,
-            price: 2200000,
-            rooms: [
-              { n: "Studio", x: 2, y: 2, w: 62, h: 60, t: "main" },
-              { n: "Kitchen", x: 66, y: 2, w: 32, h: 28, t: "kitchen" },
-              { n: "Bath", x: 66, y: 32, w: 32, h: 30, t: "bath" },
-              { n: "Balcony", x: 2, y: 64, w: 96, h: 34, t: "out" },
-            ],
-          },
-          "1br": {
-            beds: 1,
-            baths: 1,
-            areaMin: 70,
-            areaMax: 110,
-            price: 3500000,
-            rooms: [
-              { n: "Bedroom", x: 2, y: 2, w: 44, h: 52, t: "bed" },
-              { n: "Living", x: 50, y: 2, w: 48, h: 52, t: "live" },
-              { n: "Kitchen", x: 2, y: 58, w: 28, h: 38, t: "kitchen" },
-              { n: "Bath", x: 34, y: 58, w: 22, h: 38, t: "bath" },
-              { n: "Balcony", x: 60, y: 58, w: 38, h: 38, t: "out" },
-            ],
-          },
-          "2br": {
-            beds: 2,
-            baths: 2,
-            areaMin: 120,
-            areaMax: 200,
-            price: 5800000,
-            rooms: [
-              { n: "Master", x: 2, y: 2, w: 42, h: 44, t: "bed" },
-              { n: "Bedroom", x: 48, y: 2, w: 50, h: 44, t: "bed" },
-              { n: "Living", x: 2, y: 50, w: 42, h: 48, t: "live" },
-              { n: "Kitchen", x: 48, y: 50, w: 24, h: 24, t: "kitchen" },
-              { n: "Bath", x: 48, y: 76, w: 24, h: 22, t: "bath" },
-              { n: "Bath 2", x: 76, y: 50, w: 22, h: 22, t: "bath" },
-              { n: "Balcony", x: 76, y: 76, w: 22, h: 22, t: "out" },
-            ],
-          },
-          "3br": {
-            beds: 3,
-            baths: 2,
-            areaMin: 200,
-            areaMax: 340,
-            price: 9500000,
-            rooms: [
-              { n: "Master", x: 2, y: 2, w: 34, h: 42, t: "bed" },
-              { n: "Bed 2", x: 40, y: 2, w: 26, h: 42, t: "bed" },
-              { n: "Bed 3", x: 70, y: 2, w: 28, h: 42, t: "bed" },
-              { n: "Living", x: 2, y: 48, w: 44, h: 50, t: "live" },
-              { n: "Dining", x: 50, y: 48, w: 22, h: 50, t: "dining" },
-              { n: "Kitchen", x: 76, y: 48, w: 22, h: 24, t: "kitchen" },
-              { n: "Bath", x: 76, y: 76, w: 22, h: 22, t: "bath" },
-            ],
-          },
-          villa: {
-            beds: 4,
-            baths: 3,
-            areaMin: 380,
-            areaMax: 600,
-            price: 18000000,
-            rooms: [
-              { n: "Master", x: 2, y: 2, w: 28, h: 34, t: "bed" },
-              { n: "Bed 2", x: 34, y: 2, w: 24, h: 34, t: "bed" },
-              { n: "Bed 3", x: 62, y: 2, w: 20, h: 34, t: "bed" },
-              { n: "Bed 4", x: 86, y: 2, w: 12, h: 34, t: "bed" },
-              { n: "Living", x: 2, y: 40, w: 44, h: 30, t: "live" },
-              { n: "Dining", x: 50, y: 40, w: 22, h: 30, t: "dining" },
-              { n: "Kitchen", x: 76, y: 40, w: 22, h: 14, t: "kitchen" },
-              { n: "Bath", x: 76, y: 56, w: 22, h: 14, t: "bath" },
-              { n: "Pool", x: 2, y: 74, w: 44, h: 24, t: "out" },
-              { n: "Garden", x: 50, y: 74, w: 48, h: 24, t: "out" },
-            ],
-          },
-        };
+        /* ── State ── */
+        var bedCount = 1;
+        var bathCount = 1;
+        var finishMultiplier = 1.0;
+        var displayedPrice = 3500000;
+        var userPriceBase = null;
 
-        const planKeys = ["studio", "1br", "2br", "3br", "villa"];
-        let currentPlanKey = "2br";
-        let finishMultiplier = 1.0;
-        let bathOverride = null; /* null = use plan default */
-        let displayedPrice = PLANS["2br"].price;
-        let userPriceBase = null;
-
-        /* ── Helpers ── */
+        /* ── Price helpers ── */
         function formatPrice(n) {
           return n.toLocaleString("en-EG");
         }
 
-        function calcPrice() {
-          var base =
-            userPriceBase !== null
-              ? userPriceBase
-              : PLANS[currentPlanKey].price;
-          return Math.round(base * finishMultiplier);
+        function getBasePrice() {
+          var base;
+          if (bedCount === 1) base = 3500000;
+          else if (bedCount === 2) base = 5800000;
+          else if (bedCount === 3) base = 9500000;
+          else base = Math.round(9500000 * Math.pow(1.28, bedCount - 3));
+          if (bathCount > 2)
+            base = Math.round(base * Math.pow(1.04, bathCount - 2));
+          return base;
         }
 
-        /* ── Render floor plan ── */
+        function calcPrice() {
+          return Math.round(
+            (userPriceBase !== null ? userPriceBase : getBasePrice()) *
+              finishMultiplier,
+          );
+        }
+
+        /* ── Floor plan generator ── */
+        function generateRooms(beds, baths) {
+          /* Simplified numeric view for counts beyond the full-plan range */
+          if (beds > 3 || baths > 3) {
+            return [
+              {
+                n: beds + (beds === 1 ? " Bedroom" : " Bedrooms"),
+                x: 2,
+                y: 2,
+                w: 56,
+                h: 56,
+                t: "bed",
+              },
+              {
+                n: baths + (baths === 1 ? " Bathroom" : " Bathrooms"),
+                x: 60,
+                y: 2,
+                w: 38,
+                h: 56,
+                t: "bath",
+              },
+              { n: "Kitchen", x: 2, y: 62, w: 46, h: 34, t: "kitchen" },
+              { n: "Balcony", x: 50, y: 62, w: 48, h: 34, t: "out" },
+            ];
+          }
+
+          var rooms = [];
+
+          /* Top row — bedrooms (y:2, h:58) */
+          if (beds === 1) {
+            rooms.push({ n: "Master", x: 2, y: 2, w: 96, h: 58, t: "bed" });
+          } else if (beds === 2) {
+            rooms.push({ n: "Master", x: 2, y: 2, w: 46, h: 58, t: "bed" });
+            rooms.push({ n: "Bed 2", x: 50, y: 2, w: 48, h: 58, t: "bed" });
+          } else {
+            rooms.push({ n: "Master", x: 2, y: 2, w: 30, h: 58, t: "bed" });
+            rooms.push({ n: "Bed 2", x: 34, y: 2, w: 30, h: 58, t: "bed" });
+            rooms.push({ n: "Bed 3", x: 66, y: 2, w: 32, h: 58, t: "bed" });
+          }
+
+          /* Bottom row — kitchen + baths + balcony (y:62, h:34) */
+          if (baths === 1) {
+            rooms.push({
+              n: "Kitchen",
+              x: 2,
+              y: 62,
+              w: 24,
+              h: 34,
+              t: "kitchen",
+            });
+            rooms.push({ n: "Bath", x: 28, y: 62, w: 36, h: 34, t: "bath" });
+            rooms.push({ n: "Balcony", x: 66, y: 62, w: 32, h: 34, t: "out" });
+          } else if (baths === 2) {
+            rooms.push({
+              n: "Kitchen",
+              x: 2,
+              y: 62,
+              w: 22,
+              h: 34,
+              t: "kitchen",
+            });
+            rooms.push({ n: "Bath 1", x: 26, y: 62, w: 22, h: 34, t: "bath" });
+            rooms.push({ n: "Bath 2", x: 50, y: 62, w: 22, h: 34, t: "bath" });
+            rooms.push({ n: "Balcony", x: 74, y: 62, w: 24, h: 34, t: "out" });
+          } else {
+            rooms.push({
+              n: "Kitchen",
+              x: 2,
+              y: 62,
+              w: 20,
+              h: 34,
+              t: "kitchen",
+            });
+            rooms.push({ n: "Bath 1", x: 24, y: 62, w: 16, h: 34, t: "bath" });
+            rooms.push({ n: "Bath 2", x: 42, y: 62, w: 16, h: 34, t: "bath" });
+            rooms.push({ n: "Bath 3", x: 60, y: 62, w: 16, h: 34, t: "bath" });
+            rooms.push({ n: "Balcony", x: 78, y: 62, w: 20, h: 34, t: "out" });
+          }
+
+          return rooms;
+        }
+
+        /* ── Build floor plan DOM ── */
         function buildPlan() {
           var planEl = document.getElementById("fndPlan");
-          var plan = PLANS[currentPlanKey];
           planEl.innerHTML = "";
-          plan.rooms.forEach(function (r) {
+          generateRooms(bedCount, bathCount).forEach(function (r) {
             var div = document.createElement("div");
             div.className = "fnd-room";
             div.setAttribute("data-t", r.t);
@@ -4830,12 +4795,7 @@
             var nameSpan = document.createElement("span");
             nameSpan.className = "fnd-room-n";
             nameSpan.textContent = r.n;
-            var areaVal = Math.round((r.w * r.h) / 100);
-            var sizeSpan = document.createElement("span");
-            sizeSpan.className = "fnd-room-s";
-            sizeSpan.textContent = areaVal + " m²";
             div.appendChild(nameSpan);
-            div.appendChild(sizeSpan);
             planEl.appendChild(div);
           });
           gsap.fromTo(
@@ -4852,7 +4812,7 @@
           );
         }
 
-        function renderPlan(key, animate) {
+        function renderPlan(animate) {
           animate = animate !== false;
           var planEl = document.getElementById("fndPlan");
           var existing = planEl.querySelectorAll(".fnd-room");
@@ -4888,92 +4848,66 @@
           });
         }
 
-        /* ── Sync UI to current plan ── */
-        function syncUI(key) {
-          var plan = PLANS[key];
-          var baths = bathOverride !== null ? bathOverride : plan.baths;
-
-          /* bed value */
-          document.getElementById("bedVal").textContent = plan.beds;
-
-          /* bath value */
-          document.getElementById("bathVal").textContent = baths;
-
-          /* area */
-          document.getElementById("areaMin").value = plan.areaMin;
-          document.getElementById("areaMax").value = plan.areaMax;
-
-          /* price */
-          var newPrice = calcPrice();
-          animatePrice(newPrice);
-
-          /* active pill */
+        /* ── Sync UI ── */
+        function syncUI() {
+          document.getElementById("bedVal").textContent = bedCount;
+          document.getElementById("bathVal").textContent = bathCount;
+          animatePrice(calcPrice());
           document.querySelectorAll(".fnd-pill").forEach(function (btn) {
-            btn.classList.toggle("active", btn.dataset.plan === key);
+            btn.classList.toggle(
+              "active",
+              parseInt(btn.dataset.plan, 10) === bedCount,
+            );
           });
         }
 
         /* ── Type pill clicks ── */
         document.querySelectorAll(".fnd-pill").forEach(function (btn) {
           btn.addEventListener("click", function () {
-            currentPlanKey = btn.dataset.plan;
-            bathOverride = null;
+            bedCount = parseInt(btn.dataset.plan, 10);
+            bathCount = bedCount === 1 ? 1 : 2;
             userPriceBase = null;
-            renderPlan(currentPlanKey, true);
-            syncUI(currentPlanKey);
+            renderPlan(true);
+            syncUI();
           });
         });
 
-        /* ── Bed stepper (navigates plan index) ── */
+        /* ── Bed stepper — unlimited ── */
         document
           .getElementById("bedMinus")
           .addEventListener("click", function () {
-            var idx = planKeys.indexOf(currentPlanKey);
-            if (idx > 0) {
-              currentPlanKey = planKeys[idx - 1];
-              bathOverride = null;
+            if (bedCount > 1) {
+              bedCount--;
               userPriceBase = null;
-              renderPlan(currentPlanKey, true);
-              syncUI(currentPlanKey);
+              renderPlan(true);
+              syncUI();
             }
           });
         document
           .getElementById("bedPlus")
           .addEventListener("click", function () {
-            var idx = planKeys.indexOf(currentPlanKey);
-            if (idx < planKeys.length - 1) {
-              currentPlanKey = planKeys[idx + 1];
-              bathOverride = null;
-              userPriceBase = null;
-              renderPlan(currentPlanKey, true);
-              syncUI(currentPlanKey);
-            }
+            bedCount++;
+            userPriceBase = null;
+            renderPlan(true);
+            syncUI();
           });
 
-        /* ── Bath stepper (display only, affects price slightly) ── */
+        /* ── Bath stepper — unlimited ── */
         document
           .getElementById("bathMinus")
           .addEventListener("click", function () {
-            var plan = PLANS[currentPlanKey];
-            var cur = bathOverride !== null ? bathOverride : plan.baths;
-            if (cur > 1) {
-              bathOverride = cur - 1;
-              document.getElementById("bathVal").textContent = bathOverride;
-              var newPrice = calcPrice();
-              animatePrice(newPrice);
+            if (bathCount > 1) {
+              bathCount--;
+              renderPlan(true);
+              syncUI();
             }
           });
         document
           .getElementById("bathPlus")
           .addEventListener("click", function () {
-            var plan = PLANS[currentPlanKey];
-            var cur = bathOverride !== null ? bathOverride : plan.baths;
-            if (cur < 4) {
-              bathOverride = cur + 1;
-              document.getElementById("bathVal").textContent = bathOverride;
-              var newPrice = Math.round(calcPrice() * 1.04);
-              animatePrice(newPrice);
-            }
+            bathCount++;
+            renderPlan(true);
+            syncUI();
           });
 
         /* ── Finishing level ── */
@@ -5010,33 +4944,6 @@
             if (e.key === "Enter") this.blur();
           });
         })();
-
-        /* ── Area range inputs ── */
-        function syncAreaChip() {
-          /* reserved for future chip sync */
-        }
-
-        document
-          .getElementById("areaMin")
-          .addEventListener("input", function () {
-            var min = parseInt(this.value, 10);
-            var max = parseInt(document.getElementById("areaMax").value, 10);
-            if (!isNaN(min) && !isNaN(max) && min > max) {
-              document.getElementById("areaMax").value = min;
-            }
-            syncAreaChip();
-          });
-
-        document
-          .getElementById("areaMax")
-          .addEventListener("input", function () {
-            var min = parseInt(document.getElementById("areaMin").value, 10);
-            var max = parseInt(this.value, 10);
-            if (!isNaN(min) && !isNaN(max) && max < min) {
-              document.getElementById("areaMin").value = max;
-            }
-            syncAreaChip();
-          });
 
         /* ── 3-D hover on visual panel ── */
         var visual = document.getElementById("fndVisual");
@@ -5099,8 +5006,9 @@
         obs.observe(section);
 
         /* ── Init ── */
-        renderPlan("2br", false);
-        syncUI("2br");
+        document.getElementById("fndPrice").value = formatPrice(3500000);
+        renderPlan(false);
+        syncUI();
       })(); /* end IIFE */
 
       /* ── GSAP hero entrance ── */
