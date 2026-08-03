@@ -441,19 +441,33 @@
         transform: translateY(-6.5px) rotate(-45deg);
       }
       @media (min-width: 1025px) {
-        .main-nav { display: flex; }
+        .main-nav {
+          display: flex;
+        }
         .hdr-right .btn-ghost,
-        .hdr-right .btn-accent { display: inline-flex; }
-        .hamburger { display: none; }
+        .hdr-right .btn-accent {
+          display: inline-flex;
+        }
+        .hamburger {
+          display: none;
+        }
       }
       @media (max-width: 1024px) {
-        .main-nav { display: none; }
+        .main-nav {
+          display: none;
+        }
         .hdr-right .btn-ghost,
-        .hdr-right .btn-accent { display: none; }
-        .hamburger { display: flex; }
+        .hdr-right .btn-accent {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
       }
       @media (max-width: 768px) {
-        :root { --hh: 58px; }
+        :root {
+          --hh: 58px;
+        }
       }
 
       /* ══════════════════════════════════════════════════
@@ -1057,7 +1071,7 @@
       .pd-gallery {
         background: var(--n-50);
         padding: var(--sp7) 0;
-        overflow: hidden;
+        overflow-x: hidden;
         position: relative;
         z-index: 2;
       }
@@ -1067,7 +1081,7 @@
         padding: 0 var(--gutter);
         display: grid;
         grid-template-columns: 1fr 1.6fr;
-        gap: var(--sp7);
+        gap: var(--sp5);
         align-items: center;
       }
       @media (max-width: 860px) {
@@ -1128,12 +1142,14 @@
       .gal-swiper-wrap {
         position: relative;
         padding: var(--sp5) var(--sp5) var(--sp5) 0;
+        overflow: hidden;
       }
       .gallery-swiper {
         width: 100%;
         max-width: 520px;
         height: 360px;
         margin: 0 auto;
+        overflow: visible !important;
       }
       .gallery-swiper .swiper-slide {
         border-radius: 4px;
@@ -1178,6 +1194,9 @@
         color: var(--n-0);
       }
       @media (max-width: 860px) {
+        .gal-swiper-wrap {
+          padding: var(--sp5) var(--gutter);
+        }
         .gallery-swiper {
           max-width: 100%;
           height: 300px;
@@ -1224,7 +1243,7 @@
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.5);
         margin-bottom: var(--sp2);
         font-family: var(--font-display);
       }
@@ -4679,6 +4698,9 @@
           effect: "cards",
           grabCursor: true,
           rewind: true,
+          observer: true,
+          observeParents: true,
+          resizeObserver: true,
           autoplay: { delay: 3000, disableOnInteraction: false },
           cardsEffect: {
             perSlideOffset: 10,
