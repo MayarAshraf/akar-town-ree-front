@@ -2540,6 +2540,17 @@
         display: block;
       }
 
+      /* Mobile horizontal slider — hidden on desktop */
+      .proj-mobile-wrap {
+        display: none;
+      }
+      .proj-mob-nav {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.4rem;
+        padding: 0.8rem clamp(1rem, 4vw, 2.5rem) 0;
+      }
+
       /* ==========================================================
          FOOTER
       ========================================================== */
@@ -2779,23 +2790,33 @@
         }
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 900px) {
+        /* Desktop vertical-scroll column + its controls → hidden */
+        .proj-scroll-col,
+        .proj-ctrls {
+          display: none;
+        }
+        /* Glass panel becomes text-only, auto height */
         .proj-statement {
           grid-template-columns: 1fr;
+          height: auto;
         }
-        .proj-scroll-col {
-          border-left: none;
-          border-top: 1px solid
-            color-mix(in oklab, var(--paper) 22%, transparent);
-          height: 260px;
+        .proj-stmt-content {
+          padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 5vw, 2rem);
         }
-        .proj-scroll-track {
-          flex-direction: row;
-          overflow-x: auto;
-          padding: 0 clamp(1rem, 4vw, 2.5rem);
+        .sec-projects {
+          padding-bottom: clamp(2rem, 6vw, 3.5rem);
         }
-        .proj-card {
-          min-width: 140px;
+        /* Show mobile horizontal slider */
+        .proj-mobile-wrap {
+          display: block;
+        }
+        /* Prevent Swiper from stretching slides to container height */
+        #projMobileSwiper .swiper-wrapper {
+          align-items: flex-start;
+        }
+        #projMobileSwiper .swiper-slide {
+          height: auto;
         }
       }
     </style>
@@ -3834,6 +3855,121 @@
               </a>
             </div>
           </div>
+
+          <!-- Mobile-only horizontal slider (hidden on desktop) -->
+          <div class="proj-mobile-wrap">
+            <div class="swiper proj-mobile-swiper" id="projMobileSwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <article class="proj-card">
+                    <div class="proj-card-media">
+                      <img
+                        src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=400&fit=crop&q=90"
+                        alt="The Residences"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="proj-card-info">
+                      <span class="proj-card-name">The Residences — New Cairo</span>
+                      <span class="proj-card-price">EGP 2.4M+</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="swiper-slide">
+                  <article class="proj-card">
+                    <div class="proj-card-media">
+                      <img
+                        src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&h=400&fit=crop&q=90"
+                        alt="Skyline Tower"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="proj-card-info">
+                      <span class="proj-card-name">Skyline Tower — New Capital</span>
+                      <span class="proj-card-price">EGP 3.1M+</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="swiper-slide">
+                  <article class="proj-card">
+                    <div class="proj-card-media">
+                      <img
+                        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=400&fit=crop&q=90"
+                        alt="Palm Shore"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="proj-card-info">
+                      <span class="proj-card-name">Palm Shore — North Coast</span>
+                      <span class="proj-card-price">EGP 3.8M+</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="swiper-slide">
+                  <article class="proj-card">
+                    <div class="proj-card-media">
+                      <img
+                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=400&fit=crop&q=90"
+                        alt="The Boulevard"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="proj-card-info">
+                      <span class="proj-card-name">The Boulevard — Sheikh Zayed</span>
+                      <span class="proj-card-price">EGP 2.9M+</span>
+                    </div>
+                  </article>
+                </div>
+                <div class="swiper-slide">
+                  <article class="proj-card">
+                    <div class="proj-card-media">
+                      <img
+                        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&h=400&fit=crop&q=90"
+                        alt="Azzurra Bay"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="proj-card-info">
+                      <span class="proj-card-name">Azzurra Bay — Ain Sokhna</span>
+                      <span class="proj-card-price">EGP 1.9M+</span>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <!-- Prev / Next -->
+            <div class="proj-mob-nav">
+              <button class="proj-ctrl proj-mob-prev" aria-label="Previous project">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="8,2 4,6 8,10" />
+                </svg>
+              </button>
+              <button class="proj-ctrl proj-mob-next" aria-label="Next project">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="4,2 8,6 4,10" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- /proj-mobile-wrap -->
         </div>
       </section>
 
@@ -5219,12 +5355,39 @@
             step(1);
           });
 
-        /* Respect reduced motion */
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        /* Respect reduced motion + skip on mobile (slider takes over) */
+        if (
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+          window.innerWidth <= 900
+        ) {
           paused = true;
         }
 
         raf = requestAnimationFrame(tick);
+      })();
+
+      /* ── Projects — mobile horizontal slider ── */
+      (function () {
+        var el = document.getElementById("projMobileSwiper");
+        if (!el) return;
+        new Swiper("#projMobileSwiper", {
+          slidesPerView: 1.2,
+          spaceBetween: 14,
+          slidesOffsetBefore: 20,
+          slidesOffsetAfter: 20,
+          loop: true,
+          autoplay: { delay: 3000, disableOnInteraction: false },
+          navigation: {
+            prevEl: ".proj-mob-prev",
+            nextEl: ".proj-mob-next",
+          },
+          breakpoints: {
+            540: {
+              slidesPerView: 2.15,
+              spaceBetween: 16,
+            },
+          },
+        });
       })();
 
       /* ── Locations — keyboard + accordion logic ── */

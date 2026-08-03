@@ -954,11 +954,9 @@
         background: var(--accent-fill);
         cursor: none;
         transition: all var(--dur-ui);
-        box-shadow: 0 2px 10px rgba(211, 2, 1, 0.25);
       }
       .btn-apply:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(211, 2, 1, 0.35);
       }
 
       /* ============================================================
@@ -1337,7 +1335,7 @@
       .pagination-wrap {
         display: flex;
         justify-content: center;
-        padding: var(--sp5) var(--gutter) var(--sp7);
+        padding: 0 var(--gutter) var(--sp5);
       }
       .pagination {
         display: flex;
@@ -1996,24 +1994,6 @@
                     aria-label="Maximum price"
                   />
                 </div>
-                <input
-                  type="range"
-                  class="range-slider"
-                  min="1800000"
-                  max="22000000"
-                  value="1800000"
-                  id="priceSliderMin"
-                  aria-label="Price range minimum"
-                />
-                <input
-                  type="range"
-                  class="range-slider"
-                  min="1800000"
-                  max="22000000"
-                  value="22000000"
-                  id="priceSliderMax"
-                  aria-label="Price range maximum"
-                />
               </div>
             </div>
 
@@ -2038,24 +2018,6 @@
                     aria-label="Maximum area"
                   />
                 </div>
-                <input
-                  type="range"
-                  class="range-slider"
-                  min="42"
-                  max="580"
-                  value="42"
-                  id="areaSliderMin"
-                  aria-label="Area minimum"
-                />
-                <input
-                  type="range"
-                  class="range-slider"
-                  min="42"
-                  max="580"
-                  value="580"
-                  id="areaSliderMax"
-                  aria-label="Area maximum"
-                />
               </div>
             </div>
 
