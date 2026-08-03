@@ -596,20 +596,6 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
-      }
-      /* Hero Swiper fills the bg container */
-      .hero-swiper {
-        width: 100%;
-        height: 100%;
-      }
-      .hero-swiper .swiper-slide {
-        overflow: hidden;
-      }
-      .hero-swiper .swiper-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
         display: block;
       }
       .pd-hero-scrim {
@@ -631,7 +617,7 @@
         margin: 0 auto;
         width: 100%;
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr;
         gap: var(--sp6);
         align-items: end;
       }
@@ -768,45 +754,151 @@
         gap: var(--sp3);
         flex-wrap: wrap;
       }
-      /* Thumbnail stack */
-      .pd-thumb-stack {
+
+      /* ── Gallery zoom button ── */
+      .gal-zoom-btn {
+        position: absolute;
+        top: var(--sp3);
+        right: var(--sp3);
+        z-index: 3;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(35, 31, 32, 0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui) var(--ease-expo);
+        opacity: 0;
+      }
+      .gallery-swiper .swiper-slide-active .gal-zoom-btn,
+      .gallery-swiper .swiper-slide:hover .gal-zoom-btn {
+        opacity: 1;
+      }
+      .gal-zoom-btn:hover {
+        background: var(--accent-fill);
+        border-color: var(--accent-fill);
+      }
+
+      /* ── Lightbox ── */
+      .lb {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        background: rgba(35, 31, 32, 0.96);
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.38s var(--ease-expo),
+          visibility 0s 0.38s;
+      }
+      .lb.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+          opacity 0.38s var(--ease-expo),
+          visibility 0s 0s;
+      }
+      .lb-figure {
         display: flex;
         flex-direction: column;
-        gap: var(--sp2);
-        width: 120px;
-        flex-shrink: 0;
+        align-items: center;
+        padding: 0 var(--sp7);
+        max-width: 100vw;
       }
-      .pd-thumb {
-        width: 120px;
-        height: 80px;
-        overflow: hidden;
+      .lb-img {
+        max-width: calc(100vw - var(--sp7) * 2);
+        max-height: 82vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
         border-radius: 4px;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        display: block;
+        transform: scale(0.94);
+        transition: transform 0.38s var(--ease-expo);
+      }
+      .lb.open .lb-img {
+        transform: scale(1);
+      }
+      .lb-caption {
+        margin-top: var(--sp3);
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
+      .lb-close {
+        position: fixed;
+        top: var(--sp4);
+        right: var(--sp5);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: none;
         transition: all var(--dur-ui);
-        position: relative;
       }
-      .pd-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s var(--ease-expo);
-      }
-      .pd-thumb:hover {
+      .lb-close:hover {
+        background: var(--accent-fill);
         border-color: var(--accent-fill);
+        color: var(--n-0);
       }
-      .pd-thumb:hover img {
-        transform: scale(1.06);
+      .lb-arrow {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: all var(--dur-ui);
       }
-      .pd-thumb.active {
+      .lb-arrow:hover {
+        background: var(--accent-fill);
         border-color: var(--accent-fill);
+        color: var(--n-0);
       }
-      @media (max-width: 900px) {
-        .pd-hero-body {
-          grid-template-columns: 1fr;
-        }
-        .pd-thumb-stack {
+      .lb-prev {
+        left: var(--sp5);
+      }
+      .lb-next {
+        right: var(--sp5);
+      }
+      @media (max-width: 640px) {
+        .lb-arrow {
           display: none;
+        }
+        .lb-figure {
+          padding: 0 var(--sp3);
+        }
+        .lb-img {
+          max-width: calc(100vw - var(--sp3) * 2);
         }
       }
 
@@ -2273,6 +2365,54 @@
     <div id="c-dot" aria-hidden="true"></div>
     <div id="c-ring" aria-hidden="true"></div>
 
+    <!-- ── LIGHTBOX ── -->
+    <div
+      class="lb"
+      id="lb"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image viewer"
+    >
+      <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+      <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Previous image">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+      </button>
+      <button class="lb-arrow lb-next" id="lbNext" aria-label="Next image">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </button>
+      <figure class="lb-figure">
+        <img class="lb-img" id="lbImg" src="" alt="" />
+        <figcaption class="lb-caption" id="lbCaption"></figcaption>
+      </figure>
+    </div>
+
     <!-- ── MOBILE NAV ── -->
     <nav class="mob" id="mob" aria-label="Mobile navigation" aria-hidden="true">
       <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
@@ -2432,34 +2572,10 @@
   ══════════════════════════════════════════════════ -->
       <section class="pd-hero" aria-label="Property Hero">
         <div class="pd-hero-bg" aria-hidden="true">
-          <div class="swiper hero-swiper" id="heroSwiper">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <img
-                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=85"
-                  alt="Living Room"
-                />
-              </div>
-              <div class="swiper-slide">
-                <img
-                  src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=85"
-                  alt="Master Bedroom"
-                />
-              </div>
-              <div class="swiper-slide">
-                <img
-                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&q=85"
-                  alt="Second Bedroom"
-                />
-              </div>
-              <div class="swiper-slide">
-                <img
-                  src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1600&q=85"
-                  alt="Kitchen"
-                />
-              </div>
-            </div>
-          </div>
+          <img
+            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=85"
+            alt="Garden View Apartment — feature image"
+          />
           <div class="pd-hero-scrim"></div>
         </div>
         <div class="pd-hero-body wrap">
@@ -2600,37 +2716,6 @@
               </button>
             </div>
           </div>
-          <!-- Thumbnail stack -->
-          <div class="pd-thumb-stack" aria-label="Property photos">
-            <button class="pd-thumb active" aria-label="Photo 1">
-              <img
-                src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=240&q=80"
-                alt="Living room"
-                loading="lazy"
-              />
-            </button>
-            <button class="pd-thumb" aria-label="Photo 2">
-              <img
-                src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=240&q=80"
-                alt="Master Bedroom"
-                loading="lazy"
-              />
-            </button>
-            <button class="pd-thumb" aria-label="Photo 3">
-              <img
-                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=240&q=80"
-                alt="Second Bedroom"
-                loading="lazy"
-              />
-            </button>
-            <button class="pd-thumb" aria-label="Photo 4">
-              <img
-                src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=240&q=80"
-                alt="Kitchen"
-                loading="lazy"
-              />
-            </button>
-          </div>
         </div>
       </section>
 
@@ -2643,7 +2728,7 @@
           <div class="pd-gallery-meta">
             <div class="eyebrow-wrap">
               <span class="eyebrow-slab" style="background: var(--n-300)"></span
-              ><span class="eyebrow-text eyebrow-text--dark">Unit Types</span>
+              ><span class="eyebrow-text eyebrow-text--dark">Unit Gallery</span>
             </div>
             <h2 class="pd-gallery-heading">Every Angle,<br />Every Detail</h2>
             <p class="pd-gallery-sub">
@@ -2709,6 +2794,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">01 / 06</div>
                     <div class="gal-slide-label">Living Room</div>
@@ -2721,6 +2824,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">02 / 06</div>
                     <div class="gal-slide-label">Master Bedroom</div>
@@ -2733,6 +2854,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">03 / 06</div>
                     <div class="gal-slide-label">Open Kitchen</div>
@@ -2745,6 +2884,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">04 / 06</div>
                     <div class="gal-slide-label">Second Bedroom</div>
@@ -2757,6 +2914,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">05 / 06</div>
                     <div class="gal-slide-label">Garden Balcony</div>
@@ -2769,6 +2944,24 @@
                     loading="lazy"
                   />
                   <div class="gal-slide-overlay" aria-hidden="true"></div>
+                  <button class="gal-zoom-btn" aria-label="View full size">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="15 3 21 3 21 9" />
+                      <polyline points="9 21 3 21 3 15" />
+                      <line x1="21" y1="3" x2="14" y2="10" />
+                      <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                  </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">06 / 06</div>
                     <div class="gal-slide-label">Master Bathroom</div>
@@ -4499,24 +4692,59 @@
           .forEach((a) => a.addEventListener("click", close));
       })();
 
-      /* ── Hero Swiper ── */
+      /* ── Lightbox ── */
       (function () {
-        const thumbs = document.querySelectorAll(".pd-thumb");
-        const heroSwiper = new Swiper("#heroSwiper", {
-          loop: true,
-          effect: "fade",
-          fadeEffect: { crossFade: true },
-          speed: 900,
-          autoplay: { delay: 4500, disableOnInteraction: false },
-          on: {
-            slideChange: function () {
-              const idx = this.realIndex;
-              thumbs.forEach((t, i) => t.classList.toggle("active", i === idx));
-            },
-          },
+        const lb = document.getElementById("lb");
+        const lbImg = document.getElementById("lbImg");
+        const lbCaption = document.getElementById("lbCaption");
+        const lbClose = document.getElementById("lbClose");
+        const lbPrev = document.getElementById("lbPrev");
+        const lbNext = document.getElementById("lbNext");
+
+        const slides = Array.from(
+          document.querySelectorAll(".gallery-swiper .swiper-slide"),
+        );
+        const items = slides.map((s) => ({
+          src: s.querySelector("img").src.replace(/w=\d+/, "w=1600"),
+          alt: s.querySelector("img").alt,
+          label: s.querySelector(".gal-slide-label")?.textContent || "",
+        }));
+
+        let current = 0;
+
+        function open(idx) {
+          current = (idx + items.length) % items.length;
+          lbImg.src = items[current].src;
+          lbImg.alt = items[current].alt;
+          lbCaption.textContent = items[current].label;
+          lb.classList.add("open");
+          lb.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+          lb.classList.remove("open");
+          lb.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+
+        slides.forEach((s, i) => {
+          s.querySelector(".gal-zoom-btn").addEventListener("click", () =>
+            open(i),
+          );
         });
-        thumbs.forEach((t, i) => {
-          t.addEventListener("click", () => heroSwiper.slideToLoop(i));
+
+        lbClose.addEventListener("click", close);
+        lbPrev.addEventListener("click", () => open(current - 1));
+        lbNext.addEventListener("click", () => open(current + 1));
+        lb.addEventListener("click", (e) => {
+          if (e.target === lb) close();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (!lb.classList.contains("open")) return;
+          if (e.key === "Escape") close();
+          if (e.key === "ArrowLeft") open(current - 1);
+          if (e.key === "ArrowRight") open(current + 1);
         });
       })();
 
