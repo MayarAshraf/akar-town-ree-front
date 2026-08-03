@@ -1214,6 +1214,9 @@
         padding: var(--sp2) 0;
         border-bottom: 1px solid var(--n-100);
       }
+      .fnd-row:last-child {
+        border-bottom: none;
+      }
       .fnd-row-icon {
         width: 20px;
         height: 20px;
@@ -1323,7 +1326,6 @@
         color: var(--n-950);
         background: transparent;
         border: none;
-        border-bottom: 1.5px solid var(--n-200);
         width: 52px;
         text-align: center;
         padding: 2px 2px 3px;
@@ -1441,7 +1443,6 @@
         opacity: 0;
         transform: translate(20px, 48px);
       }
-
 
       /* 3-D floor plan */
       .fnd-plan-wrap {
@@ -3392,7 +3393,6 @@
                 role="img"
               ></div>
             </div>
-
           </div>
           <!-- /fnd-visual -->
         </div>
@@ -4871,7 +4871,6 @@
           document.getElementById("areaMin").value = plan.areaMin;
           document.getElementById("areaMax").value = plan.areaMax;
 
-
           /* price */
           var newPrice = calcPrice();
           animatePrice(newPrice);
@@ -5070,7 +5069,6 @@
         /* ── Init ── */
         renderPlan("2br", false);
         syncUI("2br");
-
       })(); /* end IIFE */
 
       /* ── GSAP hero entrance ── */
