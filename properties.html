@@ -448,16 +448,20 @@
       .hamburger.open span:nth-child(3) {
         transform: translateY(-6.5px) rotate(-45deg);
       }
-      @media (max-width: 900px) {
-        .main-nav {
-          display: none;
-        }
-        .hdr-right .btn-ghost {
-          display: none;
-        }
-        .hamburger {
-          display: flex;
-        }
+      @media (min-width: 1025px) {
+        .main-nav { display: flex; }
+        .hdr-right .btn-ghost,
+        .hdr-right .btn-accent { display: inline-flex; }
+        .hamburger { display: none; }
+      }
+      @media (max-width: 1024px) {
+        .main-nav { display: none; }
+        .hdr-right .btn-ghost,
+        .hdr-right .btn-accent { display: none; }
+        .hamburger { display: flex; }
+      }
+      @media (max-width: 768px) {
+        :root { --hh: 58px; }
       }
 
       /* ============================================================
