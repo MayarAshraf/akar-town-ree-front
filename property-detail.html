@@ -797,11 +797,15 @@
       /* ══════════════════════════════════════════════════
        FOOTER (dark ink, 4-col)
     ══════════════════════════════════════════════════ */
+      /* ═══════════════════════════════════════════════════════════
+         SITE FOOTER — dark with buildings
+      ══════════════════════════════════════════════════════════════ */
       .site-footer {
-        background: var(--n-950);
         position: relative;
         overflow: hidden;
+        background: var(--n-50);
       }
+      /* Red accent line */
       .site-footer::before {
         content: "";
         position: absolute;
@@ -815,8 +819,36 @@
           color-mix(in oklab, var(--sig-500) 30%, transparent) 55%,
           transparent 100%
         );
+        z-index: 4;
+      }
+      /* Building background image */
+      .footer-bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 65%;
+        z-index: 0;
+        opacity: 0.45;
+        filter: brightness(1.15) saturate(0.45) contrast(0.85);
+      }
+      /* Light gradient scrim over image */
+      .footer-scrim {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          to bottom,
+          rgba(247, 247, 247, 0.99) 0%,
+          rgba(247, 247, 247, 0.88) 20%,
+          rgba(247, 247, 247, 0.84) 60%,
+          rgba(247, 247, 247, 0.99) 100%
+        );
       }
       .footer-inner {
+        position: relative;
+        z-index: 3;
         max-width: var(--container, 1320px);
         margin: 0 auto;
         padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2.5rem)
@@ -834,9 +866,12 @@
       .footer-logo:hover {
         opacity: 1;
       }
+      .footer-logo path:not([fill="#FF0000"]) {
+        fill: var(--n-950);
+      }
       .footer-tagline {
         font-size: var(--text-sm);
-        color: var(--n-500);
+        color: var(--n-700);
         line-height: 1.75;
         max-width: 30ch;
         margin: 0 0 2rem;
@@ -849,11 +884,11 @@
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        border: 1px solid var(--n-800);
+        border: 1px solid var(--n-300);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--n-500);
+        color: var(--n-600);
         text-decoration: none;
         transition:
           border-color 0.2s,
@@ -882,7 +917,7 @@
         font-size: 0.7rem;
         letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: var(--n-500);
+        color: var(--n-700);
       }
       .slab {
         --slab-w: 28px;
@@ -908,7 +943,7 @@
       }
       .footer-nav a {
         font-size: var(--text-sm);
-        color: var(--n-400);
+        color: var(--n-800);
         text-decoration: none;
         display: inline-flex;
         align-items: center;
@@ -929,7 +964,7 @@
         flex-shrink: 0;
       }
       .footer-nav a:hover {
-        color: var(--n-0);
+        color: var(--n-950);
       }
       .footer-nav a:hover::before {
         width: 10px;
@@ -940,14 +975,14 @@
         align-items: flex-start;
         gap: 0.65rem;
         margin-bottom: 1rem;
-        color: var(--n-400);
+        color: var(--n-800);
         font-size: var(--text-sm);
         line-height: 1.65;
       }
       .footer-contact-item svg {
         flex-shrink: 0;
         margin-top: 2px;
-        color: var(--n-600);
+        color: var(--n-500);
       }
       .footer-contact-item a {
         color: inherit;
@@ -955,10 +990,12 @@
         transition: color 0.18s;
       }
       .footer-contact-item a:hover {
-        color: var(--n-0);
+        color: var(--n-950);
       }
       .footer-bottom {
-        border-top: 1px solid var(--n-800);
+        position: relative;
+        z-index: 3;
+        border-top: 1px solid var(--n-200);
         max-width: var(--container, 1320px);
         margin: 0 auto;
         padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
@@ -970,10 +1007,10 @@
       }
       .footer-copy {
         font-size: 0.78rem;
-        color: var(--n-700);
+        color: var(--n-500);
       }
       .footer-copy strong {
-        color: var(--n-500);
+        color: var(--n-800);
         font-weight: var(--fw-regular);
       }
       .footer-legal {
@@ -982,12 +1019,12 @@
       }
       .footer-legal a {
         font-size: 0.78rem;
-        color: var(--n-700);
+        color: var(--n-600);
         text-decoration: none;
         transition: color 0.18s;
       }
       .footer-legal a:hover {
-        color: var(--n-300);
+        color: var(--n-950);
       }
       @media (max-width: 1024px) {
         .footer-inner {
@@ -4165,6 +4202,14 @@
      FOOTER
 ══════════════════════════════════════════════════ -->
     <footer class="site-footer" aria-label="Site footer">
+      <img
+        class="footer-bg-img"
+        src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=85"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+      />
+      <div class="footer-scrim"></div>
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="Akar Town">
