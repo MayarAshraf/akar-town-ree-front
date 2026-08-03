@@ -1068,6 +1068,7 @@
          PROPERTY CARD
       ============================================================ */
       .prop-card {
+        position: relative;
         background: var(--n-0);
         border-radius: 4px;
         overflow: hidden;
@@ -1075,7 +1076,7 @@
         transition:
           transform var(--dur-ui) var(--ease-expo),
           box-shadow var(--dur-ui) var(--ease-expo);
-        cursor: none;
+        cursor: pointer;
       }
       .prop-card:hover {
         transform: translateY(-4px);
@@ -1153,6 +1154,8 @@
         border: 1px solid rgba(255, 255, 255, 0.12);
       }
       .prop-save-btn {
+        position: relative;
+        z-index: 2;
         width: 34px;
         height: 34px;
         border-radius: 50%;
@@ -1162,7 +1165,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: none;
+        cursor: pointer;
         transition: all var(--dur-ui);
         color: rgba(255, 255, 255, 0.7);
       }
@@ -1296,6 +1299,12 @@
         gap: 4px;
         letter-spacing: 0.01em;
         transition: gap var(--dur-ui) var(--ease-expo);
+      }
+      .prop-cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
       }
       .prop-card:hover .prop-cta {
         gap: 8px;
