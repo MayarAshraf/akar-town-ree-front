@@ -234,10 +234,11 @@
         align-items: center;
         gap: var(--sp2);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
-        padding: 10px 22px;
+        padding: 7px 18px;
+        line-height: 1;
         border-radius: 100px;
         white-space: nowrap;
         cursor: none;
@@ -261,7 +262,6 @@
       }
       .btn-accent:hover {
         transform: translateY(-1px);
-        box-shadow: 0 5px 20px rgba(211, 2, 1, 0.42);
       }
       .btn-accent:active {
         transform: translateY(0);
@@ -402,6 +402,7 @@
         color: rgba(255, 255, 255, 0.52);
         padding: 8px 14px;
         border-radius: 100px;
+        white-space: nowrap;
         transition:
           color var(--dur-ui),
           background var(--dur-ui);
@@ -416,8 +417,20 @@
       .hdr-right {
         display: flex;
         align-items: center;
-        gap: var(--sp2);
+        gap: 8px;
         flex-shrink: 0;
+      }
+      .lang-toggle {
+        flex-shrink: 0;
+        padding: 6px 18px !important;
+      }
+      .lang-toggle svg {
+        flex-shrink: 0;
+      }
+      @media (max-width: 600px) {
+        .lang-toggle svg {
+          display: none;
+        }
       }
       .hamburger {
         display: none;
@@ -471,6 +484,19 @@
         .hamburger {
           display: flex;
         }
+      }
+      /* RTL — shrink nav + buttons so Arabic labels fit without collapsing */
+      [dir="rtl"] .main-nav a {
+        font-size: 11px;
+        padding: 7px 9px;
+      }
+      [dir="rtl"] .hdr-right .btn {
+        font-size: 11px;
+        padding: 7px 13px;
+      }
+      /* RTL — flip pagination arrows */
+      [dir="rtl"] .page-btn.arrow {
+        transform: scaleX(-1);
       }
       @media (max-width: 768px) {
         :root {
@@ -1893,8 +1919,8 @@
       <div class="hdr-inner">
         <a href="index.html" class="logo" aria-label="Akar Town">
           <svg
-            width="300"
-            viewBox="0 0 2750 380"
+            width="240"
+            viewBox="0 0 2185 380"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -1941,19 +1967,47 @@
           </svg>
         </a>
         <nav class="main-nav" aria-label="Primary navigation">
-          <a href="index.html">Home</a>
-          <a href="properties.html" class="active">Properties</a>
-          <a href="projects.html">Projects</a>
-          <a href="about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="contact.html">Contact</a>
+          <a href="index.html" data-i18n="nav.home">Home</a>
+          <a href="properties.html" class="active" data-i18n="nav.properties"
+            >Properties</a
+          >
+          <a href="projects.html" data-i18n="nav.projects">Projects</a>
+          <a href="about.html" data-i18n="nav.about">About</a>
+          <a href="blog.html" data-i18n="nav.blog">Blog</a>
+          <a href="contact.html" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="hdr-right">
+          <button
+            class="lang-toggle btn btn-ghost"
+            id="langToggle"
+            aria-label="Switch to Arabic"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path
+                d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"
+              />
+            </svg>
+            <span class="lang-indicator">AR</span>
+          </button>
           <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
-          <a href="properties.html" class="btn btn-accent">Find Property</a>
+          <a href="properties.html" class="btn btn-accent" data-i18n="nav.find"
+            >Find Property</a
+          >
           <button
             class="hamburger"
             id="hbgBtn"
+            data-i18n-aria="nav.open_menu"
             aria-label="Open menu"
             aria-expanded="false"
             aria-controls="mob"
@@ -1971,27 +2025,34 @@
       <section class="page-hero on-ink" aria-label="Properties Hero">
         <div class="page-hero-inner">
           <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="index.html">Home</a>
+            <a href="index.html" data-i18n="props.breadcrumb_home">Home</a>
             <span class="breadcrumb-sep" aria-hidden="true"></span>
-            <span class="breadcrumb-current" aria-current="page"
+            <span
+              class="breadcrumb-current"
+              aria-current="page"
+              data-i18n="props.breadcrumb"
               >Properties</span
             >
           </nav>
           <div class="hero-eyebrow" aria-hidden="true">
             <span class="hero-eyebrow-slab"></span>
-            <span class="hero-eyebrow-text">Browse Listings</span>
+            <span class="hero-eyebrow-text" data-i18n="props.eyebrow"
+              >Browse Listings</span
+            >
           </div>
-          <h1>Find Your <span class="mark">Property</span></h1>
-          <p class="page-hero-sub">
+          <h1 data-i18n="props.heading">Find Your Property</h1>
+          <p class="page-hero-sub" data-i18n="props.desc">
             544 premium properties across Egypt's most sought-after locations —
             from studios to sky villas.
           </p>
           <div class="hero-meta">
             <div class="hero-count-badge">
-              <span class="hero-count num">544</span> properties available
+              <span class="hero-count num">544</span>
+              <span data-i18n="props.stat.available">properties available</span>
             </div>
             <div class="hero-count-badge">
-              <span class="hero-count num">6</span> prime locations
+              <span class="hero-count num">6</span>
+              <span data-i18n="props.stat.locations">prime locations</span>
             </div>
           </div>
         </div>
@@ -2008,25 +2069,60 @@
       >
         <div class="filter-bar-inner">
           <div class="filter-pills" role="group" aria-label="Property type">
-            <button class="pill active" data-type="all" aria-pressed="true">
+            <button
+              class="pill active"
+              data-type="all"
+              aria-pressed="true"
+              data-i18n="filter.all"
+            >
               All
             </button>
-            <button class="pill" data-type="studio" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="studio"
+              aria-pressed="false"
+              data-i18n="filter.studio"
+            >
               Studio
             </button>
-            <button class="pill" data-type="1br" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="1br"
+              aria-pressed="false"
+              data-i18n="filter.1br"
+            >
               1 BR
             </button>
-            <button class="pill" data-type="2br" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="2br"
+              aria-pressed="false"
+              data-i18n="filter.2br"
+            >
               2 BR
             </button>
-            <button class="pill" data-type="3br" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="3br"
+              aria-pressed="false"
+              data-i18n="filter.3br"
+            >
               3 BR
             </button>
-            <button class="pill" data-type="villa" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="villa"
+              aria-pressed="false"
+              data-i18n="filter.villa"
+            >
               Villa
             </button>
-            <button class="pill" data-type="sky-villa" aria-pressed="false">
+            <button
+              class="pill"
+              data-type="sky-villa"
+              aria-pressed="false"
+              data-i18n="filter.sky_villa"
+            >
               Sky Villa
             </button>
           </div>
@@ -2042,8 +2138,13 @@
                 aria-label="Sort by"
               >
                 <span class="sort-label-group">
-                  <span class="sort-prefix">Sort:</span>
-                  <span class="sort-current" id="sortCurrent">Featured</span>
+                  <span class="sort-prefix" data-i18n="sort.prefix">Sort:</span>
+                  <span
+                    class="sort-current"
+                    id="sortCurrent"
+                    data-i18n="sort.featured"
+                    >Featured</span
+                  >
                 </span>
                 <svg
                   class="sort-chevron"
@@ -2070,6 +2171,7 @@
                   data-value="featured"
                   data-label="Featured"
                   aria-selected="true"
+                  data-i18n="sort.featured"
                 >
                   Featured
                 </li>
@@ -2079,6 +2181,7 @@
                   data-value="price-asc"
                   data-label="Price ↑"
                   aria-selected="false"
+                  data-i18n="sort.price_asc"
                 >
                   Price — Low to High
                 </li>
@@ -2088,6 +2191,7 @@
                   data-value="price-desc"
                   data-label="Price ↓"
                   aria-selected="false"
+                  data-i18n="sort.price_desc"
                 >
                   Price — High to Low
                 </li>
@@ -2097,6 +2201,7 @@
                   data-value="newest"
                   data-label="Newest"
                   aria-selected="false"
+                  data-i18n="sort.newest"
                 >
                   Newest First
                 </li>
@@ -2106,6 +2211,7 @@
                   data-value="area"
                   data-label="By Area"
                   aria-selected="false"
+                  data-i18n="sort.area"
                 >
                   By Area
                 </li>
@@ -2140,7 +2246,7 @@
                 <line x1="4" y1="12" x2="20" y2="12" />
                 <line x1="4" y1="18" x2="20" y2="18" />
               </svg>
-              Filters
+              <span data-i18n="filter.adv">Filters</span>
               <span
                 class="filter-badge num"
                 id="filterCount"
@@ -2173,7 +2279,7 @@
           <div class="adv-grid">
             <!-- Location -->
             <div>
-              <p class="adv-group-label">Location</p>
+              <p class="adv-group-label" data-i18n="adv.location">Location</p>
               <div class="adv-checkboxes">
                 <label class="adv-checkbox-label">
                   <input
@@ -2182,15 +2288,15 @@
                     value="new-cairo"
                     checked
                   />
-                  New Cairo
+                  <span data-i18n="loc.new_cairo">New Cairo</span>
                 </label>
                 <label class="adv-checkbox-label">
                   <input type="checkbox" name="location" value="north-coast" />
-                  North Coast
+                  <span data-i18n="loc.north_coast">North Coast</span>
                 </label>
                 <label class="adv-checkbox-label">
                   <input type="checkbox" name="location" value="sheikh-zayed" />
-                  Sheikh Zayed
+                  <span data-i18n="loc.sheikh_zayed">Sheikh Zayed</span>
                 </label>
                 <label class="adv-checkbox-label loc-extra">
                   <input
@@ -2199,19 +2305,19 @@
                     value="new-capital"
                     checked
                   />
-                  New Capital
+                  <span data-i18n="loc.new_capital">New Capital</span>
                 </label>
                 <label class="adv-checkbox-label loc-extra">
                   <input type="checkbox" name="location" value="ain-sokhna" />
-                  Ain Sokhna
+                  <span data-i18n="loc.ain_sokhna">Ain Sokhna</span>
                 </label>
                 <label class="adv-checkbox-label loc-extra">
                   <input type="checkbox" name="location" value="6th-october" />
-                  6th of October
+                  <span data-i18n="loc.6th_oct">6th of October</span>
                 </label>
               </div>
               <button class="loc-more-btn" id="locMoreBtn" type="button">
-                <span class="loc-btn-text">+3 more</span>
+                <span class="loc-btn-text" data-i18n="loc.more">+3 more</span>
                 <svg
                   width="10"
                   height="10"
@@ -2229,7 +2335,9 @@
 
             <!-- Price Range -->
             <div>
-              <p class="adv-group-label">Price Range (EGP)</p>
+              <p class="adv-group-label" data-i18n="adv.price">
+                Price Range (EGP)
+              </p>
               <div class="range-wrap">
                 <div class="range-inputs">
                   <input
@@ -2253,7 +2361,7 @@
 
             <!-- Area -->
             <div>
-              <p class="adv-group-label">Area (m²)</p>
+              <p class="adv-group-label" data-i18n="adv.area">Area (m²)</p>
               <div class="range-wrap">
                 <div class="range-inputs">
                   <input
@@ -2277,7 +2385,7 @@
 
             <!-- Bedrooms -->
             <div>
-              <p class="adv-group-label">Bedrooms</p>
+              <p class="adv-group-label" data-i18n="adv.bedrooms">Bedrooms</p>
               <div
                 class="bed-pills"
                 role="group"
@@ -2310,7 +2418,7 @@
 
             <!-- Delivery -->
             <div>
-              <p class="adv-group-label">Delivery</p>
+              <p class="adv-group-label" data-i18n="adv.delivery">Delivery</p>
               <div class="adv-checkboxes">
                 <label class="adv-checkbox-label">
                   <input
@@ -2319,41 +2427,47 @@
                     value="ready"
                     checked
                   />
-                  Ready Now
+                  <span data-i18n="adv.ready">Ready Now</span>
                 </label>
                 <label class="adv-checkbox-label">
-                  <input type="checkbox" name="delivery" value="q4-2026" /> Q4
-                  2026
+                  <input type="checkbox" name="delivery" value="q4-2026" />
+                  <span data-i18n="adv.q4_2026">Q4 2026</span>
                 </label>
                 <label class="adv-checkbox-label">
-                  <input type="checkbox" name="delivery" value="q2-2027" /> Q2
-                  2027
+                  <input type="checkbox" name="delivery" value="q2-2027" />
+                  <span data-i18n="adv.q2_2027">Q2 2027</span>
                 </label>
                 <label class="adv-checkbox-label">
                   <input type="checkbox" name="delivery" value="off-plan" />
-                  Off-Plan
+                  <span data-i18n="adv.off_plan">Off-Plan</span>
                 </label>
               </div>
             </div>
 
             <!-- Finishing -->
             <div>
-              <p class="adv-group-label">Finishing</p>
+              <p class="adv-group-label" data-i18n="adv.finishing">Finishing</p>
               <div class="fin-pills" role="group" aria-label="Finishing level">
                 <button
                   class="fin-pill active"
                   data-fin="standard"
                   aria-pressed="true"
                 >
-                  Standard
+                  <span data-i18n="adv.standard">Standard</span>
                 </button>
-                <button class="fin-pill" data-fin="luxury" aria-pressed="false">
+                <button
+                  class="fin-pill"
+                  data-fin="luxury"
+                  aria-pressed="false"
+                  data-i18n="adv.luxury"
+                >
                   Luxury
                 </button>
                 <button
                   class="fin-pill active"
                   data-fin="ultra"
                   aria-pressed="true"
+                  data-i18n="adv.ultra"
                 >
                   Ultra
                 </button>
@@ -2362,8 +2476,12 @@
           </div>
 
           <div class="adv-panel-footer">
-            <button class="btn-clear" id="clearFilters">Clear All</button>
-            <button class="btn-apply" id="applyFilters">Apply Filters</button>
+            <button class="btn-clear" id="clearFilters" data-i18n="adv.clear">
+              Clear All
+            </button>
+            <button class="btn-apply" id="applyFilters" data-i18n="adv.apply">
+              Apply Filters
+            </button>
           </div>
         </div>
       </div>
@@ -2476,7 +2594,7 @@
           <a href="index.html" class="footer-logo" aria-label="Akar Town">
             <svg
               width="180"
-              viewBox="0 0 2750 380"
+              viewBox="0 0 2185 380"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -2522,7 +2640,7 @@
               />
             </svg>
           </a>
-          <p class="footer-tagline">
+          <p class="footer-tagline" data-i18n="footer.tagline">
             Egypt's most trusted real estate partner — connecting families with
             premium developments across the country's finest addresses.
           </p>
@@ -2593,33 +2711,77 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Navigate</span>
+            <span data-i18n="footer.col.navigate">Navigate</span>
           </div>
           <ul class="footer-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="properties.html">Properties</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html" data-i18n="footer.nav.home">Home</a></li>
+            <li>
+              <a href="properties.html" data-i18n="footer.nav.properties"
+                >Properties</a
+              >
+            </li>
+            <li>
+              <a href="projects.html" data-i18n="footer.nav.projects"
+                >Projects</a
+              >
+            </li>
+            <li>
+              <a href="about.html" data-i18n="footer.nav.about">About Us</a>
+            </li>
+            <li><a href="blog.html" data-i18n="footer.nav.blog">Blog</a></li>
+            <li>
+              <a href="contact.html" data-i18n="footer.nav.contact">Contact</a>
+            </li>
           </ul>
         </div>
         <!-- Areas -->
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Areas</span>
+            <span data-i18n="footer.col.areas">Areas</span>
           </div>
           <ul class="footer-nav">
-            <li><a href="properties.html?area=new-cairo">New Cairo</a></li>
-            <li><a href="properties.html?area=new-capital">New Capital</a></li>
             <li>
-              <a href="properties.html?area=sheikh-zayed">Sheikh Zayed</a>
+              <a
+                href="properties.html?area=new-cairo"
+                data-i18n="footer.area.new_cairo"
+                >New Cairo</a
+              >
             </li>
-            <li><a href="properties.html?area=north-coast">North Coast</a></li>
-            <li><a href="properties.html?area=ain-sokhna">Ain Sokhna</a></li>
             <li>
-              <a href="properties.html?area=6th-october">6th of October</a>
+              <a
+                href="properties.html?area=new-capital"
+                data-i18n="footer.area.new_capital"
+                >New Capital</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=sheikh-zayed"
+                data-i18n="footer.area.sheikh_zayed"
+                >Sheikh Zayed</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=north-coast"
+                data-i18n="footer.area.north_coast"
+                >North Coast</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=ain-sokhna"
+                data-i18n="footer.area.ain_sokhna"
+                >Ain Sokhna</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=6th-october"
+                data-i18n="footer.area.6th_oct"
+                >6th of October</a
+              >
             </li>
           </ul>
         </div>
@@ -2627,7 +2789,7 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Contact</span>
+            <span data-i18n="footer.col.contact">Contact</span>
           </div>
           <div class="footer-contact-item">
             <svg
@@ -2643,7 +2805,9 @@
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span>
+            <span data-i18n="footer.address"
+              >90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span
+            >
           </div>
           <div class="footer-contact-item">
             <svg
@@ -2683,17 +2847,18 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copy">
-          © 2026 <strong>Akar Town</strong>. All rights reserved.
+        <p class="footer-copy" data-i18n="footer.copy">
+          © 2026 Akar Town. All rights reserved.
         </p>
         <nav class="footer-legal" aria-label="Legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Cookie Settings</a>
+          <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+          <a href="#" data-i18n="footer.terms">Terms of Use</a>
+          <a href="#" data-i18n="footer.cookies">Cookie Settings</a>
         </nav>
       </div>
     </footer>
 
+    <script src="js/i18n.js"></script>
     <script>
       /* ──────────────────────────────────────────────────────────
        PROPERTY DATA — 12 mock listings
@@ -2703,6 +2868,7 @@
           id: 1,
           type: "2br",
           typeLabel: "2 BR",
+          typeLabelAr: "٢ غرفة",
           project: "Azha Residence",
           name: "Garden View Apartment",
           location: "New Cairo",
@@ -2712,6 +2878,7 @@
           baths: 2,
           delivery: "ready",
           deliveryLabel: "Ready Now",
+          deliveryLabelAr: "جاهز الآن",
           photo:
             "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80",
         },
@@ -2719,6 +2886,7 @@
           id: 2,
           type: "studio",
           typeLabel: "Studio",
+          typeLabelAr: "استوديو",
           project: "Capital Heights",
           name: "Loft Studio Unit",
           location: "New Capital",
@@ -2728,6 +2896,7 @@
           baths: 1,
           delivery: "q4-2026",
           deliveryLabel: "Q4 2026",
+          deliveryLabelAr: "الربع الرابع 2026",
           photo:
             "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80",
         },
@@ -2735,6 +2904,7 @@
           id: 3,
           type: "villa",
           typeLabel: "Villa",
+          typeLabelAr: "فيلا",
           project: "Palm Hills",
           name: "Private Corner Villa",
           location: "Sheikh Zayed",
@@ -2744,6 +2914,7 @@
           baths: 4,
           delivery: "ready",
           deliveryLabel: "Ready Now",
+          deliveryLabelAr: "جاهز الآن",
           photo:
             "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
         },
@@ -2751,6 +2922,7 @@
           id: 4,
           type: "3br",
           typeLabel: "3 BR",
+          typeLabelAr: "٣ غرف",
           project: "Marsa Alam Bay",
           name: "Seafront Penthouse",
           location: "North Coast",
@@ -2760,6 +2932,7 @@
           baths: 3,
           delivery: "q2-2027",
           deliveryLabel: "Q2 2027",
+          deliveryLabelAr: "الربع الثاني 2027",
           photo:
             "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80",
         },
@@ -2767,6 +2940,7 @@
           id: 5,
           type: "1br",
           typeLabel: "1 BR",
+          typeLabelAr: "١ غرفة",
           project: "Zed East",
           name: "Smart Apartment",
           location: "New Cairo",
@@ -2776,6 +2950,7 @@
           baths: 1,
           delivery: "off-plan",
           deliveryLabel: "Off-Plan",
+          deliveryLabelAr: "على الخريطة",
           photo:
             "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80",
         },
@@ -2783,6 +2958,7 @@
           id: 6,
           type: "sky-villa",
           typeLabel: "Sky Villa",
+          typeLabelAr: "سكاي فيلا",
           project: "The Waterway",
           name: "Rooftop Sky Villa",
           location: "New Cairo",
@@ -2792,6 +2968,7 @@
           baths: 5,
           delivery: "q4-2026",
           deliveryLabel: "Q4 2026",
+          deliveryLabelAr: "الربع الرابع 2026",
           photo:
             "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
         },
@@ -2799,6 +2976,7 @@
           id: 7,
           type: "2br",
           typeLabel: "2 BR",
+          typeLabelAr: "٢ غرفة",
           project: "Telal Sokhna",
           name: "Chalet with Pool Access",
           location: "Ain Sokhna",
@@ -2808,6 +2986,7 @@
           baths: 2,
           delivery: "ready",
           deliveryLabel: "Ready Now",
+          deliveryLabelAr: "جاهز الآن",
           photo:
             "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80",
         },
@@ -2815,6 +2994,7 @@
           id: 8,
           type: "1br",
           typeLabel: "1 BR",
+          typeLabelAr: "١ غرفة",
           project: "SODIC West",
           name: "Urban Loft Apartment",
           location: "6th of October",
@@ -2824,6 +3004,7 @@
           baths: 1,
           delivery: "q2-2027",
           deliveryLabel: "Q2 2027",
+          deliveryLabelAr: "الربع الثاني 2027",
           photo:
             "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80",
         },
@@ -2831,6 +3012,7 @@
           id: 9,
           type: "3br",
           typeLabel: "3 BR",
+          typeLabelAr: "٣ غرف",
           project: "O West",
           name: "Duplex with Garden",
           location: "6th of October",
@@ -2840,6 +3022,7 @@
           baths: 2,
           delivery: "off-plan",
           deliveryLabel: "Off-Plan",
+          deliveryLabelAr: "على الخريطة",
           photo:
             "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
         },
@@ -2847,6 +3030,7 @@
           id: 10,
           type: "studio",
           typeLabel: "Studio",
+          typeLabelAr: "استوديو",
           project: "Taj City",
           name: "Compact Studio Flat",
           location: "New Cairo",
@@ -2856,6 +3040,7 @@
           baths: 1,
           delivery: "ready",
           deliveryLabel: "Ready Now",
+          deliveryLabelAr: "جاهز الآن",
           photo:
             "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80",
         },
@@ -2863,6 +3048,7 @@
           id: 11,
           type: "villa",
           typeLabel: "Villa",
+          typeLabelAr: "فيلا",
           project: "Marassi",
           name: "Mediterranean Villa",
           location: "North Coast",
@@ -2872,6 +3058,7 @@
           baths: 3,
           delivery: "q4-2026",
           deliveryLabel: "Q4 2026",
+          deliveryLabelAr: "الربع الرابع 2026",
           photo:
             "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80",
         },
@@ -2879,6 +3066,7 @@
           id: 12,
           type: "2br",
           typeLabel: "2 BR",
+          typeLabelAr: "٢ غرفة",
           project: "Compound 90",
           name: "Corner Unit, Club View",
           location: "New Capital",
@@ -2888,6 +3076,7 @@
           baths: 2,
           delivery: "q2-2027",
           deliveryLabel: "Q2 2027",
+          deliveryLabelAr: "الربع الثاني 2027",
           photo:
             "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80",
         },
@@ -2963,7 +3152,7 @@
             <img class="prop-card-photo" src="${p.photo}" alt="${p.name} — ${p.location}" loading="lazy" width="600" height="450">
             <div class="prop-card-shear" aria-hidden="true"></div>
             <div class="prop-card-badges" aria-hidden="true">
-              <span class="prop-type-badge">${p.typeLabel}</span>
+              <span class="prop-type-badge">${document.documentElement.lang === 'ar' ? (p.typeLabelAr || p.typeLabel) : p.typeLabel}</span>
               <button class="prop-save-btn${savedIds.has(p.id) ? " saved" : ""}" data-save="${p.id}" aria-label="${savedIds.has(p.id) ? "Remove from saved" : "Save property"}">
                 ${bookmarkIcon(savedIds.has(p.id))}
               </button>
@@ -2983,7 +3172,7 @@
               <span class="prop-chip">${bathIcon()} ${p.baths} Bath${p.baths > 1 ? "s" : ""}</span>
             </div>
             <div class="prop-card-footer">
-              <span class="delivery-tag ${deliveryClass(p.delivery)}">${p.deliveryLabel}</span>
+              <span class="delivery-tag ${deliveryClass(p.delivery)}">${document.documentElement.lang === 'ar' ? (p.deliveryLabelAr || p.deliveryLabel) : p.deliveryLabel}</span>
               <a href="property-detail.html?id=${p.id}" class="prop-cta" aria-label="View details for ${p.name}">
                 View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
@@ -3011,6 +3200,9 @@
           });
         });
       }
+
+      /* Re-render cards on language change */
+      document.addEventListener('akar:langchange', function() { renderCards(currentPage); });
 
       /* ──────────────────────────────────────────────────────────
        PAGINATION

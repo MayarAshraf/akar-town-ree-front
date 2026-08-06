@@ -287,10 +287,11 @@
         align-items: center;
         gap: var(--sp2);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
-        padding: 10px 22px;
+        padding: 7px 18px;
+        line-height: 1;
         border-radius: 100px;
         white-space: nowrap;
         cursor: none;
@@ -315,7 +316,6 @@
       .btn-accent:hover {
         background: var(--accent-fill-hover);
         transform: translateY(-1px);
-        box-shadow: 0 5px 20px rgba(211, 2, 1, 0.42);
       }
       .btn-accent:active {
         transform: translateY(0);
@@ -453,6 +453,7 @@
         color: rgba(255, 255, 255, 0.52);
         padding: 8px 14px;
         border-radius: 100px;
+        white-space: nowrap;
         transition:
           color var(--dur-ui),
           background var(--dur-ui);
@@ -467,8 +468,20 @@
       .hdr-right {
         display: flex;
         align-items: center;
-        gap: var(--sp2);
+        gap: 8px;
         flex-shrink: 0;
+      }
+      .lang-toggle {
+        flex-shrink: 0;
+        padding: 6px 18px !important;
+      }
+      .lang-toggle svg {
+        flex-shrink: 0;
+      }
+      @media (max-width: 600px) {
+        .lang-toggle svg {
+          display: none;
+        }
       }
       .hamburger {
         display: none;
@@ -1032,6 +1045,17 @@
           display: flex;
         }
       }
+      /* RTL — shrink nav + buttons so Arabic labels fit without collapsing */
+      [dir="rtl"] .main-nav a {
+        font-size: 11px;
+        padding: 7px 9px;
+      }
+      [dir="rtl"] .hdr-right .btn,
+      [dir="rtl"] .btn-ghost,
+      [dir="rtl"] .btn-accent {
+        font-size: 11px;
+        padding: 7px 13px;
+      }
       @media (max-width: 768px) {
         :root {
           --hh: 58px;
@@ -1175,6 +1199,13 @@
           100% 100%,
           calc(var(--slab-h) * 0.81) 100%
         );
+      }
+      /* RTL — flip directional arrows */
+      [dir="rtl"] .hn-btn svg,
+      [dir="rtl"] .props-nav-btn svg,
+      [dir="rtl"] .proj-ctrl svg,
+      [dir="rtl"] .loc-arrow svg {
+        transform: scaleX(-1);
       }
 
       .fnd-eyebrow-slab {
@@ -2888,12 +2919,12 @@
       aria-hidden="true"
     >
       <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
-      <a href="index.html" onclick="closeMob()">Home</a>
-      <a href="properties.html" onclick="closeMob()">Properties</a>
-      <a href="projects.html" onclick="closeMob()">Projects</a>
-      <a href="about.html" onclick="closeMob()">About</a>
-      <a href="blog.html" onclick="closeMob()">Blog</a>
-      <a href="contact.html" onclick="closeMob()">Contact</a>
+      <a href="index.html" onclick="closeMob()" data-i18n="mob.home">Home</a>
+      <a href="properties.html" onclick="closeMob()" data-i18n="mob.properties">Properties</a>
+      <a href="projects.html" onclick="closeMob()" data-i18n="mob.projects">Projects</a>
+      <a href="about.html" onclick="closeMob()" data-i18n="mob.about">About</a>
+      <a href="blog.html" onclick="closeMob()" data-i18n="mob.blog">Blog</a>
+      <a href="contact.html" onclick="closeMob()" data-i18n="mob.contact">Contact</a>
     </div>
 
     <!-- HEADER -->
@@ -2901,8 +2932,8 @@
       <div class="hdr-inner">
         <a href="index.html" class="logo" aria-label="Akar Town">
           <svg
-            width="300"
-            viewBox="0 0 2750 380"
+            width="240"
+            viewBox="0 0 2185 380"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -2949,19 +2980,45 @@
           </svg>
         </a>
         <nav class="main-nav" aria-label="Primary navigation">
-          <a href="index.html" class="active">Home</a>
-          <a href="properties.html">Properties</a>
-          <a href="projects.html">Projects</a>
-          <a href="about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="contact.html">Contact</a>
+          <a href="index.html" class="active" data-i18n="nav.home">Home</a>
+          <a href="properties.html" data-i18n="nav.properties">Properties</a>
+          <a href="projects.html" data-i18n="nav.projects">Projects</a>
+          <a href="about.html" data-i18n="nav.about">About</a>
+          <a href="blog.html" data-i18n="nav.blog">Blog</a>
+          <a href="contact.html" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="hdr-right">
+          <button
+            class="lang-toggle btn btn-ghost"
+            id="langToggle"
+            aria-label="Switch to Arabic"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path
+                d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"
+              />
+            </svg>
+            <span class="lang-indicator">AR</span>
+          </button>
           <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
-          <a href="properties.html" class="btn btn-accent">Find Property</a>
+          <a href="properties.html" class="btn btn-accent" data-i18n="nav.find"
+            >Find Property</a
+          >
           <button
             class="hamburger"
             id="hbgBtn"
+            data-i18n-aria="nav.open_menu"
             aria-label="Open menu"
             aria-expanded="false"
             aria-controls="mob"
@@ -2992,11 +3049,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge hs-badge--sale">For Sale</span>
+                        <span
+                          class="hs-badge hs-badge--sale"
+                          data-i18n="hero.badge.sale"
+                          >For Sale</span
+                        >
                         <span class="hs-num" aria-hidden="true">01</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Luxury Apartments</p>
+                        <p class="hs-cat" data-i18n="hero.cat.luxury_apts">Luxury Apartments</p>
                         <h2 class="hs-title">The Residences</h2>
                         <p class="hs-loc">
                           <svg
@@ -3008,7 +3069,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          New Cairo, Cairo
+                          <span data-i18n="hero.loc.new_cairo">New Cairo, Cairo</span>
                         </p>
                       </div>
                     </div>
@@ -3022,13 +3083,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge hs-badge--launch"
+                        <span
+                          class="hs-badge hs-badge--launch"
+                          data-i18n="hero.badge.launch"
                           >New Launch</span
                         >
                         <span class="hs-num" aria-hidden="true">02</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Mixed-Use Tower</p>
+                        <p class="hs-cat" data-i18n="hero.cat.mixed_use">Mixed-Use Tower</p>
                         <h2 class="hs-title">Crystal Tower</h2>
                         <p class="hs-loc">
                           <svg
@@ -3040,7 +3103,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          6th of October, Giza
+                          <span data-i18n="hero.loc.6th_oct">6th of October, Giza</span>
                         </p>
                       </div>
                     </div>
@@ -3054,11 +3117,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge hs-badge--ready">Ready</span>
+                        <span
+                          class="hs-badge hs-badge--ready"
+                          data-i18n="hero.badge.ready"
+                          >Ready</span
+                        >
                         <span class="hs-num" aria-hidden="true">03</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Luxury Villas</p>
+                        <p class="hs-cat" data-i18n="hero.cat.luxury_villas">Luxury Villas</p>
                         <h2 class="hs-title">Palm Gardens</h2>
                         <p class="hs-loc">
                           <svg
@@ -3070,7 +3137,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          North Coast, Alexandria
+                          <span data-i18n="hero.loc.north_coast">North Coast, Alexandria</span>
                         </p>
                       </div>
                     </div>
@@ -3084,13 +3151,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge hs-badge--launch"
+                        <span
+                          class="hs-badge hs-badge--launch"
+                          data-i18n="hero.badge.launch"
                           >New Launch</span
                         >
                         <span class="hs-num" aria-hidden="true">04</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Waterfront Residences</p>
+                        <p class="hs-cat" data-i18n="hero.cat.waterfront">Waterfront Residences</p>
                         <h2 class="hs-title">Marina Heights</h2>
                         <p class="hs-loc">
                           <svg
@@ -3102,7 +3171,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          New Alamein, Matrouh
+                          <span data-i18n="hero.loc.new_alamein">New Alamein, Matrouh</span>
                         </p>
                       </div>
                     </div>
@@ -3116,11 +3185,11 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge">Off-Plan</span>
+                        <span class="hs-badge" data-i18n="hero.badge.offplan">Off-Plan</span>
                         <span class="hs-num" aria-hidden="true">05</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Premium Villas</p>
+                        <p class="hs-cat" data-i18n="hero.cat.premium_villas">Premium Villas</p>
                         <h2 class="hs-title">The Grand Villas</h2>
                         <p class="hs-loc">
                           <svg
@@ -3132,7 +3201,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          Sheikh Zayed, Giza
+                          <span data-i18n="hero.loc.sheikh_zayed">Sheikh Zayed, Giza</span>
                         </p>
                       </div>
                     </div>
@@ -3146,11 +3215,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge hs-badge--sale">For Sale</span>
+                        <span
+                          class="hs-badge hs-badge--sale"
+                          data-i18n="hero.badge.sale"
+                          >For Sale</span
+                        >
                         <span class="hs-num" aria-hidden="true">06</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat">Coastal Chalets</p>
+                        <p class="hs-cat" data-i18n="hero.cat.chalets">Coastal Chalets</p>
                         <h2 class="hs-title">Azure Bay</h2>
                         <p class="hs-loc">
                           <svg
@@ -3162,7 +3235,7 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          Sidi Abdel Rahman, North Coast
+                          <span data-i18n="hero.loc.sidi_abdel_rahman">Sidi Abdel Rahman, North Coast</span>
                         </p>
                       </div>
                     </div>
@@ -3213,17 +3286,19 @@
               aria-label="Selected property details"
             >
               <div class="ic" id="ic-price">
-                <span class="il">Starting From</span>
+                <span class="il" data-i18n="hero.stat.starting"
+                  >Starting From</span
+                >
                 <span class="iv" id="v-price">4,200,000<sub>EGP</sub></span>
               </div>
               <div class="isep" aria-hidden="true"></div>
               <div class="ic" id="ic-area">
-                <span class="il">Area Range</span>
+                <span class="il" data-i18n="hero.stat.area">Area Range</span>
                 <span class="iv" id="v-area">120–320<sub>m²</sub></span>
               </div>
               <div class="isep" aria-hidden="true"></div>
               <div class="ic" id="ic-units">
-                <span class="il">Total Units</span>
+                <span class="il" data-i18n="hero.stat.units">Total Units</span>
                 <span class="iv" id="v-units">248<sub>units</sub></span>
               </div>
               <div class="isep" aria-hidden="true"></div>
@@ -3249,11 +3324,13 @@
           <div class="fnd-config" id="fndConfig">
             <div class="fnd-eyebrow" aria-hidden="true">
               <span class="slab fnd-eyebrow-slab"></span>
-              <span class="fnd-eyebrow-text">Configure Your Space</span>
+              <span class="fnd-eyebrow-text" data-i18n="finder.eyebrow"
+                >Configure Your Space</span
+              >
             </div>
 
-            <h2 class="fnd-heading">
-              Find Your <span class="mark">Perfect</span> Home Layout
+            <h2 class="fnd-heading" data-i18n="finder.heading">
+              Find Your Perfect Home Layout
             </h2>
 
             <!-- Type pills -->
@@ -3279,7 +3356,9 @@
                     d="M2 20v-6a2 2 0 012-2h16a2 2 0 012 2v6M2 14V9a2 2 0 012-2h1V5a2 2 0 012-2h10a2 2 0 012 2v2h1a2 2 0 012 2v5"
                   />
                 </svg>
-                <span class="fnd-row-label">Bedrooms</span>
+                <span class="fnd-row-label" data-i18n="finder.bedrooms"
+                  >Bedrooms</span
+                >
                 <div class="fnd-stepper" aria-label="Bedrooms stepper">
                   <button
                     class="fnd-step-btn"
@@ -3315,7 +3394,9 @@
                     d="M9 6C9 4.343 7.657 3 6 3s-3 1.343-3 3v8h18v2c0 3.314-2.686 6-6 6H9c-3.314 0-6-2.686-6-6v-2"
                   />
                 </svg>
-                <span class="fnd-row-label">Bathrooms</span>
+                <span class="fnd-row-label" data-i18n="finder.bathrooms"
+                  >Bathrooms</span
+                >
                 <div class="fnd-stepper" aria-label="Bathrooms stepper">
                   <button
                     class="fnd-step-btn"
@@ -3351,19 +3432,35 @@
                     d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
                   />
                 </svg>
-                <span class="fnd-row-label">Finishing</span>
+                <span class="fnd-row-label" data-i18n="finder.finishing"
+                  >Finishing</span
+                >
                 <div
                   class="fnd-finish-group"
                   role="group"
                   aria-label="Finishing level"
                 >
-                  <button class="fnd-finish active" data-finish="standard">
+                  <button
+                    class="fnd-finish active"
+                    data-finish="standard"
+                    data-i18n="finder.standard"
+                  >
                     Standard
                   </button>
-                  <button class="fnd-finish" data-finish="luxury">
+                  <button
+                    class="fnd-finish"
+                    data-finish="luxury"
+                    data-i18n="finder.luxury"
+                  >
                     Luxury
                   </button>
-                  <button class="fnd-finish" data-finish="ultra">Ultra</button>
+                  <button
+                    class="fnd-finish"
+                    data-finish="ultra"
+                    data-i18n="finder.ultra"
+                  >
+                    Ultra
+                  </button>
                 </div>
               </div>
             </div>
@@ -3387,7 +3484,9 @@
                   /><sub>EGP</sub>
                 </div>
               </div>
-              <a href="properties.html" class="fnd-cta">Find Properties →</a>
+              <a href="properties.html" class="fnd-cta" data-i18n="finder.cta"
+                >Find Properties →</a
+              >
             </div>
           </div>
           <!-- /fnd-config -->
@@ -3421,10 +3520,12 @@
           <div class="props-heading-group">
             <div class="fnd-eyebrow">
               <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
-              <span class="fnd-eyebrow-text">Browse Properties</span>
+              <span class="fnd-eyebrow-text" data-i18n="props_slider.eyebrow"
+                >Browse Properties</span
+              >
             </div>
-            <h2 class="props-heading">
-              Find Your <span class="mark">Perfect</span> Property
+            <h2 class="props-heading" data-i18n="props_slider.heading">
+              Find Your Perfect Property
             </h2>
           </div>
           <nav class="props-nav" aria-label="Properties slider navigation">
@@ -3487,9 +3588,9 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat">Residential</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
                       </div>
-                      <div class="props-card-label">Studio<br />Apartment</div>
+                      <div class="props-card-label" data-i18n-html="prop.card.studio_apt">Studio<br />Apartment</div>
                     </div>
                   </a>
                 </div>
@@ -3506,9 +3607,9 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat">Residential</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
                       </div>
-                      <div class="props-card-label">1BR<br />Apartment</div>
+                      <div class="props-card-label" data-i18n-html="prop.card.1br_apt">1BR<br />Apartment</div>
                     </div>
                   </a>
                 </div>
@@ -3525,9 +3626,9 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat">Premium</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.premium">Premium</span>
                       </div>
-                      <div class="props-card-label">2BR<br />Penthouse</div>
+                      <div class="props-card-label" data-i18n-html="prop.card.2br_pent">2BR<br />Penthouse</div>
                     </div>
                   </a>
                 </div>
@@ -3544,9 +3645,9 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat">Villa</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.villa">Villa</span>
                       </div>
-                      <div class="props-card-label">3BR<br />Garden Villa</div>
+                      <div class="props-card-label" data-i18n-html="prop.card.3br_villa">3BR<br />Garden Villa</div>
                     </div>
                   </a>
                 </div>
@@ -3563,9 +3664,9 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat">Ultra-Premium</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.ultra">Ultra-Premium</span>
                       </div>
-                      <div class="props-card-label">Sky<br />Villa</div>
+                      <div class="props-card-label" data-i18n-html="prop.card.sky_villa">Sky<br />Villa</div>
                     </div>
                   </a>
                 </div>
@@ -3585,27 +3686,27 @@
             <div class="props-det-divider"></div>
             <div class="props-det-table" id="propsDetTable">
               <div class="props-det-row">
-                <span class="props-det-key">Price From</span>
+                <span class="props-det-key" data-i18n="props.det.price_from">Price From</span>
                 <span class="props-det-val accent" id="propsDetPrice"
                   >2,500,000 EGP</span
                 >
               </div>
               <div class="props-det-row">
-                <span class="props-det-key">Living Space</span>
+                <span class="props-det-key" data-i18n="props.det.living_space">Living Space</span>
                 <span class="props-det-val" id="propsDetArea">45 m²</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key">Bedrooms</span>
+                <span class="props-det-key" data-i18n="props.det.bedrooms">Bedrooms</span>
                 <span class="props-det-val" id="propsDetBeds">Studio</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key">Delivery</span>
+                <span class="props-det-key" data-i18n="props.det.delivery">Delivery</span>
                 <span class="props-det-val" id="propsDetDelivery"
                   >Ready Now</span
                 >
               </div>
             </div>
-            <a href="properties.html" class="props-det-cta" id="propsDetCta"
+            <a href="properties.html" class="props-det-cta" id="propsDetCta" data-i18n="props.det.cta"
               >Find Listings →</a
             >
           </div>
@@ -3822,13 +3923,14 @@
             <div class="proj-stmt-content">
               <div class="fnd-eyebrow">
                 <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
-                <span class="fnd-eyebrow-text">Our Projects</span>
+                <span class="fnd-eyebrow-text" data-i18n="proj.eyebrow"
+                  >Our Projects</span
+                >
               </div>
-              <h2 class="proj-stmt-headline">
-                Your Next Chapter Starts With the Right
-                <span class="mark">Address.</span>
+              <h2 class="proj-stmt-headline" data-i18n="proj.headline">
+                Your Next Chapter Starts With the Right Address.
               </h2>
-              <p class="proj-stmt-body">
+              <p class="proj-stmt-body" data-i18n-html="proj.body">
                 From New Cairo's rising skyline to the North Coast's pristine
                 shores, every project in our portfolio is hand-selected for
                 location strength, developer credibility, and long-term
@@ -3839,7 +3941,11 @@
                 transparent pricing, and a guaranteed delivery timeline. No
                 surprises. No compromises.
               </p>
-              <a href="projects.html" class="proj-stmt-cta">
+              <a
+                href="projects.html"
+                class="proj-stmt-cta"
+                data-i18n="proj.cta"
+              >
                 Explore All Projects
                 <svg
                   width="13"
@@ -3992,9 +4098,9 @@
           <div class="locs-title-group">
             <div class="fnd-eyebrow">
               <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
-              <span class="fnd-eyebrow-text">Explore by Location</span>
+              <span class="fnd-eyebrow-text" data-i18n="loc.section.eyebrow">Explore by Location</span>
             </div>
-            <h2 class="props-heading">
+            <h2 class="props-heading" data-i18n-html="loc.section.heading">
               Where Do You Want to <span class="mark">Live?</span>
             </h2>
           </div>
@@ -4017,9 +4123,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">01</span>
-              <span class="loc-name">New Cairo</span>
-              <span class="loc-tag">East Cairo</span>
-              <span class="loc-prop-count">148 properties</span>
+              <span class="loc-name" data-i18n="loc.new_cairo">New Cairo</span>
+              <span class="loc-tag" data-i18n="loc.tag.east_cairo">East Cairo</span>
+              <span class="loc-prop-count" data-i18n="loc.new_cairo.count">148 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4036,21 +4142,21 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">148</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 2.4M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">12</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">Fifth Settlement</span>
-                <span class="loc-district-tag">El Banafseg</span>
-                <span class="loc-district-tag">Rehab City</span>
-                <span class="loc-district-tag">Madinaty</span>
+                <span class="loc-district-tag" data-i18n="loc.district.fifth_settlement">Fifth Settlement</span>
+                <span class="loc-district-tag" data-i18n="loc.district.banafseg">El Banafseg</span>
+                <span class="loc-district-tag" data-i18n="loc.district.rehab">Rehab City</span>
+                <span class="loc-district-tag" data-i18n="loc.district.madinaty">Madinaty</span>
               </div>
             </div>
           </li>
@@ -4071,9 +4177,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">02</span>
-              <span class="loc-name">North Coast</span>
-              <span class="loc-tag">Mediterranean</span>
-              <span class="loc-prop-count">96 properties</span>
+              <span class="loc-name" data-i18n="loc.north_coast">North Coast</span>
+              <span class="loc-tag" data-i18n="loc.tag.mediterranean">Mediterranean</span>
+              <span class="loc-prop-count" data-i18n="loc.north_coast.count">96 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4090,20 +4196,20 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">96</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 3.1M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">8</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">Sidi Abdel Rahman</span>
-                <span class="loc-district-tag">Hacienda Bay</span>
-                <span class="loc-district-tag">Marassi</span>
+                <span class="loc-district-tag" data-i18n="loc.district.sidi_abdel_rahman">Sidi Abdel Rahman</span>
+                <span class="loc-district-tag" data-i18n="loc.district.hacienda">Hacienda Bay</span>
+                <span class="loc-district-tag" data-i18n="loc.district.marassi">Marassi</span>
               </div>
             </div>
           </li>
@@ -4124,9 +4230,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">03</span>
-              <span class="loc-name">Sheikh Zayed</span>
-              <span class="loc-tag">West Cairo</span>
-              <span class="loc-prop-count">74 properties</span>
+              <span class="loc-name" data-i18n="loc.sheikh_zayed">Sheikh Zayed</span>
+              <span class="loc-tag" data-i18n="loc.tag.west_cairo">West Cairo</span>
+              <span class="loc-prop-count" data-i18n="loc.sheikh_zayed.count">74 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4143,20 +4249,20 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">74</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.9M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">6</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">Allegria</span>
-                <span class="loc-district-tag">Zayed 2000</span>
-                <span class="loc-district-tag">Golf District</span>
+                <span class="loc-district-tag" data-i18n="loc.district.allegria">Allegria</span>
+                <span class="loc-district-tag" data-i18n="loc.district.zayed_2000">Zayed 2000</span>
+                <span class="loc-district-tag" data-i18n="loc.district.golf">Golf District</span>
               </div>
             </div>
           </li>
@@ -4177,9 +4283,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">04</span>
-              <span class="loc-name">New Capital</span>
-              <span class="loc-tag">Future City</span>
-              <span class="loc-prop-count">112 properties</span>
+              <span class="loc-name" data-i18n="loc.new_capital">New Capital</span>
+              <span class="loc-tag" data-i18n="loc.tag.future_city">Future City</span>
+              <span class="loc-prop-count" data-i18n="loc.new_capital.count">112 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4196,21 +4302,21 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">112</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 2.8M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">14</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">R7 District</span>
-                <span class="loc-district-tag">R8 District</span>
-                <span class="loc-district-tag">Downtown</span>
-                <span class="loc-district-tag">MU23</span>
+                <span class="loc-district-tag" data-i18n="loc.district.r7">R7 District</span>
+                <span class="loc-district-tag" data-i18n="loc.district.r8">R8 District</span>
+                <span class="loc-district-tag" data-i18n="loc.district.downtown_cap">Downtown</span>
+                <span class="loc-district-tag" data-i18n="loc.district.mu23">MU23</span>
               </div>
             </div>
           </li>
@@ -4231,9 +4337,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">05</span>
-              <span class="loc-name">Ain Sokhna</span>
-              <span class="loc-tag">Red Sea</span>
-              <span class="loc-prop-count">53 properties</span>
+              <span class="loc-name" data-i18n="loc.ain_sokhna">Ain Sokhna</span>
+              <span class="loc-tag" data-i18n="loc.tag.red_sea">Red Sea</span>
+              <span class="loc-prop-count" data-i18n="loc.ain_sokhna.count">53 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4250,20 +4356,20 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">53</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.5M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">5</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">Porto Sokhna</span>
-                <span class="loc-district-tag">Azzurra</span>
-                <span class="loc-district-tag">La Vista</span>
+                <span class="loc-district-tag" data-i18n="loc.district.porto_sokhna">Porto Sokhna</span>
+                <span class="loc-district-tag" data-i18n="loc.district.azzurra">Azzurra</span>
+                <span class="loc-district-tag" data-i18n="loc.district.la_vista">La Vista</span>
               </div>
             </div>
           </li>
@@ -4284,9 +4390,9 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">06</span>
-              <span class="loc-name">October City</span>
-              <span class="loc-tag">West Cairo</span>
-              <span class="loc-prop-count">61 properties</span>
+              <span class="loc-name" data-i18n="loc.6th_oct">October City</span>
+              <span class="loc-tag" data-i18n="loc.tag.west_cairo">West Cairo</span>
+              <span class="loc-prop-count" data-i18n="loc.6th_oct.count">61 properties</span>
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4303,31 +4409,31 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">61</span
-                ><span class="loc-stat-key">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.7M+</span
-                ><span class="loc-stat-key">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">5</span
-                ><span class="loc-stat-key">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag">Hadayek October</span>
-                <span class="loc-district-tag">Wadi El Nile</span>
-                <span class="loc-district-tag">Beverly Hills</span>
+                <span class="loc-district-tag" data-i18n="loc.district.hadayek_october">Hadayek October</span>
+                <span class="loc-district-tag" data-i18n="loc.district.wadi_nile">Wadi El Nile</span>
+                <span class="loc-district-tag" data-i18n="loc.district.beverly">Beverly Hills</span>
               </div>
             </div>
           </li>
         </ul>
 
         <div class="locs-footer">
-          <span class="locs-footer-text"
+          <span class="locs-footer-text" data-i18n="loc.section.footer"
             >Serving 6 prime destinations · 544+ active listings</span
           >
           <a href="properties.html" class="locs-cta">
-            View All Locations
+            <span data-i18n="loc.section.cta">View All Locations</span>
             <svg
               width="14"
               height="14"
@@ -4360,7 +4466,7 @@
           <a href="index.html" class="footer-logo" aria-label="Akar Town">
             <svg
               width="180"
-              viewBox="0 0 2750 380"
+              viewBox="0 0 2185 380"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -4406,7 +4512,7 @@
               />
             </svg>
           </a>
-          <p class="footer-tagline">
+          <p class="footer-tagline" data-i18n="footer.tagline">
             Egypt's most trusted real estate partner — connecting families with
             premium developments across the country's finest addresses.
           </p>
@@ -4478,15 +4584,27 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Navigate</span>
+            <span data-i18n="footer.col.navigate">Navigate</span>
           </div>
           <ul class="footer-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="properties.html">Properties</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html" data-i18n="footer.nav.home">Home</a></li>
+            <li>
+              <a href="properties.html" data-i18n="footer.nav.properties"
+                >Properties</a
+              >
+            </li>
+            <li>
+              <a href="projects.html" data-i18n="footer.nav.projects"
+                >Projects</a
+              >
+            </li>
+            <li>
+              <a href="about.html" data-i18n="footer.nav.about">About Us</a>
+            </li>
+            <li><a href="blog.html" data-i18n="footer.nav.blog">Blog</a></li>
+            <li>
+              <a href="contact.html" data-i18n="footer.nav.contact">Contact</a>
+            </li>
           </ul>
         </div>
 
@@ -4494,18 +4612,50 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Areas</span>
+            <span data-i18n="footer.col.areas">Areas</span>
           </div>
           <ul class="footer-nav">
-            <li><a href="properties.html?area=new-cairo">New Cairo</a></li>
-            <li><a href="properties.html?area=new-capital">New Capital</a></li>
             <li>
-              <a href="properties.html?area=sheikh-zayed">Sheikh Zayed</a>
+              <a
+                href="properties.html?area=new-cairo"
+                data-i18n="footer.area.new_cairo"
+                >New Cairo</a
+              >
             </li>
-            <li><a href="properties.html?area=north-coast">North Coast</a></li>
-            <li><a href="properties.html?area=ain-sokhna">Ain Sokhna</a></li>
             <li>
-              <a href="properties.html?area=6th-october">6th of October</a>
+              <a
+                href="properties.html?area=new-capital"
+                data-i18n="footer.area.new_capital"
+                >New Capital</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=sheikh-zayed"
+                data-i18n="footer.area.sheikh_zayed"
+                >Sheikh Zayed</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=north-coast"
+                data-i18n="footer.area.north_coast"
+                >North Coast</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=ain-sokhna"
+                data-i18n="footer.area.ain_sokhna"
+                >Ain Sokhna</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=6th-october"
+                data-i18n="footer.area.6th_oct"
+                >6th of October</a
+              >
             </li>
           </ul>
         </div>
@@ -4514,7 +4664,7 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Contact</span>
+            <span data-i18n="footer.col.contact">Contact</span>
           </div>
           <div class="footer-contact-item">
             <svg
@@ -4572,13 +4722,13 @@
 
       <!-- Bottom bar -->
       <div class="footer-bottom">
-        <p class="footer-copy">
-          © 2026 <strong>Akar Town</strong>. All rights reserved.
+        <p class="footer-copy" data-i18n="footer.copy">
+          © 2026 Akar Town. All rights reserved.
         </p>
         <nav class="footer-legal" aria-label="Legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Cookie Settings</a>
+          <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+          <a href="#" data-i18n="footer.terms">Terms of Use</a>
+          <a href="#" data-i18n="footer.cookies">Cookie Settings</a>
         </nav>
       </div>
     </footer>
@@ -4586,6 +4736,7 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/i18n.js"></script>
 
     <script>
       /* ── Cursor ── */
@@ -4765,7 +4916,7 @@
       }
 
       /* ── Swiper — coverflow fan ── */
-      const heroSwiper = new Swiper("#heroSwiper", {
+      let heroSwiper = new Swiper("#heroSwiper", {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
@@ -5192,60 +5343,62 @@
       ══════════════════════════════════════════════════ */
       const PROPS_DATA = [
         {
-          count: "48 PROPERTY LISTING",
-          name: "Studio Apartment",
-          agent: "Akar Town Real Estate",
+          count: { en: "48 PROPERTY LISTING", ar: "٤٨ قائمة عقارية" },
+          name:  { en: "Studio Apartment", ar: "استوديو سكني" },
+          agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "2,500,000 EGP",
-          area: "45 m²",
-          beds: "Studio",
-          delivery: "Ready Now",
-          href: "properties.html?type=studio",
+          area:  "45 m²",
+          beds:  { en: "Studio", ar: "استوديو" },
+          delivery: { en: "Ready Now", ar: "جاهز الآن" },
+          href:  "properties.html?type=studio",
         },
         {
-          count: "36 PROPERTY LISTING",
-          name: "1BR Apartment",
-          agent: "Akar Town Real Estate",
+          count: { en: "36 PROPERTY LISTING", ar: "٣٦ قائمة عقارية" },
+          name:  { en: "1BR Apartment", ar: "شقة ١ غرفة" },
+          agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "3,800,000 EGP",
-          area: "75 m²",
-          beds: "1 Bedroom",
-          delivery: "Ready Now",
-          href: "properties.html?type=1br",
+          area:  "75 m²",
+          beds:  { en: "1 Bedroom", ar: "١ غرفة نوم" },
+          delivery: { en: "Ready Now", ar: "جاهز الآن" },
+          href:  "properties.html?type=1br",
         },
         {
-          count: "24 PROPERTY LISTING",
-          name: "2BR Penthouse",
-          agent: "Akar Town Real Estate",
+          count: { en: "24 PROPERTY LISTING", ar: "٢٤ قائمة عقارية" },
+          name:  { en: "2BR Penthouse", ar: "بنتهاوس ٢ غرفة" },
+          agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "7,200,000 EGP",
-          area: "140 m²",
-          beds: "2 Bedrooms",
-          delivery: "Q4 2026",
-          href: "properties.html?type=2br",
+          area:  "140 m²",
+          beds:  { en: "2 Bedrooms", ar: "٢ غرف نوم" },
+          delivery: { en: "Q4 2026", ar: "الربع الرابع 2026" },
+          href:  "properties.html?type=2br",
         },
         {
-          count: "12 PROPERTY LISTING",
-          name: "3BR Garden Villa",
-          agent: "Akar Town Real Estate",
+          count: { en: "12 PROPERTY LISTING", ar: "١٢ قائمة عقارية" },
+          name:  { en: "3BR Garden Villa", ar: "فيلا حديقة ٣ غرف" },
+          agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "14,500,000 EGP",
-          area: "280 m²",
-          beds: "3 Bedrooms",
-          delivery: "Q2 2027",
-          href: "properties.html?type=villa",
+          area:  "280 m²",
+          beds:  { en: "3 Bedrooms", ar: "٣ غرف نوم" },
+          delivery: { en: "Q2 2027", ar: "الربع الثاني 2027" },
+          href:  "properties.html?type=villa",
         },
         {
-          count: "6 PROPERTY LISTING",
-          name: "Sky Villa",
-          agent: "Akar Town Real Estate",
+          count: { en: "6 PROPERTY LISTING", ar: "٦ قوائم عقارية" },
+          name:  { en: "Sky Villa", ar: "سكاي فيلا" },
+          agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "28,000,000 EGP",
-          area: "480 m²",
-          beds: "5 Bedrooms",
-          delivery: "Off-Plan",
-          href: "properties.html?type=sky",
+          area:  "480 m²",
+          beds:  { en: "5 Bedrooms", ar: "٥ غرف نوم" },
+          delivery: { en: "Off-Plan", ar: "على الخريطة" },
+          href:  "properties.html?type=sky",
         },
       ];
 
       function updatePropsDetail(idx) {
         var d = PROPS_DATA[idx];
         if (!d) return;
+        var lang = document.documentElement.lang || 'en';
+        function t(v) { return typeof v === 'object' ? (v[lang] || v.en) : v; }
         var els = [
           "#propsDetCount",
           "#propsDetName",
@@ -5265,14 +5418,14 @@
           stagger: 0.03,
           ease: "power2.in",
           onComplete: function () {
-            document.getElementById("propsDetCount").textContent = d.count;
-            document.getElementById("propsDetName").textContent = d.name;
-            document.getElementById("propsDetAgent").textContent = d.agent;
+            document.getElementById("propsDetCount").textContent = t(d.count);
+            document.getElementById("propsDetName").textContent = t(d.name);
+            document.getElementById("propsDetAgent").textContent = t(d.agent);
             document.getElementById("propsDetPrice").textContent = d.price;
             document.getElementById("propsDetArea").textContent = d.area;
-            document.getElementById("propsDetBeds").textContent = d.beds;
+            document.getElementById("propsDetBeds").textContent = t(d.beds);
             document.getElementById("propsDetDelivery").textContent =
-              d.delivery;
+              t(d.delivery);
             document.getElementById("propsDetCta").href = d.href;
             gsap.fromTo(
               els,
@@ -5289,7 +5442,7 @@
         });
       }
 
-      const propsSwiper = new Swiper("#propsSwiper", {
+      let propsSwiper = new Swiper("#propsSwiper", {
         slidesPerView: "auto",
         spaceBetween: 16,
         grabCursor: true,
@@ -5310,6 +5463,71 @@
             updatePropsDetail(this.realIndex);
           },
         },
+      });
+
+      /* ── Re-render props detail panel on language change ── */
+      document.addEventListener('akar:langchange', function() {
+        var idx = propsSwiper ? propsSwiper.realIndex : 0;
+        updatePropsDetail(idx);
+      });
+
+      /* ── Reinitialize Swipers on language/dir change ── */
+      document.addEventListener("akar:langchange", function () {
+        var heroIdx = heroSwiper.realIndex;
+        heroSwiper.destroy(true, true);
+        heroSwiper = new Swiper("#heroSwiper", {
+          effect: "coverflow",
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: 5,
+          loop: true,
+          speed: 820,
+          autoplay: {
+            delay: 2800,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          },
+          coverflowEffect: {
+            rotate: 24,
+            stretch: 0,
+            depth: 110,
+            modifier: 1,
+            slideShadows: false,
+          },
+          breakpoints: { 0: { slidesPerView: 1.5 }, 600: { slidesPerView: 3 } },
+          on: {
+            slideChange() {
+              updateInfo(this.realIndex);
+              updateNav(this.realIndex);
+            },
+          },
+        });
+        heroSwiper.slideToLoop(heroIdx, 0, false);
+        updateInfo(heroIdx);
+        updateNav(heroIdx);
+
+        var propsIdx = propsSwiper.realIndex;
+        propsSwiper.destroy(true, true);
+        propsSwiper = new Swiper("#propsSwiper", {
+          slidesPerView: "auto",
+          spaceBetween: 16,
+          grabCursor: true,
+          speed: 680,
+          loop: true,
+          centeredSlides: false,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          },
+          navigation: { prevEl: "#propsPrev", nextEl: "#propsNext" },
+          on: {
+            slideChange: function () {
+              updatePropsDetail(this.realIndex);
+            },
+          },
+        });
+        propsSwiper.slideToLoop(propsIdx, 0, false);
       });
 
       /* ── Projects — vertical scroll controller ── */

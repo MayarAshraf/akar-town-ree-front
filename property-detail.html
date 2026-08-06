@@ -185,10 +185,11 @@
         align-items: center;
         gap: var(--sp2);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
-        padding: 10px 22px;
+        padding: 7px 18px;
+        line-height: 1;
         border-radius: 100px;
         white-space: nowrap;
         cursor: none;
@@ -394,6 +395,7 @@
         color: rgba(255, 255, 255, 0.52);
         padding: 8px 14px;
         border-radius: 100px;
+        white-space: nowrap;
         transition:
           color var(--dur-ui),
           background var(--dur-ui);
@@ -408,8 +410,20 @@
       .hdr-right {
         display: flex;
         align-items: center;
-        gap: var(--sp2);
+        gap: 8px;
         flex-shrink: 0;
+      }
+      .lang-toggle {
+        flex-shrink: 0;
+        padding: 6px 18px !important;
+      }
+      .lang-toggle svg {
+        flex-shrink: 0;
+      }
+      @media (max-width: 600px) {
+        .lang-toggle svg {
+          display: none;
+        }
       }
       .hamburger {
         display: none;
@@ -463,6 +477,20 @@
         .hamburger {
           display: flex;
         }
+      }
+      /* RTL — shrink nav + buttons so Arabic labels fit without collapsing */
+      [dir="rtl"] .main-nav a {
+        font-size: 11px;
+        padding: 7px 9px;
+      }
+      [dir="rtl"] .hdr-right .btn {
+        font-size: 11px;
+        padding: 7px 13px;
+      }
+      /* RTL — flip directional arrows */
+      [dir="rtl"] .lb-arrow svg,
+      [dir="rtl"] .gal-nav-btn svg {
+        transform: scaleX(-1);
       }
       @media (max-width: 768px) {
         :root {
@@ -1225,14 +1253,22 @@
         font-variant-numeric: tabular-nums;
         font-size: var(--text-sm);
         color: var(--n-400);
-        margin-top: var(--sp3);
         letter-spacing: 0.06em;
+      }
+      .gal-right-col {
+        display: flex;
+        flex-direction: column;
+      }
+      .gal-below-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--sp3) var(--sp5) 0 0;
       }
       /* Swiper cards container */
       .gal-swiper-wrap {
         position: relative;
         padding: var(--sp5) var(--sp5) var(--sp5) 0;
-        overflow: hidden;
       }
       .gallery-swiper {
         width: 100%;
@@ -1428,6 +1464,10 @@
         letter-spacing: -0.04em;
         user-select: none;
         z-index: 0;
+      }
+      [dir="rtl"] .pd-pin-block-num {
+        right: auto;
+        left: 0;
       }
       .pd-pin-block-eyebrow {
         display: flex;
@@ -2469,8 +2509,8 @@
       <div class="hdr-inner">
         <a href="index.html" class="logo" aria-label="Akar Town">
           <svg
-            width="300"
-            viewBox="0 0 2750 380"
+            width="240"
+            viewBox="0 0 2185 380"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -2517,19 +2557,47 @@
           </svg>
         </a>
         <nav class="main-nav" aria-label="Primary navigation">
-          <a href="index.html">Home</a>
-          <a href="properties.html" class="active">Properties</a>
-          <a href="projects.html">Projects</a>
-          <a href="about.html">About</a>
-          <a href="blog.html">Blog</a>
-          <a href="contact.html">Contact</a>
+          <a href="index.html" data-i18n="nav.home">Home</a>
+          <a href="properties.html" class="active" data-i18n="nav.properties"
+            >Properties</a
+          >
+          <a href="projects.html" data-i18n="nav.projects">Projects</a>
+          <a href="about.html" data-i18n="nav.about">About</a>
+          <a href="blog.html" data-i18n="nav.blog">Blog</a>
+          <a href="contact.html" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="hdr-right">
+          <button
+            class="lang-toggle btn btn-ghost"
+            id="langToggle"
+            aria-label="Switch to Arabic"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path
+                d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"
+              />
+            </svg>
+            <span class="lang-indicator">AR</span>
+          </button>
           <a href="tel:+201234567890" class="btn btn-ghost">+20 123 456 7890</a>
-          <a href="properties.html" class="btn btn-accent">Find Property</a>
+          <a href="properties.html" class="btn btn-accent" data-i18n="nav.find"
+            >Find Property</a
+          >
           <button
             class="hamburger"
             id="hbgBtn"
+            data-i18n-aria="nav.open_menu"
             aria-label="Open menu"
             aria-expanded="false"
             aria-controls="mob"
@@ -2575,7 +2643,7 @@
                 <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
                 <line x1="2" y1="14" x2="22" y2="14" />
               </svg>
-              <span class="pd-sticky-val">2</span> Beds
+              <span class="pd-sticky-val">2</span><span data-i18n="pd.sticky.beds"> Beds</span>
             </span>
             <span>
               <svg
@@ -2590,7 +2658,7 @@
                 <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
                 <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
               </svg>
-              <span class="pd-sticky-val">2</span> Baths
+              <span class="pd-sticky-val">2</span><span data-i18n="pd.sticky.baths"> Baths</span>
             </span>
             <span>Azha Residence · New Cairo</span>
           </div>
@@ -2619,9 +2687,9 @@
         <div class="pd-hero-body wrap">
           <div class="pd-hero-left">
             <nav class="breadcrumb" aria-label="Breadcrumb">
-              <a href="index.html">Home</a>
+              <a href="index.html" data-i18n="pd.home">Home</a>
               <span class="breadcrumb-sep" aria-hidden="true"></span>
-              <a href="properties.html">Properties</a>
+              <a href="properties.html" data-i18n="pd.properties">Properties</a>
               <span class="breadcrumb-sep" aria-hidden="true"></span>
               <span class="breadcrumb-current" aria-current="page"
                 >Garden View Apartment</span
@@ -2666,7 +2734,7 @@
                   <line x1="2" y1="14" x2="22" y2="14" />
                 </svg>
                 <span class="pd-hero-stat-val num">2</span
-                ><span class="pd-hero-stat-lbl">Beds</span>
+                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.beds">Beds</span>
               </div>
               <div class="pd-hero-stat" role="listitem">
                 <svg
@@ -2682,7 +2750,7 @@
                   <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
                 </svg>
                 <span class="pd-hero-stat-val num">2</span
-                ><span class="pd-hero-stat-lbl">Baths</span>
+                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.baths">Baths</span>
               </div>
               <div class="pd-hero-stat" role="listitem">
                 <svg
@@ -2699,7 +2767,7 @@
                   <polyline points="21 16 21 21 16 21" />
                   <line x1="15" y1="15" x2="21" y2="21" />
                 </svg>
-                <span class="pd-hero-stat-val">Floor</span
+                <span class="pd-hero-stat-val" data-i18n="pd.stat.floor">Floor</span
                 ><span class="pd-hero-stat-val num">5</span>
               </div>
               <div class="pd-hero-stat" role="listitem">
@@ -2714,7 +2782,7 @@
                 >
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 </svg>
-                <span class="pd-hero-stat-val">Garden View</span>
+                <span class="pd-hero-stat-val" data-i18n="pd.stat.view">Garden View</span>
               </div>
             </div>
             <div class="pd-hero-price-row">
@@ -2736,7 +2804,7 @@
                     d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.69 19 19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.59 1.21h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
                   />
                 </svg>
-                Request Viewing
+                <span data-i18n="pd.cta.request_viewing">Request Viewing</span>
               </a>
               <button class="btn btn-ghost" id="saveBtn" aria-pressed="false">
                 <svg
@@ -2750,7 +2818,7 @@
                 >
                   <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                 </svg>
-                Save Property
+                <span data-i18n="pd.cta.save">Save Property</span>
               </button>
             </div>
           </div>
@@ -2766,62 +2834,23 @@
           <div class="pd-gallery-meta">
             <div class="eyebrow-wrap">
               <span class="eyebrow-slab" style="background: var(--n-300)"></span
-              ><span class="eyebrow-text eyebrow-text--dark">Unit Gallery</span>
+              ><span
+                class="eyebrow-text eyebrow-text--dark"
+                data-i18n="pd.gallery_eyebrow"
+                >Unit Gallery</span
+              >
             </div>
-            <h2 class="pd-gallery-heading">Every Angle,<br />Every Detail</h2>
+            <h2 class="pd-gallery-heading" data-i18n="pd.gallery_heading">
+              Every Angle, Every Detail
+            </h2>
             <p class="pd-gallery-sub">
               A curated walk through the spaces — from the sun-drenched balcony
               to the marble-finished kitchen.
             </p>
-            <div
-              class="pd-gallery-nav"
-              role="group"
-              aria-label="Gallery navigation"
-            >
-              <button
-                class="gal-nav-btn"
-                id="galPrev"
-                aria-label="Previous photo"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <line x1="19" y1="12" x2="5" y2="12" />
-                  <polyline points="12 19 5 12 12 5" />
-                </svg>
-              </button>
-              <button class="gal-nav-btn" id="galNext" aria-label="Next photo">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </button>
-            </div>
-            <div class="pd-gallery-fraction">
-              <span id="galCurrent" class="num">01</span> /
-              <span class="num">06</span>
-            </div>
           </div>
 
-          <!-- Right: Swiper deck -->
+          <!-- Right: Swiper deck + nav below -->
+          <div class="gal-right-col">
           <div class="gal-swiper-wrap">
             <div class="swiper gallery-swiper" id="gallerySwiper">
               <div class="swiper-wrapper">
@@ -2852,7 +2881,7 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">01 / 06</div>
-                    <div class="gal-slide-label">Living Room</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.living_room">Living Room</div>
                   </div>
                 </div>
                 <div class="swiper-slide">
@@ -2882,7 +2911,7 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">02 / 06</div>
-                    <div class="gal-slide-label">Master Bedroom</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.master_bedroom">Master Bedroom</div>
                   </div>
                 </div>
                 <div class="swiper-slide">
@@ -2912,7 +2941,7 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">03 / 06</div>
-                    <div class="gal-slide-label">Open Kitchen</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.kitchen">Open Kitchen</div>
                   </div>
                 </div>
                 <div class="swiper-slide">
@@ -2942,7 +2971,7 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">04 / 06</div>
-                    <div class="gal-slide-label">Second Bedroom</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.bedroom2">Second Bedroom</div>
                   </div>
                 </div>
                 <div class="swiper-slide">
@@ -2972,7 +3001,7 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">05 / 06</div>
-                    <div class="gal-slide-label">Garden Balcony</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.balcony">Garden Balcony</div>
                   </div>
                 </div>
                 <div class="swiper-slide">
@@ -3002,13 +3031,35 @@
                   </button>
                   <div class="gal-slide-info">
                     <div class="gal-slide-num num">06 / 06</div>
-                    <div class="gal-slide-label">Master Bathroom</div>
+                    <div class="gal-slide-label" data-i18n="pd.gal.bathroom">Master Bathroom</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          <!-- Nav buttons + counter below the slider -->
+          <div class="gal-below-nav" role="group" aria-label="Gallery navigation">
+            <div class="pd-gallery-nav">
+              <button class="gal-nav-btn" id="galPrev" aria-label="Previous photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </button>
+              <button class="gal-nav-btn" id="galNext" aria-label="Next photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
+            <div class="pd-gallery-fraction">
+              <span id="galCurrent" class="num">01</span> /
+              <span class="num">06</span>
+            </div>
+          </div>
+          </div><!-- /.gal-right-col -->
+        </div><!-- /.pd-gallery-inner -->
       </section>
 
       <!-- ══════════════════════════════════════════════════
@@ -3017,36 +3068,36 @@
       <section class="pd-specs" aria-label="Property specifications">
         <div class="pd-specs-grid">
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Unit Type</div>
-            <div class="pd-spec-val">2-Bed Apartment</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.unit_type">Unit Type</div>
+            <div class="pd-spec-val" data-i18n="pd.val.2bed_apt">2-Bed Apartment</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Total Area</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.total_area">Total Area</div>
             <div class="pd-spec-val num">148 m²</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Floor</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.floor">Floor</div>
             <div class="pd-spec-val num">5</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">View</div>
-            <div class="pd-spec-val">Garden &amp; Pool</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.view">View</div>
+            <div class="pd-spec-val" data-i18n="pd.val.garden_pool">Garden &amp; Pool</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Project</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.project">Project</div>
             <div class="pd-spec-val">Azha Residence</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Location</div>
-            <div class="pd-spec-val">New Cairo</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.location">Location</div>
+            <div class="pd-spec-val" data-i18n="loc.new_cairo">New Cairo</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Finishing</div>
-            <div class="pd-spec-val">Luxury</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.finishing">Finishing</div>
+            <div class="pd-spec-val" data-i18n="adv.luxury">Luxury</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label">Delivery</div>
-            <div class="pd-spec-val pd-spec-val--accent">Ready Now</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.delivery">Delivery</div>
+            <div class="pd-spec-val pd-spec-val--accent" data-i18n="adv.ready">Ready Now</div>
           </div>
         </div>
       </section>
@@ -3075,26 +3126,28 @@
                   class="eyebrow-slab"
                   style="background: var(--n-300)"
                 ></span>
-                <span class="eyebrow-text eyebrow-text--dark"
+                <span
+                  class="eyebrow-text eyebrow-text--dark"
+                  data-i18n="pd.about_eyebrow"
                   >About the Unit</span
                 >
               </div>
-              <h2 class="pd-pin-block-title">
+              <h2 class="pd-pin-block-title" data-i18n="pd.about.heading">
                 Refined living in the heart of New Cairo
               </h2>
-              <p class="pd-pin-block-text">
+              <p class="pd-pin-block-text" data-i18n="pd.about.p1">
                 This 148 m² garden-view apartment sits on the 5th floor of Azha
                 Residence — one of New Cairo's most distinguished compounds.
                 Designed for those who value both space and serenity, the unit
                 faces an expansive landscaped garden and resort-style pool.
               </p>
-              <p class="pd-pin-block-text">
+              <p class="pd-pin-block-text" data-i18n="pd.about.p2">
                 The open-plan layout connects the living and dining zones
                 seamlessly, while floor-to-ceiling windows flood every room with
                 natural light. Both bedrooms are en-suite, with the master
                 bedroom featuring a walk-in closet and private balcony access.
               </p>
-              <p class="pd-pin-block-text">
+              <p class="pd-pin-block-text" data-i18n="pd.about.p3">
                 Delivered fully finished with Italian marble flooring, custom
                 built-in wardrobes, and a fully fitted kitchen — ready to move
                 into immediately.
@@ -3109,11 +3162,11 @@
                   class="eyebrow-slab"
                   style="background: var(--n-300)"
                 ></span>
-                <span class="eyebrow-text eyebrow-text--dark"
+                <span class="eyebrow-text eyebrow-text--dark" data-i18n="pd.features.eyebrow"
                   >Interior Highlights</span
                 >
               </div>
-              <h2 class="pd-pin-block-title">
+              <h2 class="pd-pin-block-title" data-i18n="pd.features.heading">
                 Crafted with precision, finished with purpose
               </h2>
               <ul class="pd-feature-list">
@@ -3130,7 +3183,7 @@
                       <rect x="3" y="3" width="18" height="18" rx="2" />
                       <path d="M9 3v18" /></svg
                   ></span>
-                  <span class="pd-feature-text"
+                  <span class="pd-feature-text" data-i18n-html="pd.feature.open_plan"
                     ><strong>Open-Plan Living &amp; Dining</strong>Seamless flow
                     between spaces, ideal for entertaining and everyday
                     comfort.</span
@@ -3150,7 +3203,7 @@
                       <line x1="8" y1="21" x2="16" y2="21" />
                       <line x1="12" y1="17" x2="12" y2="21" /></svg
                   ></span>
-                  <span class="pd-feature-text"
+                  <span class="pd-feature-text" data-i18n-html="pd.feature.smart_home"
                     ><strong>Smart Home System</strong>Pre-wired for full
                     automation — lighting, climate, and security from your
                     phone.</span
@@ -3170,7 +3223,7 @@
                         d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
                       /></svg
                   ></span>
-                  <span class="pd-feature-text"
+                  <span class="pd-feature-text" data-i18n-html="pd.feature.marble"
                     ><strong>Italian Marble Flooring</strong>Botticino marble
                     throughout all living areas and master bedroom.</span
                   >
@@ -3193,7 +3246,7 @@
                       <line x1="1" y1="12" x2="3" y2="12" />
                       <line x1="21" y1="12" x2="23" y2="12" /></svg
                   ></span>
-                  <span class="pd-feature-text"
+                  <span class="pd-feature-text" data-i18n-html="pd.feature.windows"
                     ><strong>Floor-to-Ceiling Windows</strong>Double-glazed,
                     UV-filtered — maximum garden views, minimal heat gain.</span
                   >
@@ -3209,7 +3262,9 @@
                   class="eyebrow-slab"
                   style="background: var(--n-300)"
                 ></span>
-                <span class="eyebrow-text eyebrow-text--dark"
+                <span
+                  class="eyebrow-text eyebrow-text--dark"
+                  data-i18n="pd.payment_eyebrow"
                   >Payment Plan</span
                 >
               </div>
@@ -3226,42 +3281,42 @@
               <table class="pd-payment-table" aria-label="Payment schedule">
                 <thead>
                   <tr>
-                    <th>Milestone</th>
-                    <th>%</th>
-                    <th>Amount (EGP)</th>
-                    <th>Due</th>
+                    <th data-i18n="pd.pay.milestone">Milestone</th>
+                    <th data-i18n="pd.pay.pct">%</th>
+                    <th data-i18n="pd.pay.amount">Amount (EGP)</th>
+                    <th data-i18n="pd.pay.due">Due</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Down Payment</td>
+                    <td data-i18n="pd.pay.down">Down Payment</td>
                     <td class="num">10%</td>
                     <td class="num">475,000</td>
-                    <td>On Contract</td>
+                    <td data-i18n="pd.pay.on_contract">On Contract</td>
                   </tr>
                   <tr>
-                    <td>2nd Installment</td>
+                    <td data-i18n="pd.pay.2nd">2nd Installment</td>
                     <td class="num">10%</td>
                     <td class="num">475,000</td>
                     <td>3 Months</td>
                   </tr>
                   <tr>
-                    <td>3rd Installment</td>
+                    <td data-i18n="pd.pay.3rd">3rd Installment</td>
                     <td class="num">10%</td>
                     <td class="num">475,000</td>
                     <td>6 Months</td>
                   </tr>
                   <tr>
-                    <td>4th Installment</td>
+                    <td data-i18n="pd.pay.4th">4th Installment</td>
                     <td class="num">10%</td>
                     <td class="num">475,000</td>
                     <td>12 Months</td>
                   </tr>
                   <tr>
-                    <td>Remaining Balance</td>
+                    <td data-i18n="pd.pay.balance">Remaining Balance</td>
                     <td class="num">60%</td>
                     <td class="num">2,850,000</td>
-                    <td>On Delivery</td>
+                    <td data-i18n="pd.pay.on_delivery">On Delivery</td>
                   </tr>
                 </tbody>
               </table>
@@ -3280,7 +3335,9 @@
                       d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.69 19 19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.59 1.21h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
                     />
                   </svg>
-                  Discuss Payment Options
+                  <span data-i18n="pd.payment_cta"
+                    >Discuss Payment Options</span
+                  >
                 </a>
               </div>
             </div>
@@ -3355,11 +3412,15 @@
                   class="eyebrow-slab"
                   style="background: var(--accent-fill)"
                 ></span
-                ><span class="eyebrow-text eyebrow-text--dark"
+                ><span
+                  class="eyebrow-text eyebrow-text--dark"
+                  data-i18n="pd.amenities_eyebrow"
                   >What's Included</span
                 >
               </div>
-              <h2 class="sec-title">Unit Amenities</h2>
+              <h2 class="sec-title" data-i18n="pd.amenities_heading">
+                Unit Amenities
+              </h2>
               <p class="sec-sub">
                 Every comfort considered — from the walk-in closet to the smart
                 home hub.
@@ -3382,7 +3443,7 @@
                     <polyline points="9,22 9,12 15,12 15,22" />
                   </svg>
                 </div>
-                <span class="amenity-label">Private Balcony</span>
+                <span class="amenity-label" data-i18n="pd.amenity.balcony">Private Balcony</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3400,7 +3461,7 @@
                     <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
                   </svg>
                 </div>
-                <span class="amenity-label">Built-in Wardrobes</span>
+                <span class="amenity-label" data-i18n="pd.amenity.wardrobes">Built-in Wardrobes</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3418,7 +3479,7 @@
                     <path d="M12 12a10 10 0 0 1-10 10V12h10z" />
                   </svg>
                 </div>
-                <span class="amenity-label">Central A/C</span>
+                <span class="amenity-label" data-i18n="pd.amenity.ac">Central A/C</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3437,7 +3498,7 @@
                     <line x1="12" y1="17" x2="12" y2="21" />
                   </svg>
                 </div>
-                <span class="amenity-label">Smart Home System</span>
+                <span class="amenity-label" data-i18n="pd.amenity.smart_home">Smart Home System</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3454,7 +3515,7 @@
                     <path d="M3 11l19-9-9 19-2-8-8-2z" />
                   </svg>
                 </div>
-                <span class="amenity-label">Open Kitchen</span>
+                <span class="amenity-label" data-i18n="pd.amenity.kitchen">Open Kitchen</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3473,7 +3534,7 @@
                     />
                   </svg>
                 </div>
-                <span class="amenity-label">Laundry Room</span>
+                <span class="amenity-label" data-i18n="pd.amenity.laundry">Laundry Room</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3492,7 +3553,7 @@
                     />
                   </svg>
                 </div>
-                <span class="amenity-label">Storage Room</span>
+                <span class="amenity-label" data-i18n="pd.amenity.storage">Storage Room</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3510,7 +3571,7 @@
                     <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
                   </svg>
                 </div>
-                <span class="amenity-label">En-Suite Master</span>
+                <span class="amenity-label" data-i18n="pd.amenity.en_suite">En-Suite Master</span>
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3830,11 +3891,15 @@
                   class="eyebrow-slab"
                   style="background: var(--accent-fill)"
                 ></span
-                ><span class="eyebrow-text eyebrow-text--dark"
+                ><span
+                  class="eyebrow-text eyebrow-text--dark"
+                  data-i18n="pd.similar_eyebrow"
                   >More Like This</span
                 >
               </div>
-              <h2 class="sec-title">Similar Properties</h2>
+              <h2 class="sec-title" data-i18n="pd.similar_heading">
+                Similar Properties
+              </h2>
               <p class="sec-sub">
                 More properties that match your preferences in New Cairo.
               </p>
@@ -4467,7 +4532,7 @@
           <a href="index.html" class="footer-logo" aria-label="Akar Town">
             <svg
               width="180"
-              viewBox="0 0 2750 380"
+              viewBox="0 0 2185 380"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -4579,39 +4644,83 @@
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Navigate</span>
+            <span data-i18n="footer.col.navigate">Navigate</span>
           </div>
           <ul class="footer-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="properties.html">Properties</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-heading">
-            <div class="slab" aria-hidden="true"></div>
-            <span>Areas</span>
-          </div>
-          <ul class="footer-nav">
-            <li><a href="properties.html?area=new-cairo">New Cairo</a></li>
-            <li><a href="properties.html?area=new-capital">New Capital</a></li>
+            <li><a href="index.html" data-i18n="footer.nav.home">Home</a></li>
             <li>
-              <a href="properties.html?area=sheikh-zayed">Sheikh Zayed</a>
+              <a href="properties.html" data-i18n="footer.nav.properties"
+                >Properties</a
+              >
             </li>
-            <li><a href="properties.html?area=north-coast">North Coast</a></li>
-            <li><a href="properties.html?area=ain-sokhna">Ain Sokhna</a></li>
             <li>
-              <a href="properties.html?area=6th-october">6th of October</a>
+              <a href="projects.html" data-i18n="footer.nav.projects"
+                >Projects</a
+              >
+            </li>
+            <li>
+              <a href="about.html" data-i18n="footer.nav.about">About Us</a>
+            </li>
+            <li><a href="blog.html" data-i18n="footer.nav.blog">Blog</a></li>
+            <li>
+              <a href="contact.html" data-i18n="footer.nav.contact">Contact</a>
             </li>
           </ul>
         </div>
         <div class="footer-col">
           <div class="footer-col-heading">
             <div class="slab" aria-hidden="true"></div>
-            <span>Contact</span>
+            <span data-i18n="footer.col.areas">Areas</span>
+          </div>
+          <ul class="footer-nav">
+            <li>
+              <a
+                href="properties.html?area=new-cairo"
+                data-i18n="footer.area.new_cairo"
+                >New Cairo</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=new-capital"
+                data-i18n="footer.area.new_capital"
+                >New Capital</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=sheikh-zayed"
+                data-i18n="footer.area.sheikh_zayed"
+                >Sheikh Zayed</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=north-coast"
+                data-i18n="footer.area.north_coast"
+                >North Coast</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=ain-sokhna"
+                data-i18n="footer.area.ain_sokhna"
+                >Ain Sokhna</a
+              >
+            </li>
+            <li>
+              <a
+                href="properties.html?area=6th-october"
+                data-i18n="footer.area.6th_oct"
+                >6th of October</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">
+            <div class="slab" aria-hidden="true"></div>
+            <span data-i18n="footer.col.contact">Contact</span>
           </div>
           <div class="footer-contact-item">
             <svg
@@ -4627,7 +4736,9 @@
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span>
+            <span data-i18n="footer.address"
+              >90 St. Mohamed Naguib, New Cairo, Cairo, Egypt</span
+            >
           </div>
           <div class="footer-contact-item">
             <svg
@@ -4667,18 +4778,20 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copy">
-          © 2026 <strong>Akar Town</strong>. All rights reserved.
+        <p class="footer-copy" data-i18n="footer.copy">
+          © 2026 Akar Town. All rights reserved.
         </p>
         <nav class="footer-legal" aria-label="Legal">
-          <a href="#">Privacy Policy</a><a href="#">Terms of Use</a
-          ><a href="#">Cookie Settings</a>
+          <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+          <a href="#" data-i18n="footer.terms">Terms of Use</a>
+          <a href="#" data-i18n="footer.cookies">Cookie Settings</a>
         </nav>
       </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
       /* ── Header scroll ── */
@@ -4958,7 +5071,7 @@
 
       /* ── Gallery Swiper ── */
       (function () {
-        const swiper = new Swiper("#gallerySwiper", {
+        const cfg = {
           effect: "cards",
           grabCursor: true,
           rewind: true,
@@ -4979,13 +5092,23 @@
               ).padStart(2, "0");
             },
           },
-        });
+        };
+
+        let galSwiper = new Swiper("#gallerySwiper", cfg);
+
         document
           .getElementById("galPrev")
-          .addEventListener("click", () => swiper.slidePrev());
+          .addEventListener("click", () => galSwiper.slidePrev());
         document
           .getElementById("galNext")
-          .addEventListener("click", () => swiper.slideNext());
+          .addEventListener("click", () => galSwiper.slideNext());
+
+        document.addEventListener("akar:langchange", function () {
+          const idx = galSwiper.activeIndex;
+          galSwiper.destroy(true, true);
+          galSwiper = new Swiper("#gallerySwiper", cfg);
+          galSwiper.slideTo(idx, 0, false);
+        });
       })();
 
       /* ── Video scroll-triggered autoplay ── */
