@@ -188,7 +188,7 @@
         font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
-        padding: 7px 18px;
+        padding: 12px 18px;
         line-height: 1;
         border-radius: 100px;
         white-space: nowrap;
@@ -415,7 +415,7 @@
       }
       .lang-toggle {
         flex-shrink: 0;
-        padding: 6px 18px !important;
+        padding: 11px 18px !important;
       }
       .lang-toggle svg {
         flex-shrink: 0;
@@ -1369,7 +1369,7 @@
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.55);
         margin-bottom: var(--sp2);
         font-family: var(--font-display);
       }
@@ -2437,6 +2437,51 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* ── Section sticky CTA ── */
+      .sec-cta-wrap {
+        position: fixed;
+        bottom: clamp(24px, 4vh, 48px);
+        left: 50%;
+        z-index: 400;
+        pointer-events: none;
+      }
+      .sec-cta-wrap.active {
+        pointer-events: auto;
+      }
+      .sec-cta-btn {
+        display: flex;
+        align-items: center;
+        background: var(--accent-fill);
+        color: var(--n-0);
+        text-decoration: none;
+        border-radius: 100px;
+        height: 45px;
+        width: 45px;
+        overflow: hidden;
+        will-change: width;
+        transition: transform 0.25s ease;
+      }
+      .sec-cta-btn:hover {
+        transform: translateY(-2px);
+      }
+      .sec-cta-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+      }
+      .sec-cta-label {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        white-space: nowrap;
+        padding-right: 24px;
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
@@ -2643,7 +2688,8 @@
                 <path d="M2 22v-3a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v3" />
                 <line x1="2" y1="14" x2="22" y2="14" />
               </svg>
-              <span class="pd-sticky-val">2</span><span data-i18n="pd.sticky.beds"> Beds</span>
+              <span class="pd-sticky-val">2</span
+              ><span data-i18n="pd.sticky.beds"> Beds</span>
             </span>
             <span>
               <svg
@@ -2658,7 +2704,8 @@
                 <path d="M2 12h20v5a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-5z" />
                 <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
               </svg>
-              <span class="pd-sticky-val">2</span><span data-i18n="pd.sticky.baths"> Baths</span>
+              <span class="pd-sticky-val">2</span
+              ><span data-i18n="pd.sticky.baths"> Baths</span>
             </span>
             <span>Azha Residence · New Cairo</span>
           </div>
@@ -2734,7 +2781,9 @@
                   <line x1="2" y1="14" x2="22" y2="14" />
                 </svg>
                 <span class="pd-hero-stat-val num">2</span
-                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.beds">Beds</span>
+                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.beds"
+                  >Beds</span
+                >
               </div>
               <div class="pd-hero-stat" role="listitem">
                 <svg
@@ -2750,7 +2799,9 @@
                   <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
                 </svg>
                 <span class="pd-hero-stat-val num">2</span
-                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.baths">Baths</span>
+                ><span class="pd-hero-stat-lbl" data-i18n="pd.stat.baths"
+                  >Baths</span
+                >
               </div>
               <div class="pd-hero-stat" role="listitem">
                 <svg
@@ -2767,7 +2818,8 @@
                   <polyline points="21 16 21 21 16 21" />
                   <line x1="15" y1="15" x2="21" y2="21" />
                 </svg>
-                <span class="pd-hero-stat-val" data-i18n="pd.stat.floor">Floor</span
+                <span class="pd-hero-stat-val" data-i18n="pd.stat.floor"
+                  >Floor</span
                 ><span class="pd-hero-stat-val num">5</span>
               </div>
               <div class="pd-hero-stat" role="listitem">
@@ -2782,7 +2834,9 @@
                 >
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 </svg>
-                <span class="pd-hero-stat-val" data-i18n="pd.stat.view">Garden View</span>
+                <span class="pd-hero-stat-val" data-i18n="pd.stat.view"
+                  >Garden View</span
+                >
               </div>
             </div>
             <div class="pd-hero-price-row">
@@ -2851,215 +2905,267 @@
 
           <!-- Right: Swiper deck + nav below -->
           <div class="gal-right-col">
-          <div class="gal-swiper-wrap">
-            <div class="swiper gallery-swiper" id="gallerySwiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85"
-                    alt="Living Room"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">01 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.living_room">Living Room</div>
+            <div class="gal-swiper-wrap">
+              <div class="swiper gallery-swiper" id="gallerySwiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85"
+                      alt="Living Room"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">01 / 06</div>
+                      <div
+                        class="gal-slide-label"
+                        data-i18n="pd.gal.living_room"
+                      >
+                        Living Room
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=85"
-                    alt="Master Bedroom"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">02 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.master_bedroom">Master Bedroom</div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=85"
+                      alt="Master Bedroom"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">02 / 06</div>
+                      <div
+                        class="gal-slide-label"
+                        data-i18n="pd.gal.master_bedroom"
+                      >
+                        Master Bedroom
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=700&q=85"
-                    alt="Kitchen"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">03 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.kitchen">Open Kitchen</div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=700&q=85"
+                      alt="Kitchen"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">03 / 06</div>
+                      <div class="gal-slide-label" data-i18n="pd.gal.kitchen">
+                        Open Kitchen
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=85"
-                    alt="Second Bedroom"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">04 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.bedroom2">Second Bedroom</div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=85"
+                      alt="Second Bedroom"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">04 / 06</div>
+                      <div class="gal-slide-label" data-i18n="pd.gal.bedroom2">
+                        Second Bedroom
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=85"
-                    alt="Balcony"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">05 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.balcony">Garden Balcony</div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=85"
+                      alt="Balcony"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">05 / 06</div>
+                      <div class="gal-slide-label" data-i18n="pd.gal.balcony">
+                        Garden Balcony
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=85"
-                    alt="Bathroom"
-                    loading="lazy"
-                  />
-                  <div class="gal-slide-overlay" aria-hidden="true"></div>
-                  <button class="gal-zoom-btn" aria-label="View full size">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
-                      <line x1="21" y1="3" x2="14" y2="10" />
-                      <line x1="3" y1="21" x2="10" y2="14" />
-                    </svg>
-                  </button>
-                  <div class="gal-slide-info">
-                    <div class="gal-slide-num num">06 / 06</div>
-                    <div class="gal-slide-label" data-i18n="pd.gal.bathroom">Master Bathroom</div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=85"
+                      alt="Bathroom"
+                      loading="lazy"
+                    />
+                    <div class="gal-slide-overlay" aria-hidden="true"></div>
+                    <button class="gal-zoom-btn" aria-label="View full size">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                      </svg>
+                    </button>
+                    <div class="gal-slide-info">
+                      <div class="gal-slide-num num">06 / 06</div>
+                      <div class="gal-slide-label" data-i18n="pd.gal.bathroom">
+                        Master Bathroom
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- Nav buttons + counter below the slider -->
-          <div class="gal-below-nav" role="group" aria-label="Gallery navigation">
-            <div class="pd-gallery-nav">
-              <button class="gal-nav-btn" id="galPrev" aria-label="Previous photo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="19" y1="12" x2="5" y2="12" />
-                  <polyline points="12 19 5 12 12 5" />
-                </svg>
-              </button>
-              <button class="gal-nav-btn" id="galNext" aria-label="Next photo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </button>
+            <!-- Nav buttons + counter below the slider -->
+            <div
+              class="gal-below-nav"
+              role="group"
+              aria-label="Gallery navigation"
+            >
+              <div class="pd-gallery-nav">
+                <button
+                  class="gal-nav-btn"
+                  id="galPrev"
+                  aria-label="Previous photo"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                  </svg>
+                </button>
+                <button
+                  class="gal-nav-btn"
+                  id="galNext"
+                  aria-label="Next photo"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </button>
+              </div>
+              <div class="pd-gallery-fraction">
+                <span id="galCurrent" class="num">01</span> /
+                <span class="num">06</span>
+              </div>
             </div>
-            <div class="pd-gallery-fraction">
-              <span id="galCurrent" class="num">01</span> /
-              <span class="num">06</span>
-            </div>
           </div>
-          </div><!-- /.gal-right-col -->
-        </div><!-- /.pd-gallery-inner -->
+          <!-- /.gal-right-col -->
+        </div>
+        <!-- /.pd-gallery-inner -->
       </section>
 
       <!-- ══════════════════════════════════════════════════
@@ -3068,11 +3174,17 @@
       <section class="pd-specs" aria-label="Property specifications">
         <div class="pd-specs-grid">
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.unit_type">Unit Type</div>
-            <div class="pd-spec-val" data-i18n="pd.val.2bed_apt">2-Bed Apartment</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.unit_type">
+              Unit Type
+            </div>
+            <div class="pd-spec-val" data-i18n="pd.val.2bed_apt">
+              2-Bed Apartment
+            </div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.total_area">Total Area</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.total_area">
+              Total Area
+            </div>
             <div class="pd-spec-val num">148 m²</div>
           </div>
           <div class="pd-spec-item">
@@ -3081,23 +3193,33 @@
           </div>
           <div class="pd-spec-item">
             <div class="pd-spec-label" data-i18n="pd.spec.view">View</div>
-            <div class="pd-spec-val" data-i18n="pd.val.garden_pool">Garden &amp; Pool</div>
+            <div class="pd-spec-val" data-i18n="pd.val.garden_pool">
+              Garden &amp; Pool
+            </div>
           </div>
           <div class="pd-spec-item">
             <div class="pd-spec-label" data-i18n="pd.spec.project">Project</div>
             <div class="pd-spec-val">Azha Residence</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.location">Location</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.location">
+              Location
+            </div>
             <div class="pd-spec-val" data-i18n="loc.new_cairo">New Cairo</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.finishing">Finishing</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.finishing">
+              Finishing
+            </div>
             <div class="pd-spec-val" data-i18n="adv.luxury">Luxury</div>
           </div>
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.delivery">Delivery</div>
-            <div class="pd-spec-val pd-spec-val--accent" data-i18n="adv.ready">Ready Now</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.delivery">
+              Delivery
+            </div>
+            <div class="pd-spec-val pd-spec-val--accent" data-i18n="adv.ready">
+              Ready Now
+            </div>
           </div>
         </div>
       </section>
@@ -3162,7 +3284,9 @@
                   class="eyebrow-slab"
                   style="background: var(--n-300)"
                 ></span>
-                <span class="eyebrow-text eyebrow-text--dark" data-i18n="pd.features.eyebrow"
+                <span
+                  class="eyebrow-text eyebrow-text--dark"
+                  data-i18n="pd.features.eyebrow"
                   >Interior Highlights</span
                 >
               </div>
@@ -3183,7 +3307,9 @@
                       <rect x="3" y="3" width="18" height="18" rx="2" />
                       <path d="M9 3v18" /></svg
                   ></span>
-                  <span class="pd-feature-text" data-i18n-html="pd.feature.open_plan"
+                  <span
+                    class="pd-feature-text"
+                    data-i18n-html="pd.feature.open_plan"
                     ><strong>Open-Plan Living &amp; Dining</strong>Seamless flow
                     between spaces, ideal for entertaining and everyday
                     comfort.</span
@@ -3203,7 +3329,9 @@
                       <line x1="8" y1="21" x2="16" y2="21" />
                       <line x1="12" y1="17" x2="12" y2="21" /></svg
                   ></span>
-                  <span class="pd-feature-text" data-i18n-html="pd.feature.smart_home"
+                  <span
+                    class="pd-feature-text"
+                    data-i18n-html="pd.feature.smart_home"
                     ><strong>Smart Home System</strong>Pre-wired for full
                     automation — lighting, climate, and security from your
                     phone.</span
@@ -3223,7 +3351,9 @@
                         d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
                       /></svg
                   ></span>
-                  <span class="pd-feature-text" data-i18n-html="pd.feature.marble"
+                  <span
+                    class="pd-feature-text"
+                    data-i18n-html="pd.feature.marble"
                     ><strong>Italian Marble Flooring</strong>Botticino marble
                     throughout all living areas and master bedroom.</span
                   >
@@ -3246,7 +3376,9 @@
                       <line x1="1" y1="12" x2="3" y2="12" />
                       <line x1="21" y1="12" x2="23" y2="12" /></svg
                   ></span>
-                  <span class="pd-feature-text" data-i18n-html="pd.feature.windows"
+                  <span
+                    class="pd-feature-text"
+                    data-i18n-html="pd.feature.windows"
                     ><strong>Floor-to-Ceiling Windows</strong>Double-glazed,
                     UV-filtered — maximum garden views, minimal heat gain.</span
                   >
@@ -3443,7 +3575,9 @@
                     <polyline points="9,22 9,12 15,12 15,22" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.balcony">Private Balcony</span>
+                <span class="amenity-label" data-i18n="pd.amenity.balcony"
+                  >Private Balcony</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3461,7 +3595,9 @@
                     <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.wardrobes">Built-in Wardrobes</span>
+                <span class="amenity-label" data-i18n="pd.amenity.wardrobes"
+                  >Built-in Wardrobes</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3479,7 +3615,9 @@
                     <path d="M12 12a10 10 0 0 1-10 10V12h10z" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.ac">Central A/C</span>
+                <span class="amenity-label" data-i18n="pd.amenity.ac"
+                  >Central A/C</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3498,7 +3636,9 @@
                     <line x1="12" y1="17" x2="12" y2="21" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.smart_home">Smart Home System</span>
+                <span class="amenity-label" data-i18n="pd.amenity.smart_home"
+                  >Smart Home System</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3515,7 +3655,9 @@
                     <path d="M3 11l19-9-9 19-2-8-8-2z" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.kitchen">Open Kitchen</span>
+                <span class="amenity-label" data-i18n="pd.amenity.kitchen"
+                  >Open Kitchen</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3534,7 +3676,9 @@
                     />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.laundry">Laundry Room</span>
+                <span class="amenity-label" data-i18n="pd.amenity.laundry"
+                  >Laundry Room</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3553,7 +3697,9 @@
                     />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.storage">Storage Room</span>
+                <span class="amenity-label" data-i18n="pd.amenity.storage"
+                  >Storage Room</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -3571,7 +3717,9 @@
                     <path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" />
                   </svg>
                 </div>
-                <span class="amenity-label" data-i18n="pd.amenity.en_suite">En-Suite Master</span>
+                <span class="amenity-label" data-i18n="pd.amenity.en_suite"
+                  >En-Suite Master</span
+                >
               </div>
             </div>
             <div class="amenity-card gs-anim">
@@ -4789,6 +4937,14 @@
       </div>
     </footer>
 
+    <!-- Section sticky CTA -->
+    <div class="sec-cta-wrap" id="secCtaWrap">
+      <a class="sec-cta-btn" id="secCtaBtn" href="#inquiry">
+        <span class="sec-cta-icon" id="secCtaIcon" aria-hidden="true"></span>
+        <span class="sec-cta-label" id="secCtaLabel"></span>
+      </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="js/i18n.js"></script>
@@ -4911,57 +5067,19 @@
       /* ── GSAP ScrollTrigger ── */
       gsap.registerPlugin(ScrollTrigger);
 
-      /* Pin blocks stagger in */
-      gsap.utils.toArray(".pd-pin-block").forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, x: calc(-26 * 0.81), y: 26 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 82%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
+      /* Hero bg: initial scale-down + parallax on scroll */
+      gsap.from(".pd-hero-bg img", {
+        scale: 1.08,
+        duration: 2.2,
+        ease: "power2.out",
       });
-
-      /* Video heading split slide */
-      gsap.fromTo(
-        "#pdVideoHeading",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".pd-video", start: "top 70%" },
-        },
-      );
-
-      /* Generic section entry — any .gs-anim element */
-      gsap.utils.toArray(".gs-anim").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, x: -21, y: 26 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            duration: 0.75,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
+      ScrollTrigger.create({
+        trigger: ".pd-hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.2,
+        onUpdate: (self) =>
+          gsap.set(".pd-hero-bg img", { yPercent: self.progress * 22 }),
       });
 
       /* ── Download Master Plan ── */
@@ -5038,36 +5156,321 @@
         });
       });
 
-      /* ── Inquiry section entry animation ── */
+      /* ── Comprehensive scroll animations ── */
+
+      // Shear-vector offsets from design system (--shear-tan: 0.81, base 26 px)
+      const SX = -21,
+        SY = 26;
+
+      /* Hero: staggered entrance on page load */
+      gsap
+        .timeline({ defaults: { ease: "power4.out" } })
+        .fromTo(
+          ".pd-hero .breadcrumb",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.55 },
+          0.2,
+        )
+        .fromTo(
+          ".pd-hero .eyebrow-wrap",
+          { opacity: 0, x: SX * 0.7, y: SY * 0.7 },
+          { opacity: 1, x: 0, y: 0, duration: 0.6 },
+          0.32,
+        )
+        .fromTo(
+          ".pd-hero-title",
+          { opacity: 0, y: 44, clipPath: "inset(0 0 100% 0)" },
+          { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.95 },
+          0.46,
+        )
+        .fromTo(
+          ".pd-hero-stat",
+          { opacity: 0, x: SX, y: SY },
+          { opacity: 1, x: 0, y: 0, duration: 0.6, stagger: 0.08 },
+          0.7,
+        )
+        .fromTo(
+          ".pd-hero-price-row",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.55 },
+          0.96,
+        )
+        .fromTo(
+          ".pd-hero-actions",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.55 },
+          1.08,
+        );
+
+      /* Gallery */
       gsap.fromTo(
-        ".pd-inquiry-info",
-        { opacity: 0, x: -28, y: 28 },
+        ".pd-gallery-meta",
+        { opacity: 0, x: SX, y: SY },
         {
           opacity: 1,
           x: 0,
           y: 0,
-          duration: 0.9,
+          duration: 0.85,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".pd-inquiry", start: "top 75%" },
-        },
-      );
-      gsap.fromTo(
-        ".pd-form",
-        { opacity: 0, x: 28, y: 28 },
-        {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          delay: 0.15,
-          scrollTrigger: { trigger: ".pd-inquiry", start: "top 75%" },
+          scrollTrigger: { trigger: ".pd-gallery", start: "top 76%" },
         },
       );
 
-      function calc(v) {
-        return v;
-      } /* helper to keep GSAP calls clean */
+      gsap.fromTo(
+        ".gal-swiper-wrap",
+        { opacity: 0, scale: 0.95, y: 32 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.95,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-gallery", start: "top 70%" },
+        },
+      );
+
+      /* Specs bar: wave stagger */
+      gsap.fromTo(
+        ".pd-spec-item",
+        { opacity: 0, y: 28, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          ease: "power3.out",
+          stagger: 0.07,
+          scrollTrigger: { trigger: ".pd-specs", start: "top 85%" },
+        },
+      );
+
+      /* About / Pinned split */
+      gsap.fromTo(
+        "#pdPinImage",
+        { opacity: 0, scale: 0.93 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-about", start: "top 80%" },
+        },
+      );
+
+      gsap.utils.toArray(".pd-pin-block").forEach((el) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+        const num = el.querySelector(".pd-pin-block-num");
+        const brow = el.querySelector(".pd-pin-block-eyebrow");
+        const title = el.querySelector(".pd-pin-block-title");
+        const texts = el.querySelectorAll(
+          ".pd-pin-block-text, .pd-feature-list",
+        );
+        if (num)
+          tl.fromTo(
+            num,
+            { opacity: 0, x: SX * 1.3 },
+            { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
+            0,
+          );
+        if (brow)
+          tl.fromTo(
+            brow,
+            { opacity: 0, x: SX, y: 14 },
+            { opacity: 1, x: 0, y: 0, duration: 0.55, ease: "power3.out" },
+            0.1,
+          );
+        if (title)
+          tl.fromTo(
+            title,
+            { opacity: 0, y: 36 },
+            { opacity: 1, y: 0, duration: 0.75, ease: "power4.out" },
+            0.2,
+          );
+        if (texts.length)
+          tl.fromTo(
+            texts,
+            { opacity: 0, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+              ease: "power3.out",
+              stagger: 0.1,
+            },
+            0.38,
+          );
+      });
+
+      /* Video section */
+      gsap
+        .timeline({ scrollTrigger: { trigger: ".pd-video", start: "top 65%" } })
+        .fromTo(
+          ".pd-video-eyebrow",
+          { opacity: 0, x: SX, y: SY },
+          { opacity: 1, x: 0, y: 0, duration: 0.6, ease: "power3.out" },
+        )
+        .fromTo(
+          "#pdVideoHeading",
+          { opacity: 0, y: 52 },
+          { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
+          0.12,
+        )
+        .fromTo(
+          ".pd-video-sub",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          0.35,
+        )
+        .fromTo(
+          ".pd-video-body .btn-accent",
+          { opacity: 0, scale: 0.9, y: 16 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" },
+          0.52,
+        );
+
+      /* Amenities */
+      gsap.fromTo(
+        ".pd-amenities .sec-header",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-amenities", start: "top 78%" },
+        },
+      );
+
+      gsap.fromTo(
+        ".amenity-card",
+        { opacity: 0, x: SX, y: SY, scale: 0.96 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.55,
+          ease: "power3.out",
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: ".pd-amenities-grid",
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      /* Masterplan: split entrance */
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: ".pd-masterplan", start: "top 72%" },
+        })
+        .fromTo(
+          ".pd-masterplan-inner > *:first-child",
+          { opacity: 0, x: -44, y: 20 },
+          { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
+        )
+        .fromTo(
+          ".pd-masterplan-inner > *:last-child",
+          { opacity: 0, x: 44, scale: 0.96 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.9, ease: "power3.out" },
+          0.1,
+        );
+
+      /* Location */
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: ".pd-location", start: "top 75%" },
+        })
+        .fromTo(
+          ".pd-location .sec-header",
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        )
+        .fromTo(
+          ".pd-map-wrap",
+          { opacity: 0, scale: 0.97, y: 26 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: "power3.out" },
+          0.22,
+        );
+
+      /* Similar properties */
+      gsap.fromTo(
+        ".pd-similar .sec-header",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pd-similar", start: "top 78%" },
+        },
+      );
+
+      gsap.fromTo(
+        ".pd-similar .prop-card",
+        { opacity: 0, y: 38, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ".pd-similar-grid",
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      /* Inquiry section */
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: ".pd-inquiry", start: "top 72%" },
+        })
+        .fromTo(
+          ".pd-inquiry-info",
+          { opacity: 0, x: -36, y: 28 },
+          { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
+        )
+        .fromTo(
+          ".pd-form",
+          { opacity: 0, x: 36, y: 28 },
+          { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
+          0.1,
+        )
+        .fromTo(
+          ".pd-inq-contact",
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: "power3.out",
+            stagger: 0.1,
+          },
+          0.3,
+        )
+        .fromTo(
+          ".pd-form-field",
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: "power3.out",
+            stagger: 0.07,
+          },
+          0.42,
+        );
 
       /* ── Gallery Swiper ── */
       (function () {
@@ -5179,6 +5582,154 @@
         if (fullText.length <= MAX_CHARS) return;
         titleEl.textContent = fullText.slice(0, MAX_CHARS).trimEnd() + "…";
         titleEl.setAttribute("data-tooltip", fullText);
+      })();
+
+      /* ── Section sticky CTA: circle → pill on section enter, collapse on leave ── */
+      (function () {
+        var wrap = document.getElementById("secCtaWrap");
+        var btn = document.getElementById("secCtaBtn");
+        var icon = document.getElementById("secCtaIcon");
+        var label = document.getElementById("secCtaLabel");
+        if (!wrap) return;
+
+        var IC = {
+          photo:
+            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+          cal: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+          star: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+          map: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>',
+          pin: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+          send: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+        };
+
+        var sections = [
+          {
+            selector: ".pd-gallery",
+            label: "View Gallery",
+            icon: IC.photo,
+            href: "#gallerySwiper",
+          },
+          {
+            selector: ".pd-about",
+            label: "Book a Viewing",
+            icon: IC.cal,
+            href: "#inquiry",
+          },
+          {
+            selector: ".pd-amenities",
+            label: "See Amenities",
+            icon: IC.star,
+            href: "#inquiry",
+          },
+          {
+            selector: ".pd-masterplan",
+            label: "View Full Plan",
+            icon: IC.map,
+            href: "#inquiry",
+          },
+          {
+            selector: ".pd-location",
+            label: "Get Directions",
+            icon: IC.pin,
+            href: "#inquiry",
+          },
+          {
+            selector: ".pd-inquiry",
+            label: "Send Request",
+            icon: IC.send,
+            href: "#pdForm",
+          },
+        ];
+
+        var currentLabel = null;
+        var tl = null;
+
+        // GSAP controls position centering + scale/opacity — no CSS transform conflict
+        gsap.set(wrap, { xPercent: -50, scale: 0, opacity: 0 });
+
+        function show(sec) {
+          if (tl) tl.kill();
+          icon.innerHTML = sec.icon;
+          btn.setAttribute("href", sec.href);
+          wrap.classList.add("active");
+
+          var wasVisible = currentLabel !== null;
+          currentLabel = sec.label;
+
+          if (wasVisible) {
+            // Already on screen: swap label with slide, keep pill shape
+            tl = gsap.timeline();
+            tl.to(label, {
+              opacity: 0,
+              y: -8,
+              duration: 0.16,
+              ease: "power2.in",
+              onComplete: function () {
+                label.textContent = sec.label;
+              },
+            }).fromTo(
+              label,
+              { y: 8, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.2, ease: "power3.out" },
+            );
+          } else {
+            // Fresh: pop as circle then expand to pill
+            label.textContent = sec.label;
+            gsap.set(btn, { width: 56 });
+            gsap.set(label, { opacity: 0, y: 0 });
+            tl = gsap.timeline();
+            tl.to(wrap, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.42,
+              ease: "back.out(2.2)",
+            })
+              .to(btn, { width: 200, duration: 0.68, ease: "power3.out" }, 0.28)
+              .to(
+                label,
+                { opacity: 1, duration: 0.28, ease: "power2.out" },
+                0.52,
+              );
+          }
+        }
+
+        function hide(lbl) {
+          if (currentLabel !== lbl) return; // next section already took over
+          currentLabel = null;
+          wrap.classList.remove("active");
+          if (tl) tl.kill();
+          tl = gsap.timeline();
+          tl.to(label, { opacity: 0, duration: 0.16, ease: "power2.in" })
+            .to(btn, { width: 56, duration: 0.32, ease: "power2.in" }, 0)
+            .to(
+              wrap,
+              { scale: 0, opacity: 0, duration: 0.28, ease: "power2.in" },
+              0.1,
+            );
+        }
+
+        sections.forEach(function (sec) {
+          var el = document.querySelector(sec.selector);
+          if (!el) return;
+          var lbl = sec.label;
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 50%",
+            end: "bottom 50%",
+            onEnter: function () {
+              show(sec);
+            },
+            onEnterBack: function () {
+              show(sec);
+            },
+            onLeave: function () {
+              hide(lbl);
+            },
+            onLeaveBack: function () {
+              hide(lbl);
+            },
+          });
+        });
       })();
     </script>
   </body>
