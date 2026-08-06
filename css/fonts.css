@@ -12,11 +12,11 @@
   --font-display-rtl: 'Noto Kufi Arabic', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-display:     var(--font-display-ltr);
 
-  --font-body-ltr: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-body-rtl: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-body-ltr: 'Archivo', system-ui, sans-serif;
+  --font-body-rtl: 'Noto Kufi Arabic', system-ui, sans-serif;
   --font-body:     var(--font-body-ltr);
 
-  --font-data: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-data: 'Archivo', system-ui, sans-serif;
 
   --fw-regular:  400;
   --fw-medium:   500;
