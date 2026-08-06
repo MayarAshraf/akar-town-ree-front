@@ -3870,7 +3870,9 @@
                       />
                     </div>
                     <div class="proj-card-info">
-                      <span class="proj-card-name">The Residences — New Cairo</span>
+                      <span class="proj-card-name"
+                        >The Residences — New Cairo</span
+                      >
                       <span class="proj-card-price">EGP 2.4M+</span>
                     </div>
                   </article>
@@ -3885,7 +3887,9 @@
                       />
                     </div>
                     <div class="proj-card-info">
-                      <span class="proj-card-name">Skyline Tower — New Capital</span>
+                      <span class="proj-card-name"
+                        >Skyline Tower — New Capital</span
+                      >
                       <span class="proj-card-price">EGP 3.1M+</span>
                     </div>
                   </article>
@@ -3900,7 +3904,9 @@
                       />
                     </div>
                     <div class="proj-card-info">
-                      <span class="proj-card-name">Palm Shore — North Coast</span>
+                      <span class="proj-card-name"
+                        >Palm Shore — North Coast</span
+                      >
                       <span class="proj-card-price">EGP 3.8M+</span>
                     </div>
                   </article>
@@ -3915,7 +3921,9 @@
                       />
                     </div>
                     <div class="proj-card-info">
-                      <span class="proj-card-name">The Boulevard — Sheikh Zayed</span>
+                      <span class="proj-card-name"
+                        >The Boulevard — Sheikh Zayed</span
+                      >
                       <span class="proj-card-price">EGP 2.9M+</span>
                     </div>
                   </article>
@@ -3930,7 +3938,9 @@
                       />
                     </div>
                     <div class="proj-card-info">
-                      <span class="proj-card-name">Azzurra Bay — Ain Sokhna</span>
+                      <span class="proj-card-name"
+                        >Azzurra Bay — Ain Sokhna</span
+                      >
                       <span class="proj-card-price">EGP 1.9M+</span>
                     </div>
                   </article>
@@ -3939,7 +3949,10 @@
             </div>
             <!-- Prev / Next -->
             <div class="proj-mob-nav">
-              <button class="proj-ctrl proj-mob-prev" aria-label="Previous project">
+              <button
+                class="proj-ctrl proj-mob-prev"
+                aria-label="Previous project"
+              >
                 <svg
                   width="12"
                   height="12"
@@ -4836,34 +4849,20 @@
 
         /* ── Floor plan generator ── */
         function generateRooms(beds, baths) {
-          /* Simplified numeric view for counts beyond the full-plan range */
-          if (beds > 3 || baths > 3) {
-            return [
-              {
-                n: beds + (beds === 1 ? " Bedroom" : " Bedrooms"),
-                x: 2,
-                y: 2,
-                w: 56,
-                h: 56,
-                t: "bed",
-              },
-              {
-                n: baths + (baths === 1 ? " Bathroom" : " Bathrooms"),
-                x: 60,
-                y: 2,
-                w: 38,
-                h: 56,
-                t: "bath",
-              },
-              { n: "Kitchen", x: 2, y: 62, w: 46, h: 34, t: "kitchen" },
-              { n: "Balcony", x: 50, y: 62, w: 48, h: 34, t: "out" },
-            ];
-          }
-
           var rooms = [];
 
-          /* Top row — bedrooms (y:2, h:58) */
-          if (beds === 1) {
+          /* Top row — bedrooms (y:2, h:58)
+             Collapse to a single numeric block only when beds > 3 */
+          if (beds > 3) {
+            rooms.push({
+              n: beds + " Bedrooms",
+              x: 2,
+              y: 2,
+              w: 96,
+              h: 58,
+              t: "bed",
+            });
+          } else if (beds === 1) {
             rooms.push({ n: "Master", x: 2, y: 2, w: 96, h: 58, t: "bed" });
           } else if (beds === 2) {
             rooms.push({ n: "Master", x: 2, y: 2, w: 46, h: 58, t: "bed" });
@@ -4874,8 +4873,27 @@
             rooms.push({ n: "Bed 3", x: 66, y: 2, w: 32, h: 58, t: "bed" });
           }
 
-          /* Bottom row — kitchen + baths + balcony (y:62, h:34) */
-          if (baths === 1) {
+          /* Bottom row — kitchen + baths + balcony (y:62, h:34)
+             Collapse bath section to a single numeric block only when baths > 3 */
+          if (baths > 3) {
+            rooms.push({
+              n: "Kitchen",
+              x: 2,
+              y: 62,
+              w: 28,
+              h: 34,
+              t: "kitchen",
+            });
+            rooms.push({
+              n: baths + " Bathrooms",
+              x: 32,
+              y: 62,
+              w: 36,
+              h: 34,
+              t: "bath",
+            });
+            rooms.push({ n: "Balcony", x: 70, y: 62, w: 28, h: 34, t: "out" });
+          } else if (baths === 1) {
             rooms.push({
               n: "Kitchen",
               x: 2,
