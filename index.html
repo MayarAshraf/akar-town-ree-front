@@ -2852,8 +2852,308 @@
         }
       }
     </style>
+
+    <!-- ══ SPLASH SCREEN CSS ══════════════════════════════════════ -->
+    <style>
+      /* ── Container ───────────────────────────────────────────── */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        background: #F7F7F7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        cursor: pointer;
+        visibility: visible;
+        transition: opacity 0.5s 0.75s ease, visibility 0s 1.25s;
+      }
+      #splash.sp-exit {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* ── Rising columns field ────────────────────────────────── */
+      .sp-field {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 16px;
+      }
+      .sp-col {
+        flex: 0 0 176px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        animation: sp-rise var(--dur, 24s) var(--dly, 0s) linear infinite;
+        will-change: transform;
+      }
+      @keyframes sp-rise {
+        from { transform: translateY(0); }
+        to   { transform: translateY(-50%); }
+      }
+      #splash.sp-exit .sp-col {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        animation-duration: 1s !important;
+      }
+
+      /* ── Card ────────────────────────────────────────────────── */
+      .sp-card {
+        flex-shrink: 0;
+        overflow: hidden;
+        line-height: 0;
+      }
+      .sp-card svg { display: block; width: 176px; height: auto; }
+
+      /* ── Stage: logo center ──────────────────────────────────── */
+      .sp-stage {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+
+      /* Ghost logo — no box, no background. Logo lives on the same layer as
+         the cards. A layered drop-shadow on each glyph edge (not the frame)
+         keeps it legible on any card colour the way film title cards work. */
+      .sp-logo-frame {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        filter: blur(14px);
+        transition:
+          opacity 1.4s 0.3s cubic-bezier(0.16,1,0.3,1),
+          transform 1.6s 0.3s cubic-bezier(0.16,1,0.3,1),
+          filter 1.2s 0.3s ease;
+      }
+      #splash.sp-ready .sp-logo-frame {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: none;
+      }
+      #splash.sp-exit .sp-logo-frame {
+        opacity: 0;
+        transform: scale(1.04) translateY(-8px);
+        filter: blur(8px);
+        transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4,0,1,1), filter 0.5s ease;
+      }
+
+      /* Glyph-level shadow: light halo so dark logo reads over dark cards */
+      .sp-logo-svg {
+        width: clamp(220px, 36vw, 360px);
+        filter:
+          drop-shadow(0 0  1px rgba(247,247,247,1))
+          drop-shadow(0 0  4px rgba(247,247,247,1))
+          drop-shadow(0 0 12px rgba(247,247,247,.9))
+          drop-shadow(0 0 28px rgba(247,247,247,.65))
+          drop-shadow(0 0 56px rgba(247,247,247,.35));
+      }
+
+      /* Red rule */
+      .sp-redline {
+        width: clamp(64px, 11vw, 120px);
+        height: 2px;
+        background: #d30201;
+        transform-origin: left center;
+        transform: scaleX(0);
+        filter: drop-shadow(0 0 4px rgba(211,2,1,.6));
+        transition: transform 0.9s 1.3s cubic-bezier(0.16,1,0.3,1);
+      }
+      #splash.sp-ready .sp-redline { transform: scaleX(1); }
+
+      /* Tagline */
+      .sp-sub {
+        font-family: 'Archivo', system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(35,31,32,.82);
+        text-align: center;
+        text-shadow:
+          0 0  2px rgba(242,237,230,1),
+          0 0  6px rgba(242,237,230,1),
+          0 0 16px rgba(242,237,230,.95),
+          0 0 32px rgba(242,237,230,.7);
+        opacity: 0;
+        transition: opacity 0.9s 1.6s ease;
+      }
+      #splash.sp-ready .sp-sub { opacity: 1; }
+
+      /* Skip hint */
+      .sp-skip {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Archivo', system-ui, sans-serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(35,31,32,.22);
+        user-select: none;
+        opacity: 0;
+        transition: opacity 0.8s 2.2s ease;
+        white-space: nowrap;
+      }
+      #splash.sp-ready .sp-skip { opacity: 1; }
+
+      /* ── Responsive ──────────────────────────────────────────── */
+      @media (max-width: 1100px) {
+        .sp-col:nth-child(1),
+        .sp-col:nth-child(5) { display: none; }
+      }
+      @media (max-width: 700px) {
+        .sp-col:nth-child(2),
+        .sp-col:nth-child(4) { display: none; }
+        .sp-col { flex-basis: 148px; }
+        .sp-card svg { width: 148px; }
+      }
+
+      /* ── Reduced motion ──────────────────────────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        .sp-col { animation: none !important; transform: translateY(-50%); }
+        .sp-logo-frame,
+        .sp-redline,
+        .sp-sub { transition-duration: 0.2s !important; }
+      }
+    </style>
   </head>
   <body>
+
+    <!-- ══ SPLASH SCREEN ══════════════════════════════════════════ -->
+    <div id="splash" role="presentation" aria-hidden="true">
+      <!-- Five rising columns (JS populates the cards) -->
+      <div class="sp-field">
+        <div class="sp-col" style="--dur:7s;--dly:-2s"></div>
+        <div class="sp-col" style="--dur:9s;--dly:-5s"></div>
+        <div class="sp-col" style="--dur:6.5s;--dly:-1s"></div>
+        <div class="sp-col" style="--dur:10s;--dly:-7s"></div>
+        <div class="sp-col" style="--dur:8s;--dly:-3.5s"></div>
+      </div>
+
+      <!-- Center: vignette + logo -->
+      <div class="sp-stage">
+        <div class="sp-logo-frame">
+          <!-- Akar Town wordmark (same geometry as header) -->
+          <svg class="sp-logo-svg" viewBox="0 0 2185 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z" fill="#231F20"/>
+            <path d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z" fill="#FF0000"/>
+            <path d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z" fill="#231F20"/>
+            <path d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z" fill="#231F20"/>
+            <path d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z" fill="#231F20"/>
+            <path d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z" fill="#231F20"/>
+            <path d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z" fill="#231F20"/>
+            <path d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z" fill="#231F20"/>
+            <path d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z" fill="#231F20"/>
+            <path d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z" fill="#231F20"/>
+          </svg>
+          <div class="sp-redline"></div>
+          <div class="sp-sub">Premium Real Estate &nbsp;&middot;&nbsp; Akar Town</div>
+        </div>
+      </div>
+
+      <span class="sp-skip" aria-hidden="true">Click anywhere to skip</span>
+    </div>
+
+    <!-- Splash JS — runs before page content for instant activation -->
+    <script>
+      (function () {
+        'use strict';
+        var splash = document.getElementById('splash');
+        if (!splash) return;
+
+
+        /* ── Card templates (10 real-estate scenes) ─────────────── */
+        var C = [
+          /* 0: Residential Tower — night facade, lit window grid, street trees */
+          '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#0c1525"/><circle cx="148" cy="20" r="8" fill="#fdefd0" opacity=".5"/><circle cx="152" cy="18" r="6" fill="#0c1525"/><rect x="0" y="110" width="30" height="122" fill="#182234"/><rect x="146" y="130" width="30" height="102" fill="#182234"/><g fill="#fdefd0" opacity=".4"><rect x="4" y="118" width="7" height="5"/><rect x="16" y="118" width="7" height="5"/><rect x="4" y="128" width="7" height="5"/><rect x="16" y="128" width="7" height="5"/><rect x="4" y="138" width="7" height="5"/><rect x="16" y="138" width="7" height="5"/><rect x="152" y="138" width="7" height="5"/><rect x="152" y="148" width="7" height="5"/><rect x="152" y="158" width="7" height="5"/></g><rect x="36" y="14" width="104" height="218" fill="#1a2d48"/><rect x="48" y="6" width="80" height="10" fill="#1a2d48"/><rect x="76" y="0" width="24" height="8" fill="#D30201"/><g fill="#fdefd0"><rect x="44" y="20" width="11" height="8" opacity=".6"/><rect x="58" y="20" width="11" height="8" opacity=".9"/><rect x="72" y="20" width="11" height="8" opacity=".3"/><rect x="86" y="20" width="11" height="8" opacity=".7"/><rect x="100" y="20" width="11" height="8" opacity=".5"/><rect x="114" y="20" width="11" height="8" opacity=".8"/><rect x="128" y="20" width="11" height="8" opacity=".2"/><rect x="44" y="34" width="11" height="8" opacity=".4"/><rect x="58" y="34" width="11" height="8" opacity=".2"/><rect x="72" y="34" width="11" height="8" opacity=".8"/><rect x="86" y="34" width="11" height="8" opacity=".5"/><rect x="100" y="34" width="11" height="8" opacity=".9"/><rect x="114" y="34" width="11" height="8" opacity=".3"/><rect x="128" y="34" width="11" height="8" opacity=".6"/><rect x="44" y="48" width="11" height="8" opacity=".7"/><rect x="58" y="48" width="11" height="8" opacity=".5"/><rect x="72" y="48" width="11" height="8" opacity=".2"/><rect x="86" y="48" width="11" height="8" opacity=".8"/><rect x="100" y="48" width="11" height="8" opacity=".4"/><rect x="114" y="48" width="11" height="8" opacity=".6"/><rect x="128" y="48" width="11" height="8" opacity=".9"/><rect x="44" y="62" width="11" height="8" opacity=".3"/><rect x="58" y="62" width="11" height="8" opacity=".7"/><rect x="72" y="62" width="11" height="8" opacity=".5"/><rect x="86" y="62" width="11" height="8" opacity=".1"/><rect x="100" y="62" width="11" height="8" opacity=".8"/><rect x="114" y="62" width="11" height="8" opacity=".4"/><rect x="128" y="62" width="11" height="8" opacity=".6"/><rect x="44" y="76" width="11" height="8" opacity=".8"/><rect x="58" y="76" width="11" height="8" opacity=".3"/><rect x="72" y="76" width="11" height="8" opacity=".6"/><rect x="86" y="76" width="11" height="8" opacity=".9"/><rect x="100" y="76" width="11" height="8" opacity=".2"/><rect x="114" y="76" width="11" height="8" opacity=".5"/><rect x="128" y="76" width="11" height="8" opacity=".7"/><rect x="44" y="90" width="11" height="8" opacity=".5"/><rect x="58" y="90" width="11" height="8" opacity=".8"/><rect x="72" y="90" width="11" height="8" opacity=".4"/><rect x="86" y="90" width="11" height="8" opacity=".6"/><rect x="100" y="90" width="11" height="8" opacity=".2"/><rect x="114" y="90" width="11" height="8" opacity=".9"/><rect x="128" y="90" width="11" height="8" opacity=".3"/></g><rect x="36" y="68" width="104" height="1.5" fill="#D30201" opacity=".5"/><rect x="0" y="220" width="176" height="12" fill="#080e18"/><ellipse cx="22" cy="220" rx="16" ry="10" fill="#0e1c10"/><ellipse cx="158" cy="220" rx="14" ry="9" fill="#0e1c10"/><rect x="34" y="196" width="2" height="24" fill="#2a3d55"/><ellipse cx="35" cy="195" rx="5" ry="2" fill="#fdefd0" opacity=".5"/><rect x="140" y="200" width="2" height="20" fill="#2a3d55"/><text x="88" y="229" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,.25)" letter-spacing="2">RESIDENTIAL TOWER</text></svg></div>',
+
+          /* 1: Luxury Villa — flat roof, pool, palm trees, sky */
+          '<div class="sp-card"><svg viewBox="0 0 176 220" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="220" fill="#c8dff0"/><rect width="176" height="95" fill="#d8eaf8"/><circle cx="138" cy="28" r="20" fill="#ffe8a0" opacity=".65"/><rect x="0" y="95" width="176" height="90" fill="#d0c49a"/><rect x="50" y="138" width="76" height="46" fill="#5ab0d8"/><rect x="50" y="138" width="76" height="46" fill="#7ad0f0" opacity=".35"/><line x1="50" y1="161" x2="126" y2="161" stroke="rgba(255,255,255,.28)" stroke-width="1"/><rect x="22" y="66" width="132" height="82" fill="#f5f0ea"/><rect x="16" y="60" width="144" height="10" fill="#ddd5c8"/><rect x="34" y="80" width="30" height="42" fill="#c8e0f0" opacity=".8"/><rect x="34" y="80" width="30" height="42" fill="none" stroke="#ccc4bc" stroke-width="1"/><line x1="49" y1="80" x2="49" y2="122" stroke="#ccc4bc" stroke-width=".8"/><rect x="116" y="80" width="26" height="42" fill="#c8e0f0" opacity=".8"/><rect x="116" y="80" width="26" height="42" fill="none" stroke="#ccc4bc" stroke-width="1"/><line x1="129" y1="80" x2="129" y2="122" stroke="#ccc4bc" stroke-width=".8"/><rect x="76" y="96" width="24" height="52" fill="#b0a494"/><rect x="82" y="101" width="5" height="18" fill="#c0b8ac" opacity=".5"/><rect x="89" y="101" width="5" height="18" fill="#c0b8ac" opacity=".5"/><rect x="12" y="90" width="4" height="58" fill="#7a5c34"/><ellipse cx="8" cy="86" rx="13" ry="8" fill="#3a6830" transform="rotate(-20 8 86)"/><ellipse cx="18" cy="84" rx="14" ry="7" fill="#4a7840" transform="rotate(12 18 84)"/><rect x="160" y="88" width="4" height="60" fill="#7a5c34"/><ellipse cx="156" cy="84" rx="13" ry="7" fill="#4a7840" transform="rotate(-12 156 84)"/><ellipse cx="166" cy="86" rx="12" ry="6" fill="#3a6830" transform="rotate(18 166 86)"/><rect x="0" y="185" width="176" height="35" fill="#bfb490"/><text x="88" y="215" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(60,48,30,.38)" letter-spacing="2.5">LUXURY VILLA</text></svg></div>',
+
+          /* 2: Living Room — sofa, coffee table, floor-to-ceiling window, pendant lamp */
+          '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#e8e2d8"/><rect width="176" height="10" fill="#ddd8ce"/><rect x="0" y="10" width="176" height="150" fill="#e0dace"/><rect x="28" y="16" width="92" height="124" fill="#daeaf8" opacity=".9"/><rect x="28" y="16" width="92" height="124" fill="none" stroke="#c8c0b4" stroke-width="1.5"/><line x1="74" y1="16" x2="74" y2="140" stroke="#c8c0b4" stroke-width=".8"/><line x1="28" y1="78" x2="120" y2="78" stroke="#c8c0b4" stroke-width=".8"/><rect x="14" y="12" width="18" height="132" fill="#cfc8bc" opacity=".6"/><rect x="144" y="12" width="18" height="132" fill="#cfc8bc" opacity=".6"/><line x1="88" y1="0" x2="88" y2="22" stroke="#a89880" stroke-width="1.5"/><ellipse cx="88" cy="24" rx="18" ry="7" fill="#d8c8a0" opacity=".9"/><rect x="0" y="160" width="176" height="72" fill="#c8b89a"/><g stroke="#b8a888" stroke-width=".5" fill="none" opacity=".5"><line x1="0" y1="170" x2="176" y2="170"/><line x1="0" y1="180" x2="176" y2="180"/><line x1="0" y1="190" x2="176" y2="190"/><line x1="0" y1="200" x2="176" y2="200"/></g><ellipse cx="80" cy="188" rx="56" ry="22" fill="#b8a890" opacity=".35"/><rect x="10" y="152" width="132" height="30" fill="#9e8e78"/><rect x="10" y="142" width="132" height="14" fill="#ae9e88"/><rect x="16" y="145" width="30" height="22" fill="#c4b49e"/><rect x="50" y="145" width="30" height="22" fill="#b8a890"/><rect x="84" y="145" width="30" height="22" fill="#c4b49e"/><rect x="116" y="145" width="20" height="22" fill="#b8a890"/><rect x="2" y="142" width="10" height="40" fill="#ae9e88"/><rect x="142" y="142" width="10" height="40" fill="#ae9e88"/><rect x="34" y="195" width="90" height="18" fill="#7a6848"/><rect x="46" y="212" width="8" height="8" fill="#6a5838"/><rect x="108" y="212" width="8" height="8" fill="#6a5838"/><rect x="82" y="190" width="8" height="14" fill="#8a7e6e"/><ellipse cx="86" cy="190" rx="6" ry="4" fill="#9a8e7e"/><rect x="152" y="96" width="4" height="86" fill="#78664c"/><ellipse cx="154" cy="92" rx="14" ry="9" fill="#d4cc9e" opacity=".9"/><text x="88" y="228" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(80,60,40,.35)" letter-spacing="2.5">LIVING ROOM</text></svg></div>',
+
+          /* 3: Master Bedroom — king bed, nightstands, lamps, feature wall */
+          '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#f0ece4"/><rect width="176" height="10" fill="#e4e0d8"/><rect x="0" y="10" width="176" height="104" fill="#d8d0c4"/><rect x="18" y="14" width="140" height="94" fill="#cdc4b8" opacity=".45"/><rect x="100" y="18" width="62" height="82" fill="#daeaf8" opacity=".82"/><rect x="100" y="18" width="62" height="82" fill="none" stroke="#c0b8b0" stroke-width="1"/><line x1="131" y1="18" x2="131" y2="100" stroke="#c0b8b0" stroke-width=".8"/><rect x="96" y="12" width="8" height="90" fill="#d4ccc0" opacity=".75"/><rect x="158" y="12" width="8" height="90" fill="#d4ccc0" opacity=".75"/><rect x="0" y="114" width="176" height="118" fill="#c8baa8"/><g stroke="#b8aa98" stroke-width=".5" fill="none" opacity=".4"><line x1="0" y1="124" x2="176" y2="124"/><line x1="0" y1="134" x2="176" y2="134"/><line x1="44" y1="114" x2="44" y2="232"/><line x1="88" y1="114" x2="88" y2="232"/><line x1="132" y1="114" x2="132" y2="232"/></g><rect x="16" y="88" width="144" height="48" fill="#8a7a68"/><rect x="20" y="92" width="136" height="40" fill="#9a8a78"/><rect x="12" y="134" width="152" height="76" fill="#e8e0d2"/><rect x="12" y="134" width="152" height="54" fill="#f5f0ea"/><rect x="20" y="136" width="46" height="28" fill="#fff" opacity=".9"/><rect x="20" y="136" width="46" height="28" fill="none" stroke="#e0d8cc" stroke-width=".5"/><rect x="110" y="136" width="46" height="28" fill="#fff" opacity=".9"/><rect x="110" y="136" width="46" height="28" fill="none" stroke="#e0d8cc" stroke-width=".5"/><line x1="12" y1="178" x2="164" y2="178" stroke="#e0d8cc" stroke-width="1"/><rect x="0" y="134" width="14" height="44" fill="#9a8a78"/><rect x="4" y="118" width="3" height="18" fill="#7a6a58"/><ellipse cx="5.5" cy="117" rx="7" ry="5" fill="#e8d8a0" opacity=".8"/><rect x="162" y="134" width="14" height="44" fill="#9a8a78"/><rect x="169" y="118" width="3" height="18" fill="#7a6a58"/><ellipse cx="170.5" cy="117" rx="7" ry="5" fill="#e8d8a0" opacity=".8"/><text x="88" y="228" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(80,60,45,.35)" letter-spacing="2.5">MASTER BEDROOM</text></svg></div>',
+
+          /* 4: Property listing card — photo area + price + specs */
+          '<div class="sp-card"><svg viewBox="0 0 176 220" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="220" fill="#f8f5f0"/><rect width="176" height="118" fill="#1e2d42"/><rect x="30" y="22" width="116" height="96" fill="#253450"/><rect x="30" y="22" width="116" height="10" fill="#D30201"/><g fill="#fdefd0" opacity=".5"><rect x="38" y="38" width="9" height="7"/><rect x="51" y="38" width="9" height="7"/><rect x="64" y="38" width="9" height="7"/><rect x="77" y="38" width="9" height="7"/><rect x="90" y="38" width="9" height="7"/><rect x="103" y="38" width="9" height="7"/><rect x="116" y="38" width="9" height="7"/><rect x="38" y="51" width="9" height="7" opacity=".8"/><rect x="51" y="51" width="9" height="7" opacity=".3"/><rect x="64" y="51" width="9" height="7" opacity=".9"/><rect x="77" y="51" width="9" height="7" opacity=".6"/><rect x="90" y="51" width="9" height="7" opacity=".4"/><rect x="103" y="51" width="9" height="7" opacity=".7"/><rect x="116" y="51" width="9" height="7" opacity=".2"/><rect x="38" y="64" width="9" height="7" opacity=".6"/><rect x="51" y="64" width="9" height="7" opacity=".9"/><rect x="64" y="64" width="9" height="7" opacity=".2"/><rect x="77" y="64" width="9" height="7" opacity=".8"/><rect x="90" y="64" width="9" height="7" opacity=".4"/><rect x="103" y="64" width="9" height="7" opacity=".3"/><rect x="116" y="64" width="9" height="7" opacity=".7"/></g><rect x="8" y="8" width="44" height="16" rx="1" fill="#D30201"/><text x="30" y="19" text-anchor="middle" font-family="system-ui" font-size="7.5" font-weight="700" fill="#fff" letter-spacing=".5">NEW</text><text x="12" y="136" font-family="system-ui" font-size="13" font-weight="700" fill="#231F20">EGP 4,200,000</text><text x="12" y="150" font-family="system-ui" font-size="7.5" fill="#8a7e6e" letter-spacing=".4">The Residences · New Cairo</text><rect x="12" y="157" width="152" height=".8" fill="#e8e0d4"/><g fill="#6a5e52" font-family="system-ui" font-size="8.5"><text x="12" y="172">3 BR</text><text x="46" y="172" fill="#c8b890">·</text><text x="54" y="172">2 BA</text><text x="88" y="172" fill="#c8b890">·</text><text x="96" y="172">120 m²</text></g><text x="12" y="192" font-family="system-ui" font-size="7.5" fill="#9a8e7e">Ready Q4 2026  ·  6th of October</text><rect x="12" y="200" width="32" height="2" fill="#D30201" opacity=".5"/><text x="12" y="214" font-family="system-ui" font-size="6.5" fill="rgba(80,70,60,.45)" letter-spacing="1.5">AKAR TOWN PROPERTIES</text></svg></div>',
+
+          /* 5: Golden hour skyline — warm sunset gradient + building silhouettes */
+          '<div class="sp-card"><svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="176" fill="#180e06"/><rect width="176" height="90" fill="#c04010" opacity=".55"/><rect width="176" height="65" fill="#d86028" opacity=".45"/><rect width="176" height="44" fill="#e8902a" opacity=".35"/><rect width="176" height="28" fill="#f0b840" opacity=".28"/><circle cx="88" cy="72" r="20" fill="#f8d060" opacity=".55"/><circle cx="88" cy="72" r="14" fill="#fce870" opacity=".45"/><g fill="#0e1620"><rect x="0" y="98" width="18" height="78"/><rect x="20" y="78" width="14" height="98"/><rect x="36" y="56" width="18" height="120"/><rect x="56" y="38" width="20" height="138"/><rect x="78" y="60" width="16" height="116"/><rect x="96" y="42" width="22" height="134"/><rect x="120" y="58" width="16" height="118"/><rect x="138" y="76" width="18" height="100"/><rect x="158" y="90" width="18" height="86"/></g><rect x="0" y="152" width="176" height="24" fill="#0e1620"/><g fill="#f8d060" opacity=".55"><rect x="4" y="106" width="3" height="3"/><rect x="10" y="106" width="3" height="3"/><rect x="4" y="114" width="3" height="3"/><rect x="24" y="88" width="3" height="3"/><rect x="24" y="98" width="3" height="3"/><rect x="40" y="66" width="3" height="3"/><rect x="48" y="66" width="3" height="3"/><rect x="40" y="76" width="3" height="3"/><rect x="60" y="48" width="3" height="3"/><rect x="68" y="48" width="3" height="3"/><rect x="60" y="58" width="3" height="3"/><rect x="100" y="52" width="3" height="3"/><rect x="109" y="52" width="3" height="3"/><rect x="100" y="62" width="3" height="3"/><rect x="142" y="86" width="3" height="3"/><rect x="150" y="86" width="3" height="3"/></g><text x="88" y="173" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(240,180,64,.4)" letter-spacing="2.5">GOLDEN HOUR</text></svg></div>',
+
+          /* 6: Modern kitchen — island, bar stools, pendant lights, cabinets */
+          '<div class="sp-card"><svg viewBox="0 0 176 220" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="220" fill="#f0ece6"/><rect width="176" height="10" fill="#e4e0da"/><rect x="0" y="10" width="176" height="80" fill="#e8e4de"/><rect x="0" y="14" width="72" height="50" fill="#ccc6be"/><rect x="76" y="14" width="100" height="50" fill="#ccc6be"/><g fill="none" stroke="#b8b2aa" stroke-width=".8"><line x1="36" y1="14" x2="36" y2="64"/><line x1="72" y1="14" x2="72" y2="64"/><line x1="109" y1="14" x2="109" y2="64"/><line x1="145" y1="14" x2="145" y2="64"/></g><g fill="#a0988e"><rect x="14" y="41" width="16" height="2"/><rect x="50" y="41" width="16" height="2"/><rect x="86" y="41" width="16" height="2"/><rect x="122" y="41" width="16" height="2"/><rect x="154" y="41" width="16" height="2"/></g><rect x="72" y="14" width="32" height="50" fill="#daeaf8" opacity=".65"/><rect x="72" y="14" width="32" height="50" fill="none" stroke="#b8b2aa" stroke-width=".8"/><line x1="44" y1="0" x2="44" y2="30" stroke="#8a8278" stroke-width="1"/><ellipse cx="44" cy="32" rx="11" ry="5" fill="#d8c89a" opacity=".9"/><line x1="88" y1="0" x2="88" y2="30" stroke="#8a8278" stroke-width="1"/><ellipse cx="88" cy="32" rx="11" ry="5" fill="#d8c89a" opacity=".9"/><line x1="132" y1="0" x2="132" y2="30" stroke="#8a8278" stroke-width="1"/><ellipse cx="132" cy="32" rx="11" ry="5" fill="#d8c89a" opacity=".9"/><rect x="0" y="90" width="176" height="8" fill="#a0988e"/><rect x="0" y="98" width="176" height="78" fill="#ccc6be"/><g fill="none" stroke="#b8b2aa" stroke-width=".8"><line x1="44" y1="98" x2="44" y2="176"/><line x1="88" y1="98" x2="88" y2="176"/><line x1="132" y1="98" x2="132" y2="176"/></g><g fill="#a0988e"><rect x="16" y="140" width="16" height="2"/><rect x="60" y="140" width="16" height="2"/><rect x="104" y="140" width="16" height="2"/><rect x="148" y="140" width="16" height="2"/></g><rect x="26" y="176" width="124" height="34" fill="#b8b0a4"/><rect x="26" y="172" width="124" height="6" fill="#a0988e"/><rect x="42" y="182" width="10" height="28" fill="#8a8278"/><rect x="36" y="208" width="22" height="2" fill="#7a7268"/><rect x="81" y="182" width="10" height="28" fill="#8a8278"/><rect x="75" y="208" width="22" height="2" fill="#7a7268"/><rect x="120" y="182" width="10" height="28" fill="#8a8278"/><rect x="114" y="208" width="22" height="2" fill="#7a7268"/><text x="88" y="218" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(80,70,58,.38)" letter-spacing="2.5">MODERN KITCHEN</text></svg></div>',
+
+          /* 7: Floor plan — architectural layout with room labels */
+          '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#f5f0e8"/><g fill="none" stroke="#9a8e7a" stroke-width="1.5"><rect x="16" y="18" width="144" height="96"/><line x1="96" y1="18" x2="96" y2="114"/><rect x="16" y="114" width="60" height="80"/><rect x="76" y="114" width="84" height="46"/><rect x="76" y="160" width="84" height="34"/><line x1="16" y1="154" x2="76" y2="154"/></g><line x1="36" y1="114" x2="50" y2="114" stroke="#D30201" stroke-width="2.5"/><rect x="16" y="194" width="10" height="20" rx="1.5" fill="#c4b8a4"/><text x="56" y="64" text-anchor="middle" font-family="system-ui" font-size="8" fill="#9a8e7a">LVG RM</text><text x="136" y="64" text-anchor="middle" font-family="system-ui" font-size="8" fill="#9a8e7a">MASTER</text><text x="42" y="146" text-anchor="middle" font-family="system-ui" font-size="7" fill="#9a8e7a">BED 2</text><text x="118" y="138" text-anchor="middle" font-family="system-ui" font-size="7" fill="#9a8e7a">DINING</text><text x="118" y="178" text-anchor="middle" font-family="system-ui" font-size="7" fill="#9a8e7a">KITCHEN</text><text x="88" y="226" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(80,70,58,.36)" letter-spacing="2">FLOOR PLAN · 3BR</text></svg></div>',
+
+          /* 8: Rooftop terrace — railing, lounge chairs, skyline, potted palms */
+          '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#b8d4ec"/><rect width="176" height="144" fill="#c8dff4"/><rect width="176" height="80" fill="#d8ebf8" opacity=".5"/><circle cx="88" cy="38" r="28" fill="#fff8e0" opacity=".28"/><g fill="#8ab0d0" opacity=".55"><rect x="0" y="82" width="14" height="62"/><rect x="16" y="66" width="12" height="78"/><rect x="30" y="52" width="16" height="92"/><rect x="48" y="60" width="14" height="84"/><rect x="64" y="70" width="12" height="74"/><rect x="78" y="56" width="18" height="88"/><rect x="98" y="68" width="14" height="76"/><rect x="114" y="50" width="16" height="94"/><rect x="132" y="64" width="12" height="80"/><rect x="146" y="76" width="14" height="68"/><rect x="162" y="86" width="14" height="58"/></g><rect x="0" y="144" width="176" height="88" fill="#c4b488"/><g stroke="#b4a478" stroke-width=".5" fill="none" opacity=".55"><line x1="0" y1="163" x2="176" y2="163"/><line x1="0" y1="182" x2="176" y2="182"/><line x1="0" y1="201" x2="176" y2="201"/><line x1="44" y1="144" x2="44" y2="232"/><line x1="88" y1="144" x2="88" y2="232"/><line x1="132" y1="144" x2="132" y2="232"/></g><rect x="0" y="140" width="176" height="5" fill="#d4cabb"/><g stroke="#c4bab0" stroke-width="1.5" opacity=".75"><line x1="8" y1="112" x2="8" y2="145"/><line x1="24" y1="112" x2="24" y2="145"/><line x1="40" y1="112" x2="40" y2="145"/><line x1="56" y1="112" x2="56" y2="145"/><line x1="72" y1="112" x2="72" y2="145"/><line x1="88" y1="112" x2="88" y2="145"/><line x1="104" y1="112" x2="104" y2="145"/><line x1="120" y1="112" x2="120" y2="145"/><line x1="136" y1="112" x2="136" y2="145"/><line x1="152" y1="112" x2="152" y2="145"/><line x1="168" y1="112" x2="168" y2="145"/></g><rect x="0" y="110" width="176" height="4" fill="#c4bab0"/><rect x="16" y="168" width="62" height="30" fill="#d8ccb8"/><rect x="16" y="168" width="62" height="8" fill="#c8bca8"/><rect x="28" y="172" width="38" height="20" fill="#d0c4b0" opacity=".7"/><rect x="82" y="176" width="18" height="18" fill="#b0a888"/><circle cx="91" cy="174" r="5" fill="#c0b89a"/><rect x="104" y="168" width="58" height="30" fill="#d8ccb8"/><rect x="104" y="168" width="58" height="8" fill="#c8bca8"/><rect x="115" y="172" width="36" height="20" fill="#d0c4b0" opacity=".7"/><rect x="0" y="156" width="10" height="28" fill="#8a7050"/><ellipse cx="5" cy="154" rx="12" ry="14" fill="#406034" opacity=".9"/><rect x="166" y="156" width="10" height="28" fill="#8a7050"/><ellipse cx="171" cy="154" rx="12" ry="14" fill="#406034" opacity=".9"/><text x="88" y="228" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(60,48,36,.38)" letter-spacing="2.5">ROOFTOP TERRACE</text></svg></div>',
+
+          /* 9: Amenities grid — pool, gym, parking, garden */
+          '<div class="sp-card"><svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="176" fill="#231F20"/><rect x="0" y="0" width="176" height="4" fill="#D30201"/><text x="88" y="22" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="600" fill="rgba(255,255,255,.45)" letter-spacing="3">AMENITIES</text><rect x="12" y="30" width="68" height="62" fill="#0e3050" opacity=".8"/><path d="M22 72 Q30 60 38 72 Q46 84 54 72 Q62 60 70 72" fill="none" stroke="#5ab8e0" stroke-width="2"/><path d="M22 62 Q30 50 38 62 Q46 74 54 62 Q62 50 70 62" fill="none" stroke="#5ab8e0" stroke-width="1.5" opacity=".55"/><circle cx="32" cy="46" r="6" fill="#5ab8e0" opacity=".35"/><circle cx="32" cy="46" r="3" fill="#5ab8e0" opacity=".6"/><text x="46" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(90,184,224,.65)" letter-spacing=".5">POOL</text><rect x="96" y="30" width="68" height="62" fill="#1c2830" opacity=".8"/><line x1="106" y1="58" x2="154" y2="58" stroke="#8a9aaa" stroke-width="3.5"/><rect x="106" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="149" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="118" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><rect x="137" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><text x="130" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(138,154,170,.65)" letter-spacing=".5">GYM</text><rect x="12" y="98" width="68" height="62" fill="#181c16" opacity=".8"/><text x="46" y="142" text-anchor="middle" font-family="system-ui" font-size="30" font-weight="700" fill="rgba(211,2,1,.55)">P</text><text x="46" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(211,2,1,.45)" letter-spacing=".5">PARKING</text><rect x="96" y="98" width="68" height="62" fill="#0f2010" opacity=".8"/><rect x="127" y="138" width="6" height="20" fill="#6a5228"/><circle cx="130" cy="128" r="14" fill="#3a6030" opacity=".8"/><circle cx="130" cy="128" r="9" fill="#4a7840"/><circle cx="118" cy="134" r="8" fill="#325428" opacity=".7"/><circle cx="142" cy="134" r="8" fill="#325428" opacity=".7"/><text x="130" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(74,120,64,.65)" letter-spacing=".5">GARDEN</text></svg></div>'
+        ];
+
+        /* Column assignments: which card indices appear in each column */
+        var COLS = [
+          [0,1,2,3,4,5,6,7],
+          [5,6,7,8,9,0,1,2],
+          [3,4,5,6,7,8,9,0],
+          [7,8,9,0,1,2,3,4],
+          [2,3,4,5,6,7,8,9]
+        ];
+
+        /* Populate columns with cards + duplicate for seamless loop */
+        document.querySelectorAll('.sp-col').forEach(function (col, i) {
+          var html = COLS[i].map(function (ci) { return C[ci]; }).join('');
+          col.innerHTML = html + html;
+        });
+
+        /* Reveal logo (two rAF to ensure layout is ready) */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            splash.classList.add('sp-ready');
+          });
+        });
+
+        /* Exit */
+        var exitTimer = setTimeout(doExit, 3200);
+
+        function doExit() {
+          clearTimeout(exitTimer);
+          splash.classList.add('sp-exit');
+          setTimeout(function () {
+            splash.style.display = 'none';
+          }, 1300);
+        }
+
+        /* Skip on click / Esc / Space */
+        splash.addEventListener('click', doExit);
+        document.addEventListener('keydown', function onKey(e) {
+          if (e.key === 'Escape' || e.key === ' ') {
+            document.removeEventListener('keydown', onKey);
+            /* Faster exit on skip */
+            splash.style.transition = 'opacity 0.35s ease, visibility 0s 0.35s';
+            doExit();
+          }
+        });
+      })();
+    </script>
+
     <!-- SVG FILTER DEFS — liquid glass distortion -->
     <svg
       style="position: absolute; width: 0; height: 0; overflow: hidden"
