@@ -2407,7 +2407,7 @@
           color-mix(in oklab, var(--ink) 15%, transparent);
       }
       .proj-card-media {
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 2 / 1;
         overflow: hidden;
       }
       .proj-card-media img {
@@ -2425,7 +2425,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.5rem;
-        padding: 0.65rem 0.9rem;
+        padding: 1rem;
         border-top: 1px solid var(--n-200);
       }
       .proj-card-name {
@@ -2462,7 +2462,7 @@
           inset 0 0 0 1px color-mix(in oklab, var(--n-300) 30%, transparent),
           0 24px 48px -12px color-mix(in oklab, var(--ink) 8%, transparent);
         display: grid;
-        grid-template-columns: 450px 1fr;
+        grid-template-columns: 550px 1fr;
         align-items: stretch;
         height: 520px;
         transition: backdrop-filter 0s; /* never animate backdrop-filter */
@@ -2864,14 +2864,16 @@
         position: fixed;
         inset: 0;
         z-index: 9000;
-        background: #F7F7F7;
+        background: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         cursor: pointer;
         visibility: visible;
-        transition: opacity 0.5s 0.75s ease, visibility 0s 1.25s;
+        transition:
+          opacity 0.5s 0.75s ease,
+          visibility 0s 1.25s;
       }
       #splash.sp-exit {
         opacity: 0;
@@ -2898,8 +2900,12 @@
         will-change: transform;
       }
       @keyframes sp-rise {
-        from { transform: translateY(0); }
-        to   { transform: translateY(-50%); }
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-50%);
+        }
       }
       #splash.sp-exit .sp-col {
         opacity: 0;
@@ -2913,7 +2919,11 @@
         overflow: hidden;
         line-height: 0;
       }
-      .sp-card svg { display: block; width: 176px; height: auto; }
+      .sp-card svg {
+        display: block;
+        width: 176px;
+        height: auto;
+      }
 
       /* ── Stage: logo center ──────────────────────────────────── */
       .sp-stage {
@@ -2937,8 +2947,8 @@
         transform: translateY(20px) scale(0.95);
         filter: blur(14px);
         transition:
-          opacity 1.4s 0.3s cubic-bezier(0.16,1,0.3,1),
-          transform 1.6s 0.3s cubic-bezier(0.16,1,0.3,1),
+          opacity 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
           filter 1.2s 0.3s ease;
       }
       #splash.sp-ready .sp-logo-frame {
@@ -2950,18 +2960,20 @@
         opacity: 0;
         transform: scale(1.04) translateY(-8px);
         filter: blur(8px);
-        transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.4,0,1,1), filter 0.5s ease;
+        transition:
+          opacity 0.5s ease,
+          transform 0.6s cubic-bezier(0.4, 0, 1, 1),
+          filter 0.5s ease;
       }
 
       /* Glyph-level shadow: light halo so dark logo reads over dark cards */
       .sp-logo-svg {
         width: clamp(220px, 36vw, 360px);
-        filter:
-          drop-shadow(0 0  1px rgba(247,247,247,1))
-          drop-shadow(0 0  4px rgba(247,247,247,1))
-          drop-shadow(0 0 12px rgba(247,247,247,.9))
-          drop-shadow(0 0 28px rgba(247,247,247,.65))
-          drop-shadow(0 0 56px rgba(247,247,247,.35));
+        filter: drop-shadow(0 0 1px rgba(247, 247, 247, 1))
+          drop-shadow(0 0 4px rgba(247, 247, 247, 1))
+          drop-shadow(0 0 12px rgba(247, 247, 247, 0.9))
+          drop-shadow(0 0 28px rgba(247, 247, 247, 0.65))
+          drop-shadow(0 0 56px rgba(247, 247, 247, 0.35));
       }
 
       /* Red rule */
@@ -2971,29 +2983,33 @@
         background: #d30201;
         transform-origin: left center;
         transform: scaleX(0);
-        filter: drop-shadow(0 0 4px rgba(211,2,1,.6));
-        transition: transform 0.9s 1.3s cubic-bezier(0.16,1,0.3,1);
+        filter: drop-shadow(0 0 4px rgba(211, 2, 1, 0.6));
+        transition: transform 0.9s 1.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      #splash.sp-ready .sp-redline { transform: scaleX(1); }
+      #splash.sp-ready .sp-redline {
+        transform: scaleX(1);
+      }
 
       /* Tagline */
       .sp-sub {
-        font-family: 'Archivo', system-ui, sans-serif;
+        font-family: "Archivo", system-ui, sans-serif;
         font-size: 0.72rem;
         font-weight: 600;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: rgba(35,31,32,.82);
+        color: rgba(35, 31, 32, 0.82);
         text-align: center;
         text-shadow:
-          0 0  2px rgba(242,237,230,1),
-          0 0  6px rgba(242,237,230,1),
-          0 0 16px rgba(242,237,230,.95),
-          0 0 32px rgba(242,237,230,.7);
+          0 0 2px rgba(242, 237, 230, 1),
+          0 0 6px rgba(242, 237, 230, 1),
+          0 0 16px rgba(242, 237, 230, 0.95),
+          0 0 32px rgba(242, 237, 230, 0.7);
         opacity: 0;
         transition: opacity 0.9s 1.6s ease;
       }
-      #splash.sp-ready .sp-sub { opacity: 1; }
+      #splash.sp-ready .sp-sub {
+        opacity: 1;
+      }
 
       /* Skip hint */
       .sp-skip {
@@ -3001,70 +3017,121 @@
         bottom: 28px;
         left: 50%;
         transform: translateX(-50%);
-        font-family: 'Archivo', system-ui, sans-serif;
+        font-family: "Archivo", system-ui, sans-serif;
         font-size: 0.6rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgba(35,31,32,.22);
+        color: rgba(35, 31, 32, 0.22);
         user-select: none;
         opacity: 0;
         transition: opacity 0.8s 2.2s ease;
         white-space: nowrap;
       }
-      #splash.sp-ready .sp-skip { opacity: 1; }
+      #splash.sp-ready .sp-skip {
+        opacity: 1;
+      }
 
       /* ── Responsive ──────────────────────────────────────────── */
       @media (max-width: 1100px) {
         .sp-col:nth-child(1),
-        .sp-col:nth-child(5) { display: none; }
+        .sp-col:nth-child(5) {
+          display: none;
+        }
       }
       @media (max-width: 700px) {
         .sp-col:nth-child(2),
-        .sp-col:nth-child(4) { display: none; }
-        .sp-col { flex-basis: 148px; }
-        .sp-card svg { width: 148px; }
+        .sp-col:nth-child(4) {
+          display: none;
+        }
+        .sp-col {
+          flex-basis: 148px;
+        }
+        .sp-card svg {
+          width: 148px;
+        }
       }
 
       /* ── Reduced motion ──────────────────────────────────────── */
       @media (prefers-reduced-motion: reduce) {
-        .sp-col { animation: none !important; transform: translateY(-50%); }
+        .sp-col {
+          animation: none !important;
+          transform: translateY(-50%);
+        }
         .sp-logo-frame,
         .sp-redline,
-        .sp-sub { transition-duration: 0.2s !important; }
+        .sp-sub {
+          transition-duration: 0.2s !important;
+        }
       }
     </style>
   </head>
   <body>
-
     <!-- ══ SPLASH SCREEN ══════════════════════════════════════════ -->
     <div id="splash" role="presentation" aria-hidden="true">
       <!-- Five rising columns (JS populates the cards) -->
       <div class="sp-field">
-        <div class="sp-col" style="--dur:7s;--dly:-2s"></div>
-        <div class="sp-col" style="--dur:9s;--dly:-5s"></div>
-        <div class="sp-col" style="--dur:6.5s;--dly:-1s"></div>
-        <div class="sp-col" style="--dur:10s;--dly:-7s"></div>
-        <div class="sp-col" style="--dur:8s;--dly:-3.5s"></div>
+        <div class="sp-col" style="--dur: 7s; --dly: -2s"></div>
+        <div class="sp-col" style="--dur: 9s; --dly: -5s"></div>
+        <div class="sp-col" style="--dur: 6.5s; --dly: -1s"></div>
+        <div class="sp-col" style="--dur: 10s; --dly: -7s"></div>
+        <div class="sp-col" style="--dur: 8s; --dly: -3.5s"></div>
       </div>
 
       <!-- Center: vignette + logo -->
       <div class="sp-stage">
         <div class="sp-logo-frame">
           <!-- Akar Town wordmark (same geometry as header) -->
-          <svg class="sp-logo-svg" viewBox="0 0 2185 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z" fill="#231F20"/>
-            <path d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z" fill="#FF0000"/>
-            <path d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z" fill="#231F20"/>
-            <path d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z" fill="#231F20"/>
-            <path d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z" fill="#231F20"/>
-            <path d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z" fill="#231F20"/>
-            <path d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z" fill="#231F20"/>
-            <path d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z" fill="#231F20"/>
-            <path d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z" fill="#231F20"/>
-            <path d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z" fill="#231F20"/>
+          <svg
+            class="sp-logo-svg"
+            viewBox="0 0 2185 380"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M90.97 258.84H160.93L236.12 169.2V379.42H296.66V5.21997L90.97 258.84Z"
+              fill="#231F20"
+            />
+            <path
+              d="M64.78 291.12L0 371H66.84L133.85 291.12H64.78Z"
+              fill="#FF0000"
+            />
+            <path
+              d="M390.87 186.6L544.58 373.2H472.34L339.38 212.73L317.86 187.07L339.38 160.95L472.34 0.00999451H544.58L390.87 186.61V186.6Z"
+              fill="#231F20"
+            />
+            <path
+              d="M772.951 153.462L752.741 160.698C739.129 146.227 720.111 138.991 695.632 138.991C677.085 138.991 661.976 143.759 650.277 153.268C638.606 162.805 632.756 174.92 632.756 189.613C632.756 204.306 638.55 217.086 650.111 226.429C661.671 235.772 677.279 240.429 696.935 240.429C720.665 240.429 739.351 233.082 752.935 218.362L772.036 228.924C762.388 240.179 751.465 248.302 739.295 253.32C727.125 258.338 712.57 260.833 695.632 260.833C671.901 260.833 652.162 254.9 636.471 243.035C618.534 229.423 609.58 211.625 609.58 189.613C609.58 167.601 618.673 150.302 636.831 136.579C652.661 124.575 672.261 118.587 695.632 118.587C729.259 118.587 755.042 130.203 772.978 153.462H772.951Z"
+              fill="#231F20"
+            />
+            <path
+              d="M1015.47 189.71C1015.47 211.722 1006.43 229.52 988.385 243.132C972.555 254.997 952.899 260.93 929.418 260.93C905.937 260.93 885.893 254.942 870.064 242.938C852.016 229.326 842.978 211.611 842.978 189.71C842.978 167.809 852.127 150.51 870.424 136.676C886.503 124.561 906.159 118.49 929.391 118.49C952.622 118.49 972.361 124.561 988.191 136.676C1006.38 150.538 1015.44 168.197 1015.44 189.71H1015.47ZM992.294 189.71C992.294 174.019 985.612 161.266 972.278 151.508C960.773 143.108 946.495 138.894 929.446 138.894C910.761 138.894 895.569 143.69 883.814 153.255C872.06 162.847 866.21 174.989 866.21 189.71C866.21 204.431 871.949 217.183 883.454 226.526C894.959 235.869 910.289 240.526 929.446 240.526C948.602 240.526 963.711 235.841 975.161 226.443C986.583 217.045 992.321 204.791 992.321 189.71H992.294Z"
+              fill="#231F20"
+            />
+            <path
+              d="M1269.99 256.841H1247.73V147.058H1247.18L1177.45 234.607L1108.29 147.058H1107.73V256.841H1085.47V122.579H1113.28L1177.62 203.724L1242.24 122.579H1269.97V256.841H1269.99Z"
+              fill="#231F20"
+            />
+            <path
+              d="M1446.45 122.607C1460.17 122.607 1471.04 126.405 1479.11 134.001C1487.15 141.597 1491.17 151.771 1491.17 164.496C1491.17 177.858 1486.98 188.06 1478.64 195.102C1470.29 202.144 1458.15 205.664 1442.18 205.664H1362.25V256.841H1339.99V122.579H1446.45V122.607ZM1442.57 185.676C1459.76 185.676 1468.35 178.746 1468.35 164.912C1468.35 150.08 1459.26 142.65 1441.1 142.65H1362.28V185.676H1442.6H1442.57Z"
+              fill="#231F20"
+            />
+            <path
+              d="M1731.22 256.841H1706.88L1691.41 226.789H1600.98L1585.51 256.841H1561.17L1632.19 122.579H1660.19L1731.22 256.841ZM1680.6 206.773L1646.39 141.708L1611.76 206.773H1680.6Z"
+              fill="#231F20"
+            />
+            <path
+              d="M1953.67 256.841H1925.97L1823.48 146.726V256.841H1801.22V122.579H1828.86L1931.43 232.75V122.579H1953.69V256.841H1953.67Z"
+              fill="#231F20"
+            />
+            <path
+              d="M2192.83 122.579L2119.39 203.807V256.841H2097.13V203.807L2023.69 122.579H2051.44L2108.39 185.288L2165.08 122.579H2192.83Z"
+              fill="#231F20"
+            />
           </svg>
           <div class="sp-redline"></div>
-          <div class="sp-sub">Premium Real Estate &nbsp;&middot;&nbsp; Akar Town</div>
+          <div class="sp-sub">
+            Premium Real Estate &nbsp;&middot;&nbsp; Akar Town
+          </div>
         </div>
       </div>
 
@@ -3074,10 +3141,9 @@
     <!-- Splash JS — runs before page content for instant activation -->
     <script>
       (function () {
-        'use strict';
-        var splash = document.getElementById('splash');
+        "use strict";
+        var splash = document.getElementById("splash");
         if (!splash) return;
-
 
         /* ── Card templates (10 real-estate scenes) ─────────────── */
         var C = [
@@ -3109,28 +3175,32 @@
           '<div class="sp-card"><svg viewBox="0 0 176 232" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="232" fill="#b8d4ec"/><rect width="176" height="144" fill="#c8dff4"/><rect width="176" height="80" fill="#d8ebf8" opacity=".5"/><circle cx="88" cy="38" r="28" fill="#fff8e0" opacity=".28"/><g fill="#8ab0d0" opacity=".55"><rect x="0" y="82" width="14" height="62"/><rect x="16" y="66" width="12" height="78"/><rect x="30" y="52" width="16" height="92"/><rect x="48" y="60" width="14" height="84"/><rect x="64" y="70" width="12" height="74"/><rect x="78" y="56" width="18" height="88"/><rect x="98" y="68" width="14" height="76"/><rect x="114" y="50" width="16" height="94"/><rect x="132" y="64" width="12" height="80"/><rect x="146" y="76" width="14" height="68"/><rect x="162" y="86" width="14" height="58"/></g><rect x="0" y="144" width="176" height="88" fill="#c4b488"/><g stroke="#b4a478" stroke-width=".5" fill="none" opacity=".55"><line x1="0" y1="163" x2="176" y2="163"/><line x1="0" y1="182" x2="176" y2="182"/><line x1="0" y1="201" x2="176" y2="201"/><line x1="44" y1="144" x2="44" y2="232"/><line x1="88" y1="144" x2="88" y2="232"/><line x1="132" y1="144" x2="132" y2="232"/></g><rect x="0" y="140" width="176" height="5" fill="#d4cabb"/><g stroke="#c4bab0" stroke-width="1.5" opacity=".75"><line x1="8" y1="112" x2="8" y2="145"/><line x1="24" y1="112" x2="24" y2="145"/><line x1="40" y1="112" x2="40" y2="145"/><line x1="56" y1="112" x2="56" y2="145"/><line x1="72" y1="112" x2="72" y2="145"/><line x1="88" y1="112" x2="88" y2="145"/><line x1="104" y1="112" x2="104" y2="145"/><line x1="120" y1="112" x2="120" y2="145"/><line x1="136" y1="112" x2="136" y2="145"/><line x1="152" y1="112" x2="152" y2="145"/><line x1="168" y1="112" x2="168" y2="145"/></g><rect x="0" y="110" width="176" height="4" fill="#c4bab0"/><rect x="16" y="168" width="62" height="30" fill="#d8ccb8"/><rect x="16" y="168" width="62" height="8" fill="#c8bca8"/><rect x="28" y="172" width="38" height="20" fill="#d0c4b0" opacity=".7"/><rect x="82" y="176" width="18" height="18" fill="#b0a888"/><circle cx="91" cy="174" r="5" fill="#c0b89a"/><rect x="104" y="168" width="58" height="30" fill="#d8ccb8"/><rect x="104" y="168" width="58" height="8" fill="#c8bca8"/><rect x="115" y="172" width="36" height="20" fill="#d0c4b0" opacity=".7"/><rect x="0" y="156" width="10" height="28" fill="#8a7050"/><ellipse cx="5" cy="154" rx="12" ry="14" fill="#406034" opacity=".9"/><rect x="166" y="156" width="10" height="28" fill="#8a7050"/><ellipse cx="171" cy="154" rx="12" ry="14" fill="#406034" opacity=".9"/><text x="88" y="228" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(60,48,36,.38)" letter-spacing="2.5">ROOFTOP TERRACE</text></svg></div>',
 
           /* 9: Amenities grid — pool, gym, parking, garden */
-          '<div class="sp-card"><svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="176" fill="#231F20"/><rect x="0" y="0" width="176" height="4" fill="#D30201"/><text x="88" y="22" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="600" fill="rgba(255,255,255,.45)" letter-spacing="3">AMENITIES</text><rect x="12" y="30" width="68" height="62" fill="#0e3050" opacity=".8"/><path d="M22 72 Q30 60 38 72 Q46 84 54 72 Q62 60 70 72" fill="none" stroke="#5ab8e0" stroke-width="2"/><path d="M22 62 Q30 50 38 62 Q46 74 54 62 Q62 50 70 62" fill="none" stroke="#5ab8e0" stroke-width="1.5" opacity=".55"/><circle cx="32" cy="46" r="6" fill="#5ab8e0" opacity=".35"/><circle cx="32" cy="46" r="3" fill="#5ab8e0" opacity=".6"/><text x="46" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(90,184,224,.65)" letter-spacing=".5">POOL</text><rect x="96" y="30" width="68" height="62" fill="#1c2830" opacity=".8"/><line x1="106" y1="58" x2="154" y2="58" stroke="#8a9aaa" stroke-width="3.5"/><rect x="106" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="149" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="118" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><rect x="137" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><text x="130" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(138,154,170,.65)" letter-spacing=".5">GYM</text><rect x="12" y="98" width="68" height="62" fill="#181c16" opacity=".8"/><text x="46" y="142" text-anchor="middle" font-family="system-ui" font-size="30" font-weight="700" fill="rgba(211,2,1,.55)">P</text><text x="46" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(211,2,1,.45)" letter-spacing=".5">PARKING</text><rect x="96" y="98" width="68" height="62" fill="#0f2010" opacity=".8"/><rect x="127" y="138" width="6" height="20" fill="#6a5228"/><circle cx="130" cy="128" r="14" fill="#3a6030" opacity=".8"/><circle cx="130" cy="128" r="9" fill="#4a7840"/><circle cx="118" cy="134" r="8" fill="#325428" opacity=".7"/><circle cx="142" cy="134" r="8" fill="#325428" opacity=".7"/><text x="130" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(74,120,64,.65)" letter-spacing=".5">GARDEN</text></svg></div>'
+          '<div class="sp-card"><svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg"><rect width="176" height="176" fill="#231F20"/><rect x="0" y="0" width="176" height="4" fill="#D30201"/><text x="88" y="22" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="600" fill="rgba(255,255,255,.45)" letter-spacing="3">AMENITIES</text><rect x="12" y="30" width="68" height="62" fill="#0e3050" opacity=".8"/><path d="M22 72 Q30 60 38 72 Q46 84 54 72 Q62 60 70 72" fill="none" stroke="#5ab8e0" stroke-width="2"/><path d="M22 62 Q30 50 38 62 Q46 74 54 62 Q62 50 70 62" fill="none" stroke="#5ab8e0" stroke-width="1.5" opacity=".55"/><circle cx="32" cy="46" r="6" fill="#5ab8e0" opacity=".35"/><circle cx="32" cy="46" r="3" fill="#5ab8e0" opacity=".6"/><text x="46" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(90,184,224,.65)" letter-spacing=".5">POOL</text><rect x="96" y="30" width="68" height="62" fill="#1c2830" opacity=".8"/><line x1="106" y1="58" x2="154" y2="58" stroke="#8a9aaa" stroke-width="3.5"/><rect x="106" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="149" y="47" width="5" height="22" rx="2.5" fill="#6a7a8a"/><rect x="118" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><rect x="137" y="50" width="5" height="16" rx="1" fill="#7a8a9a"/><text x="130" y="88" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(138,154,170,.65)" letter-spacing=".5">GYM</text><rect x="12" y="98" width="68" height="62" fill="#181c16" opacity=".8"/><text x="46" y="142" text-anchor="middle" font-family="system-ui" font-size="30" font-weight="700" fill="rgba(211,2,1,.55)">P</text><text x="46" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(211,2,1,.45)" letter-spacing=".5">PARKING</text><rect x="96" y="98" width="68" height="62" fill="#0f2010" opacity=".8"/><rect x="127" y="138" width="6" height="20" fill="#6a5228"/><circle cx="130" cy="128" r="14" fill="#3a6030" opacity=".8"/><circle cx="130" cy="128" r="9" fill="#4a7840"/><circle cx="118" cy="134" r="8" fill="#325428" opacity=".7"/><circle cx="142" cy="134" r="8" fill="#325428" opacity=".7"/><text x="130" y="154" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(74,120,64,.65)" letter-spacing=".5">GARDEN</text></svg></div>',
         ];
 
         /* Column assignments: which card indices appear in each column */
         var COLS = [
-          [0,1,2,3,4,5,6,7],
-          [5,6,7,8,9,0,1,2],
-          [3,4,5,6,7,8,9,0],
-          [7,8,9,0,1,2,3,4],
-          [2,3,4,5,6,7,8,9]
+          [0, 1, 2, 3, 4, 5, 6, 7],
+          [5, 6, 7, 8, 9, 0, 1, 2],
+          [3, 4, 5, 6, 7, 8, 9, 0],
+          [7, 8, 9, 0, 1, 2, 3, 4],
+          [2, 3, 4, 5, 6, 7, 8, 9],
         ];
 
         /* Populate columns with cards + duplicate for seamless loop */
-        document.querySelectorAll('.sp-col').forEach(function (col, i) {
-          var html = COLS[i].map(function (ci) { return C[ci]; }).join('');
+        document.querySelectorAll(".sp-col").forEach(function (col, i) {
+          var html = COLS[i]
+            .map(function (ci) {
+              return C[ci];
+            })
+            .join("");
           col.innerHTML = html + html;
         });
 
         /* Reveal logo (two rAF to ensure layout is ready) */
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
-            splash.classList.add('sp-ready');
+            splash.classList.add("sp-ready");
           });
         });
 
@@ -3139,19 +3209,19 @@
 
         function doExit() {
           clearTimeout(exitTimer);
-          splash.classList.add('sp-exit');
+          splash.classList.add("sp-exit");
           setTimeout(function () {
-            splash.style.display = 'none';
+            splash.style.display = "none";
           }, 1300);
         }
 
         /* Skip on click / Esc / Space */
-        splash.addEventListener('click', doExit);
-        document.addEventListener('keydown', function onKey(e) {
-          if (e.key === 'Escape' || e.key === ' ') {
-            document.removeEventListener('keydown', onKey);
+        splash.addEventListener("click", doExit);
+        document.addEventListener("keydown", function onKey(e) {
+          if (e.key === "Escape" || e.key === " ") {
+            document.removeEventListener("keydown", onKey);
             /* Faster exit on skip */
-            splash.style.transition = 'opacity 0.35s ease, visibility 0s 0.35s';
+            splash.style.transition = "opacity 0.35s ease, visibility 0s 0.35s";
             doExit();
           }
         });
@@ -3225,11 +3295,17 @@
     >
       <button class="mob-x" id="mobX" aria-label="Close menu">✕</button>
       <a href="index.html" onclick="closeMob()" data-i18n="mob.home">Home</a>
-      <a href="properties.html" onclick="closeMob()" data-i18n="mob.properties">Properties</a>
-      <a href="projects.html" onclick="closeMob()" data-i18n="mob.projects">Projects</a>
+      <a href="properties.html" onclick="closeMob()" data-i18n="mob.properties"
+        >Properties</a
+      >
+      <a href="projects.html" onclick="closeMob()" data-i18n="mob.projects"
+        >Projects</a
+      >
       <a href="about.html" onclick="closeMob()" data-i18n="mob.about">About</a>
       <a href="blog.html" onclick="closeMob()" data-i18n="mob.blog">Blog</a>
-      <a href="contact.html" onclick="closeMob()" data-i18n="mob.contact">Contact</a>
+      <a href="contact.html" onclick="closeMob()" data-i18n="mob.contact"
+        >Contact</a
+      >
     </div>
 
     <!-- HEADER -->
@@ -3362,7 +3438,9 @@
                         <span class="hs-num" aria-hidden="true">01</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.luxury_apts">Luxury Apartments</p>
+                        <p class="hs-cat" data-i18n="hero.cat.luxury_apts">
+                          Luxury Apartments
+                        </p>
                         <h2 class="hs-title">The Residences</h2>
                         <p class="hs-loc">
                           <svg
@@ -3374,7 +3452,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.new_cairo">New Cairo, Cairo</span>
+                          <span data-i18n="hero.loc.new_cairo"
+                            >New Cairo, Cairo</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3396,7 +3476,9 @@
                         <span class="hs-num" aria-hidden="true">02</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.mixed_use">Mixed-Use Tower</p>
+                        <p class="hs-cat" data-i18n="hero.cat.mixed_use">
+                          Mixed-Use Tower
+                        </p>
                         <h2 class="hs-title">Crystal Tower</h2>
                         <p class="hs-loc">
                           <svg
@@ -3408,7 +3490,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.6th_oct">6th of October, Giza</span>
+                          <span data-i18n="hero.loc.6th_oct"
+                            >6th of October, Giza</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3430,7 +3514,9 @@
                         <span class="hs-num" aria-hidden="true">03</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.luxury_villas">Luxury Villas</p>
+                        <p class="hs-cat" data-i18n="hero.cat.luxury_villas">
+                          Luxury Villas
+                        </p>
                         <h2 class="hs-title">Palm Gardens</h2>
                         <p class="hs-loc">
                           <svg
@@ -3442,7 +3528,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.north_coast">North Coast, Alexandria</span>
+                          <span data-i18n="hero.loc.north_coast"
+                            >North Coast, Alexandria</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3464,7 +3552,9 @@
                         <span class="hs-num" aria-hidden="true">04</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.waterfront">Waterfront Residences</p>
+                        <p class="hs-cat" data-i18n="hero.cat.waterfront">
+                          Waterfront Residences
+                        </p>
                         <h2 class="hs-title">Marina Heights</h2>
                         <p class="hs-loc">
                           <svg
@@ -3476,7 +3566,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.new_alamein">New Alamein, Matrouh</span>
+                          <span data-i18n="hero.loc.new_alamein"
+                            >New Alamein, Matrouh</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3490,11 +3582,15 @@
                     <div class="hs-scrim-bot"></div>
                     <div class="hs-body">
                       <div class="hs-top">
-                        <span class="hs-badge" data-i18n="hero.badge.offplan">Off-Plan</span>
+                        <span class="hs-badge" data-i18n="hero.badge.offplan"
+                          >Off-Plan</span
+                        >
                         <span class="hs-num" aria-hidden="true">05</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.premium_villas">Premium Villas</p>
+                        <p class="hs-cat" data-i18n="hero.cat.premium_villas">
+                          Premium Villas
+                        </p>
                         <h2 class="hs-title">The Grand Villas</h2>
                         <p class="hs-loc">
                           <svg
@@ -3506,7 +3602,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.sheikh_zayed">Sheikh Zayed, Giza</span>
+                          <span data-i18n="hero.loc.sheikh_zayed"
+                            >Sheikh Zayed, Giza</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3528,7 +3626,9 @@
                         <span class="hs-num" aria-hidden="true">06</span>
                       </div>
                       <div class="hs-foot">
-                        <p class="hs-cat" data-i18n="hero.cat.chalets">Coastal Chalets</p>
+                        <p class="hs-cat" data-i18n="hero.cat.chalets">
+                          Coastal Chalets
+                        </p>
                         <h2 class="hs-title">Azure Bay</h2>
                         <p class="hs-loc">
                           <svg
@@ -3540,7 +3640,9 @@
                               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                             />
                           </svg>
-                          <span data-i18n="hero.loc.sidi_abdel_rahman">Sidi Abdel Rahman, North Coast</span>
+                          <span data-i18n="hero.loc.sidi_abdel_rahman"
+                            >Sidi Abdel Rahman, North Coast</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -3893,9 +3995,18 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.residential"
+                          >Residential</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.studio_apt">Studio<br />Apartment</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.studio_apt"
+                      >
+                        Studio<br />Apartment
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -3912,9 +4023,18 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.residential"
+                          >Residential</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.1br_apt">1BR<br />Apartment</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.1br_apt"
+                      >
+                        1BR<br />Apartment
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -3931,9 +4051,18 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.premium">Premium</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.premium"
+                          >Premium</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.2br_pent">2BR<br />Penthouse</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.2br_pent"
+                      >
+                        2BR<br />Penthouse
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -3950,9 +4079,16 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.villa">Villa</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.villa"
+                          >Villa</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.3br_villa">3BR<br />Garden Villa</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.3br_villa"
+                      >
+                        3BR<br />Garden Villa
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -3969,9 +4105,16 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.ultra">Ultra-Premium</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.ultra"
+                          >Ultra-Premium</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.sky_villa">Sky<br />Villa</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.sky_villa"
+                      >
+                        Sky<br />Villa
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -3991,27 +4134,39 @@
             <div class="props-det-divider"></div>
             <div class="props-det-table" id="propsDetTable">
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.price_from">Price From</span>
+                <span class="props-det-key" data-i18n="props.det.price_from"
+                  >Price From</span
+                >
                 <span class="props-det-val accent" id="propsDetPrice"
                   >2,500,000 EGP</span
                 >
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.living_space">Living Space</span>
+                <span class="props-det-key" data-i18n="props.det.living_space"
+                  >Living Space</span
+                >
                 <span class="props-det-val" id="propsDetArea">45 m²</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.bedrooms">Bedrooms</span>
+                <span class="props-det-key" data-i18n="props.det.bedrooms"
+                  >Bedrooms</span
+                >
                 <span class="props-det-val" id="propsDetBeds">Studio</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.delivery">Delivery</span>
+                <span class="props-det-key" data-i18n="props.det.delivery"
+                  >Delivery</span
+                >
                 <span class="props-det-val" id="propsDetDelivery"
                   >Ready Now</span
                 >
               </div>
             </div>
-            <a href="properties.html" class="props-det-cta" id="propsDetCta" data-i18n="props.det.cta"
+            <a
+              href="properties.html"
+              class="props-det-cta"
+              id="propsDetCta"
+              data-i18n="props.det.cta"
               >Find Listings →</a
             >
           </div>
@@ -4403,7 +4558,9 @@
           <div class="locs-title-group">
             <div class="fnd-eyebrow">
               <div class="slab fnd-eyebrow-slab" aria-hidden="true"></div>
-              <span class="fnd-eyebrow-text" data-i18n="loc.section.eyebrow">Explore by Location</span>
+              <span class="fnd-eyebrow-text" data-i18n="loc.section.eyebrow"
+                >Explore by Location</span
+              >
             </div>
             <h2 class="props-heading" data-i18n-html="loc.section.heading">
               Where Do You Want to <span class="mark">Live?</span>
@@ -4429,8 +4586,12 @@
             <div class="loc-inner">
               <span class="loc-num">01</span>
               <span class="loc-name" data-i18n="loc.new_cairo">New Cairo</span>
-              <span class="loc-tag" data-i18n="loc.tag.east_cairo">East Cairo</span>
-              <span class="loc-prop-count" data-i18n="loc.new_cairo.count">148 properties</span>
+              <span class="loc-tag" data-i18n="loc.tag.east_cairo"
+                >East Cairo</span
+              >
+              <span class="loc-prop-count" data-i18n="loc.new_cairo.count"
+                >148 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4447,21 +4608,37 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">148</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 2.4M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">12</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.fifth_settlement">Fifth Settlement</span>
-                <span class="loc-district-tag" data-i18n="loc.district.banafseg">El Banafseg</span>
-                <span class="loc-district-tag" data-i18n="loc.district.rehab">Rehab City</span>
-                <span class="loc-district-tag" data-i18n="loc.district.madinaty">Madinaty</span>
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.fifth_settlement"
+                  >Fifth Settlement</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.banafseg"
+                  >El Banafseg</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.rehab"
+                  >Rehab City</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.madinaty"
+                  >Madinaty</span
+                >
               </div>
             </div>
           </li>
@@ -4482,9 +4659,15 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">02</span>
-              <span class="loc-name" data-i18n="loc.north_coast">North Coast</span>
-              <span class="loc-tag" data-i18n="loc.tag.mediterranean">Mediterranean</span>
-              <span class="loc-prop-count" data-i18n="loc.north_coast.count">96 properties</span>
+              <span class="loc-name" data-i18n="loc.north_coast"
+                >North Coast</span
+              >
+              <span class="loc-tag" data-i18n="loc.tag.mediterranean"
+                >Mediterranean</span
+              >
+              <span class="loc-prop-count" data-i18n="loc.north_coast.count"
+                >96 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4501,20 +4684,34 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">96</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 3.1M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">8</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.sidi_abdel_rahman">Sidi Abdel Rahman</span>
-                <span class="loc-district-tag" data-i18n="loc.district.hacienda">Hacienda Bay</span>
-                <span class="loc-district-tag" data-i18n="loc.district.marassi">Marassi</span>
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.sidi_abdel_rahman"
+                  >Sidi Abdel Rahman</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.hacienda"
+                  >Hacienda Bay</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.marassi"
+                  >Marassi</span
+                >
               </div>
             </div>
           </li>
@@ -4535,9 +4732,15 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">03</span>
-              <span class="loc-name" data-i18n="loc.sheikh_zayed">Sheikh Zayed</span>
-              <span class="loc-tag" data-i18n="loc.tag.west_cairo">West Cairo</span>
-              <span class="loc-prop-count" data-i18n="loc.sheikh_zayed.count">74 properties</span>
+              <span class="loc-name" data-i18n="loc.sheikh_zayed"
+                >Sheikh Zayed</span
+              >
+              <span class="loc-tag" data-i18n="loc.tag.west_cairo"
+                >West Cairo</span
+              >
+              <span class="loc-prop-count" data-i18n="loc.sheikh_zayed.count"
+                >74 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4554,20 +4757,34 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">74</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.9M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">6</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.allegria">Allegria</span>
-                <span class="loc-district-tag" data-i18n="loc.district.zayed_2000">Zayed 2000</span>
-                <span class="loc-district-tag" data-i18n="loc.district.golf">Golf District</span>
+                <span class="loc-district-tag" data-i18n="loc.district.allegria"
+                  >Allegria</span
+                >
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.zayed_2000"
+                  >Zayed 2000</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.golf"
+                  >Golf District</span
+                >
               </div>
             </div>
           </li>
@@ -4588,9 +4805,15 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">04</span>
-              <span class="loc-name" data-i18n="loc.new_capital">New Capital</span>
-              <span class="loc-tag" data-i18n="loc.tag.future_city">Future City</span>
-              <span class="loc-prop-count" data-i18n="loc.new_capital.count">112 properties</span>
+              <span class="loc-name" data-i18n="loc.new_capital"
+                >New Capital</span
+              >
+              <span class="loc-tag" data-i18n="loc.tag.future_city"
+                >Future City</span
+              >
+              <span class="loc-prop-count" data-i18n="loc.new_capital.count"
+                >112 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4607,21 +4830,37 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">112</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 2.8M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">14</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.r7">R7 District</span>
-                <span class="loc-district-tag" data-i18n="loc.district.r8">R8 District</span>
-                <span class="loc-district-tag" data-i18n="loc.district.downtown_cap">Downtown</span>
-                <span class="loc-district-tag" data-i18n="loc.district.mu23">MU23</span>
+                <span class="loc-district-tag" data-i18n="loc.district.r7"
+                  >R7 District</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.r8"
+                  >R8 District</span
+                >
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.downtown_cap"
+                  >Downtown</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.mu23"
+                  >MU23</span
+                >
               </div>
             </div>
           </li>
@@ -4642,9 +4881,13 @@
             <div class="loc-edge" aria-hidden="true"></div>
             <div class="loc-inner">
               <span class="loc-num">05</span>
-              <span class="loc-name" data-i18n="loc.ain_sokhna">Ain Sokhna</span>
+              <span class="loc-name" data-i18n="loc.ain_sokhna"
+                >Ain Sokhna</span
+              >
               <span class="loc-tag" data-i18n="loc.tag.red_sea">Red Sea</span>
-              <span class="loc-prop-count" data-i18n="loc.ain_sokhna.count">53 properties</span>
+              <span class="loc-prop-count" data-i18n="loc.ain_sokhna.count"
+                >53 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4661,20 +4904,34 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">53</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.5M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">5</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.porto_sokhna">Porto Sokhna</span>
-                <span class="loc-district-tag" data-i18n="loc.district.azzurra">Azzurra</span>
-                <span class="loc-district-tag" data-i18n="loc.district.la_vista">La Vista</span>
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.porto_sokhna"
+                  >Porto Sokhna</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.azzurra"
+                  >Azzurra</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.la_vista"
+                  >La Vista</span
+                >
               </div>
             </div>
           </li>
@@ -4696,8 +4953,12 @@
             <div class="loc-inner">
               <span class="loc-num">06</span>
               <span class="loc-name" data-i18n="loc.6th_oct">October City</span>
-              <span class="loc-tag" data-i18n="loc.tag.west_cairo">West Cairo</span>
-              <span class="loc-prop-count" data-i18n="loc.6th_oct.count">61 properties</span>
+              <span class="loc-tag" data-i18n="loc.tag.west_cairo"
+                >West Cairo</span
+              >
+              <span class="loc-prop-count" data-i18n="loc.6th_oct.count"
+                >61 properties</span
+              >
               <div class="loc-arrow" aria-hidden="true">
                 <svg
                   viewBox="0 0 14 14"
@@ -4714,20 +4975,36 @@
             <div class="loc-expand">
               <div class="loc-stat">
                 <span class="loc-stat-val">61</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.properties">Properties</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.properties"
+                  >Properties</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">EGP 1.7M+</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.price_from">Price from</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.price_from"
+                  >Price from</span
+                >
               </div>
               <div class="loc-stat">
                 <span class="loc-stat-val">5</span
-                ><span class="loc-stat-key" data-i18n="loc.stat.projects">Projects</span>
+                ><span class="loc-stat-key" data-i18n="loc.stat.projects"
+                  >Projects</span
+                >
               </div>
               <div class="loc-districts">
-                <span class="loc-district-tag" data-i18n="loc.district.hadayek_october">Hadayek October</span>
-                <span class="loc-district-tag" data-i18n="loc.district.wadi_nile">Wadi El Nile</span>
-                <span class="loc-district-tag" data-i18n="loc.district.beverly">Beverly Hills</span>
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.hadayek_october"
+                  >Hadayek October</span
+                >
+                <span
+                  class="loc-district-tag"
+                  data-i18n="loc.district.wadi_nile"
+                  >Wadi El Nile</span
+                >
+                <span class="loc-district-tag" data-i18n="loc.district.beverly"
+                  >Beverly Hills</span
+                >
               </div>
             </div>
           </li>
@@ -5649,61 +5926,63 @@
       const PROPS_DATA = [
         {
           count: { en: "48 PROPERTY LISTING", ar: "٤٨ قائمة عقارية" },
-          name:  { en: "Studio Apartment", ar: "استوديو سكني" },
+          name: { en: "Studio Apartment", ar: "استوديو سكني" },
           agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "2,500,000 EGP",
-          area:  "45 m²",
-          beds:  { en: "Studio", ar: "استوديو" },
+          area: "45 m²",
+          beds: { en: "Studio", ar: "استوديو" },
           delivery: { en: "Ready Now", ar: "جاهز الآن" },
-          href:  "properties.html?type=studio",
+          href: "properties.html?type=studio",
         },
         {
           count: { en: "36 PROPERTY LISTING", ar: "٣٦ قائمة عقارية" },
-          name:  { en: "1BR Apartment", ar: "شقة ١ غرفة" },
+          name: { en: "1BR Apartment", ar: "شقة ١ غرفة" },
           agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "3,800,000 EGP",
-          area:  "75 m²",
-          beds:  { en: "1 Bedroom", ar: "١ غرفة نوم" },
+          area: "75 m²",
+          beds: { en: "1 Bedroom", ar: "١ غرفة نوم" },
           delivery: { en: "Ready Now", ar: "جاهز الآن" },
-          href:  "properties.html?type=1br",
+          href: "properties.html?type=1br",
         },
         {
           count: { en: "24 PROPERTY LISTING", ar: "٢٤ قائمة عقارية" },
-          name:  { en: "2BR Penthouse", ar: "بنتهاوس ٢ غرفة" },
+          name: { en: "2BR Penthouse", ar: "بنتهاوس ٢ غرفة" },
           agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "7,200,000 EGP",
-          area:  "140 m²",
-          beds:  { en: "2 Bedrooms", ar: "٢ غرف نوم" },
+          area: "140 m²",
+          beds: { en: "2 Bedrooms", ar: "٢ غرف نوم" },
           delivery: { en: "Q4 2026", ar: "الربع الرابع 2026" },
-          href:  "properties.html?type=2br",
+          href: "properties.html?type=2br",
         },
         {
           count: { en: "12 PROPERTY LISTING", ar: "١٢ قائمة عقارية" },
-          name:  { en: "3BR Garden Villa", ar: "فيلا حديقة ٣ غرف" },
+          name: { en: "3BR Garden Villa", ar: "فيلا حديقة ٣ غرف" },
           agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "14,500,000 EGP",
-          area:  "280 m²",
-          beds:  { en: "3 Bedrooms", ar: "٣ غرف نوم" },
+          area: "280 m²",
+          beds: { en: "3 Bedrooms", ar: "٣ غرف نوم" },
           delivery: { en: "Q2 2027", ar: "الربع الثاني 2027" },
-          href:  "properties.html?type=villa",
+          href: "properties.html?type=villa",
         },
         {
           count: { en: "6 PROPERTY LISTING", ar: "٦ قوائم عقارية" },
-          name:  { en: "Sky Villa", ar: "سكاي فيلا" },
+          name: { en: "Sky Villa", ar: "سكاي فيلا" },
           agent: { en: "Akar Town Real Estate", ar: "عقار تاون للعقارات" },
           price: "28,000,000 EGP",
-          area:  "480 m²",
-          beds:  { en: "5 Bedrooms", ar: "٥ غرف نوم" },
+          area: "480 m²",
+          beds: { en: "5 Bedrooms", ar: "٥ غرف نوم" },
           delivery: { en: "Off-Plan", ar: "على الخريطة" },
-          href:  "properties.html?type=sky",
+          href: "properties.html?type=sky",
         },
       ];
 
       function updatePropsDetail(idx) {
         var d = PROPS_DATA[idx];
         if (!d) return;
-        var lang = document.documentElement.lang || 'en';
-        function t(v) { return typeof v === 'object' ? (v[lang] || v.en) : v; }
+        var lang = document.documentElement.lang || "en";
+        function t(v) {
+          return typeof v === "object" ? v[lang] || v.en : v;
+        }
         var els = [
           "#propsDetCount",
           "#propsDetName",
@@ -5729,8 +6008,9 @@
             document.getElementById("propsDetPrice").textContent = d.price;
             document.getElementById("propsDetArea").textContent = d.area;
             document.getElementById("propsDetBeds").textContent = t(d.beds);
-            document.getElementById("propsDetDelivery").textContent =
-              t(d.delivery);
+            document.getElementById("propsDetDelivery").textContent = t(
+              d.delivery,
+            );
             document.getElementById("propsDetCta").href = d.href;
             gsap.fromTo(
               els,
@@ -5771,7 +6051,7 @@
       });
 
       /* ── Re-render props detail panel on language change ── */
-      document.addEventListener('akar:langchange', function() {
+      document.addEventListener("akar:langchange", function () {
         var idx = propsSwiper ? propsSwiper.realIndex : 0;
         updatePropsDetail(idx);
       });
