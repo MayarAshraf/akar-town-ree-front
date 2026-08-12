@@ -1358,23 +1358,26 @@
        SPECS BAR
     ══════════════════════════════════════════════════ */
       .pd-specs {
-        background: var(--n-950);
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 50% -10%,
+            rgba(211, 2, 1, 0.07) 0%,
+            transparent 65%
+          ),
+          var(--n-950);
         border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: var(--sp7) 0;
         position: relative;
         z-index: 2;
       }
       .pd-specs-grid {
         max-width: calc(var(--container) + var(--gutter) * 2);
         margin: 0 auto;
-        padding: var(--sp5) var(--gutter);
+        padding: 0 var(--gutter);
         display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 0;
-      }
-      @media (max-width: 1024px) {
-        .pd-specs-grid {
-          grid-template-columns: repeat(4, 1fr);
-        }
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--sp2);
       }
       @media (max-width: 580px) {
         .pd-specs-grid {
@@ -1382,32 +1385,159 @@
         }
       }
       .pd-spec-item {
-        padding: var(--sp4) var(--sp3);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(12px) saturate(140%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+          0 8px 24px rgba(0, 0, 0, 0.22);
+        padding: var(--sp3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
+        gap: var(--sp2);
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo);
       }
-      .pd-spec-item:last-child {
-        border-right: none;
+      .pd-spec-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          calc(90deg - var(--shear)),
+          rgba(255, 255, 255, 0.07) 0%,
+          transparent 55%
+        );
+        border-radius: inherit;
+        pointer-events: none;
+      }
+      .pd-spec-item:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.15),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+          0 20px 48px rgba(0, 0, 0, 0.32);
+      }
+      .pd-spec-icon {
+        color: rgba(255, 255, 255, 0.3);
+        flex-shrink: 0;
       }
       .pd-spec-label {
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 600;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.55);
-        margin-bottom: var(--sp2);
+        color: rgba(255, 255, 255, 0.38);
         font-family: var(--font-display);
+        margin-top: auto;
       }
       .pd-spec-val {
         font-family: var(--font-data);
         font-variant-numeric: tabular-nums;
-        font-size: var(--text-sm);
-        font-weight: 600;
+        font-size: 1.0625rem;
+        font-weight: 700;
         color: var(--n-0);
-        line-height: 1.3;
+        line-height: 1.2;
       }
-      .pd-spec-val--accent {
-        color: var(--sig-400);
+      .pd-spec-val--accent { color: var(--sig-400); }
+      /* — Area ring — */
+      .pd-spec-ring-wrap {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pd-ring-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .pd-ring-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.07);
+        stroke-width: 3;
+      }
+      .pd-ring-fill {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.88);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 175.93;
+        stroke-dashoffset: 175.93;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+      }
+      .pd-ring-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .pd-ring-num {
+        font-family: var(--font-data);
+        font-size: 1.0625rem;
+        font-weight: 700;
+        color: var(--n-0);
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+      }
+      .pd-ring-unit {
+        font-size: 0.55rem;
+        color: var(--accent-fill);
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        line-height: 1;
+      }
+      /* — Floor chart — */
+      .pd-floor-viz {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--sp1);
+      }
+      .pd-floor-chart {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 48px;
+      }
+      .pd-floor-seg {
+        height: 2px;
+        border-radius: 1px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .pd-floor-seg--below {
+        background: rgba(255, 255, 255, 0.28);
+      }
+      .pd-floor-seg--current {
+        height: 3px;
+        background: var(--accent-fill);
+        border-radius: 1.5px;
+      }
+      .pd-floor-num-wrap {
+        display: flex;
+        align-items: baseline;
+        gap: 3px;
+      }
+      .pd-floor-of {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.35);
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        font-weight: 500;
       }
 
       /* ══════════════════════════════════════════════════
@@ -3267,54 +3397,107 @@
   ══════════════════════════════════════════════════ -->
       <section class="pd-specs" aria-label="Property specifications">
         <div class="pd-specs-grid">
+
+          <!-- Unit Type -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.unit_type">
-              Unit Type
-            </div>
-            <div class="pd-spec-val" data-i18n="pd.val.2bed_apt">
-              2-Bed Apartment
-            </div>
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <div class="pd-spec-val" data-i18n="pd.val.2bed_apt">2-Bed Apartment</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.unit_type">Unit Type</div>
           </div>
+
+          <!-- Total Area — ring -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.total_area">
-              Total Area
+            <div class="pd-spec-ring-wrap">
+              <svg class="pd-ring-svg" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+                <circle class="pd-ring-bg" cx="36" cy="36" r="28"/>
+                <circle class="pd-ring-fill" cx="36" cy="36" r="28"
+                  stroke-dasharray="175.93" stroke-dashoffset="175.93"/>
+              </svg>
+              <div class="pd-ring-inner">
+                <span class="pd-ring-num num" data-countup="148">0</span>
+                <span class="pd-ring-unit">m²</span>
+              </div>
             </div>
-            <div class="pd-spec-val num">148 m²</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.total_area">Total Area</div>
           </div>
+
+          <!-- Floor — chart -->
           <div class="pd-spec-item">
+            <div class="pd-floor-viz">
+              <div class="pd-floor-chart" aria-hidden="true">
+                <div class="pd-floor-seg"></div>
+                <div class="pd-floor-seg"></div>
+                <div class="pd-floor-seg"></div>
+                <div class="pd-floor-seg"></div>
+                <div class="pd-floor-seg"></div>
+                <div class="pd-floor-seg pd-floor-seg--current"></div>
+                <div class="pd-floor-seg pd-floor-seg--below"></div>
+                <div class="pd-floor-seg pd-floor-seg--below"></div>
+                <div class="pd-floor-seg pd-floor-seg--below"></div>
+                <div class="pd-floor-seg pd-floor-seg--below"></div>
+              </div>
+              <div class="pd-floor-num-wrap">
+                <span class="pd-spec-val num" data-countup="5">0</span>
+                <span class="pd-floor-of">/20</span>
+              </div>
+            </div>
             <div class="pd-spec-label" data-i18n="pd.spec.floor">Floor</div>
-            <div class="pd-spec-val num">5</div>
           </div>
+
+          <!-- View -->
           <div class="pd-spec-item">
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <div class="pd-spec-val" data-i18n="pd.val.garden_pool">Garden &amp; Pool</div>
             <div class="pd-spec-label" data-i18n="pd.spec.view">View</div>
-            <div class="pd-spec-val" data-i18n="pd.val.garden_pool">
-              Garden &amp; Pool
-            </div>
           </div>
+
+          <!-- Project -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.project">Project</div>
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18z"/>
+              <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+              <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+              <path d="M10 6h4M10 10h4M10 14h4M10 18h4"/>
+            </svg>
             <div class="pd-spec-val">Azha Residence</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.project">Project</div>
           </div>
+
+          <!-- Location -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.location">
-              Location
-            </div>
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
             <div class="pd-spec-val" data-i18n="loc.new_cairo">New Cairo</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.location">Location</div>
           </div>
+
+          <!-- Finishing -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.finishing">
-              Finishing
-            </div>
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
             <div class="pd-spec-val" data-i18n="adv.luxury">Luxury</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.finishing">Finishing</div>
           </div>
+
+          <!-- Delivery -->
           <div class="pd-spec-item">
-            <div class="pd-spec-label" data-i18n="pd.spec.delivery">
-              Delivery
-            </div>
-            <div class="pd-spec-val pd-spec-val--accent" data-i18n="adv.ready">
-              Ready Now
-            </div>
+            <svg class="pd-spec-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div class="pd-spec-val pd-spec-val--accent" data-i18n="adv.ready">Ready Now</div>
+            <div class="pd-spec-label" data-i18n="pd.spec.delivery">Delivery</div>
           </div>
+
         </div>
       </section>
 
@@ -5337,6 +5520,32 @@
           scrollTrigger: { trigger: ".pd-specs", start: "top 85%" },
         },
       );
+
+      /* Specs: area ring + count-up */
+      ScrollTrigger.create({
+        trigger: ".pd-specs",
+        start: "top 82%",
+        once: true,
+        onEnter: function () {
+          gsap.to(".pd-ring-fill", {
+            strokeDashoffset: 45.74,
+            duration: 1.6,
+            ease: "power3.out",
+            delay: 0.25,
+          });
+          document.querySelectorAll("[data-countup]").forEach(function (el) {
+            var target = +el.dataset.countup;
+            var obj = { v: 0 };
+            gsap.to(obj, {
+              v: target,
+              duration: 1.4,
+              ease: "power3.out",
+              delay: 0.25,
+              onUpdate: function () { el.textContent = Math.round(obj.v); },
+            });
+          });
+        },
+      });
 
       /* About / Pinned split */
       gsap.fromTo(
