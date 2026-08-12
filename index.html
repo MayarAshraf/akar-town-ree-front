@@ -333,14 +333,6 @@
       }
       .btn-accent:hover {
         transform: translateY(-1px);
-        box-shadow:
-          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
-          inset 0 -1px 0
-            color-mix(in oklab, var(--accent-fill) 40%, transparent),
-          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
-          0 6px 18px -4px
-            color-mix(in oklab, var(--accent-fill) 45%, transparent),
-          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .btn-accent:active {
         transform: translateY(0);
@@ -1534,14 +1526,6 @@
       }
       .fnd-cta:hover {
         transform: translateY(-2px);
-        box-shadow:
-          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
-          inset 0 -1px 0
-            color-mix(in oklab, var(--accent-fill) 40%, transparent),
-          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
-          0 6px 18px -4px
-            color-mix(in oklab, var(--accent-fill) 45%, transparent),
-          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .fnd-cta:active {
         transform: translateY(0);
@@ -2687,12 +2671,6 @@
       }
       .proj-stmt-cta:hover {
         transform: translateY(-1px);
-        box-shadow:
-          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
-          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 20%, transparent),
-          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
-          0 6px 18px -4px color-mix(in oklab, var(--n-0) 25%, transparent),
-          0 2px 8px rgba(0, 0, 0, 0.2);
       }
 
       /* Slider controls */
@@ -4785,7 +4763,8 @@
               </p>
               <a
                 href="projects.html"
-                class="proj-stmt-cta"
+                class="btn btn-accent"
+                style="align-self: flex-start"
                 data-i18n="proj.cta"
               >
                 Explore All Projects
