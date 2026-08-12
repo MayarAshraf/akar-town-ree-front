@@ -249,20 +249,45 @@
       .btn-ghost {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        color: rgba(255, 255, 255, 0.75);
+        color: #fff;
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 15%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
       }
       .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(255, 255, 255, 0.35);
-        color: #fff;
+        transform: translateY(-1px);
       }
       .btn-accent {
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         color: var(--n-0);
-        box-shadow: 0 2px 14px rgba(211, 2, 1, 0.3);
       }
       .btn-accent:hover {
         transform: translateY(-1px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 40%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px
+            color-mix(in oklab, var(--accent-fill) 45%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .btn-accent:active {
         transform: translateY(0);
@@ -1365,7 +1390,7 @@
         background: rgba(35, 31, 32, 0.75);
         backdrop-filter: blur(8px);
         color: var(--n-0);
-        border: 1px solid rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       .prop-save-btn {
         position: relative;
@@ -3174,7 +3199,7 @@
             <img class="prop-card-photo" src="${p.photo}" alt="${p.name} — ${p.location}" loading="lazy" width="600" height="450">
             <div class="prop-card-shear" aria-hidden="true"></div>
             <div class="prop-card-badges" aria-hidden="true">
-              <span class="prop-type-badge">${document.documentElement.lang === 'ar' ? (p.typeLabelAr || p.typeLabel) : p.typeLabel}</span>
+              <span class="prop-type-badge">${document.documentElement.lang === "ar" ? p.typeLabelAr || p.typeLabel : p.typeLabel}</span>
               <button class="prop-save-btn${savedIds.has(p.id) ? " saved" : ""}" data-save="${p.id}" aria-label="${savedIds.has(p.id) ? "Remove from saved" : "Save property"}">
                 ${bookmarkIcon(savedIds.has(p.id))}
               </button>
@@ -3194,7 +3219,7 @@
               <span class="prop-chip">${bathIcon()} ${p.baths} Bath${p.baths > 1 ? "s" : ""}</span>
             </div>
             <div class="prop-card-footer">
-              <span class="delivery-tag ${deliveryClass(p.delivery)}">${document.documentElement.lang === 'ar' ? (p.deliveryLabelAr || p.deliveryLabel) : p.deliveryLabel}</span>
+              <span class="delivery-tag ${deliveryClass(p.delivery)}">${document.documentElement.lang === "ar" ? p.deliveryLabelAr || p.deliveryLabel : p.deliveryLabel}</span>
               <a href="property-detail.html?id=${p.id}" class="prop-cta" aria-label="View details for ${p.name}">
                 View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
@@ -3224,7 +3249,9 @@
       }
 
       /* Re-render cards on language change */
-      document.addEventListener('akar:langchange', function() { renderCards(currentPage); });
+      document.addEventListener("akar:langchange", function () {
+        renderCards(currentPage);
+      });
 
       /* ──────────────────────────────────────────────────────────
        PAGINATION

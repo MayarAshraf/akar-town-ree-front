@@ -302,21 +302,45 @@
       .btn-ghost {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        color: rgba(255, 255, 255, 0.75);
+        color: #fff;
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 15%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
       }
       .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(255, 255, 255, 0.35);
-        color: #fff;
+        transform: translateY(-1px);
       }
       .btn-accent {
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         color: var(--n-0);
-        box-shadow: 0 2px 14px rgba(211, 2, 1, 0.3);
       }
       .btn-accent:hover {
-        background: var(--accent-fill-hover);
         transform: translateY(-1px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 40%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px
+            color-mix(in oklab, var(--accent-fill) 45%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .btn-accent:active {
         transform: translateY(0);
@@ -1483,19 +1507,41 @@
         letter-spacing: 0.02em;
         padding: 9px 20px;
         border-radius: 100px;
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         color: var(--n-0);
         border: none;
         cursor: none;
         transition:
-          background var(--dur-ui) var(--ease-expo),
-          transform var(--dur-ui) var(--ease-expo);
+          transform var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo);
         text-decoration: none;
         white-space: nowrap;
       }
       .fnd-cta:hover {
-        background: var(--accent-fill-hover, #b80100);
         transform: translateY(-2px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 40%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px
+            color-mix(in oklab, var(--accent-fill) 45%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .fnd-cta:active {
         transform: translateY(0);
@@ -1991,21 +2037,43 @@
         font-weight: 500;
         letter-spacing: 0.02em;
         color: var(--n-0);
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         border: none;
         padding: 9px 20px;
         border-radius: 100px;
         cursor: none;
         transition:
-          background var(--dur-ui) var(--ease-expo),
-          transform var(--dur-ui) var(--ease-expo);
+          transform var(--dur-ui) var(--ease-expo),
+          box-shadow var(--dur-ui) var(--ease-expo);
         text-decoration: none;
         align-self: center;
         white-space: nowrap;
       }
       .props-det-cta:hover {
-        background: var(--accent-fill-hover);
         transform: translateY(-2px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 40%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px
+            color-mix(in oklab, var(--accent-fill) 45%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .props-det-cta:active {
         transform: translateY(0);
@@ -2594,22 +2662,37 @@
         font-weight: var(--fw-semibold);
         font-size: 0.8rem;
         letter-spacing: 0.04em;
-        color: var(--ink);
+        color: var(--n-0);
         text-decoration: none;
         padding: 0.55rem 1.1rem;
-        border: 1px solid color-mix(in oklab, var(--ink) 30%, transparent);
         border-radius: 100px;
-        background: color-mix(in oklab, var(--paper) 60%, transparent);
-        backdrop-filter: blur(8px);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--n-0) 12%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 15%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         transition:
-          background 0.22s ease,
-          border-color 0.22s ease,
-          color 0.22s ease;
+          transform 0.22s ease,
+          box-shadow 0.22s ease;
       }
       .proj-stmt-cta:hover {
-        background: var(--ink);
-        border-color: var(--ink);
-        color: var(--paper);
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 20%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px color-mix(in oklab, var(--n-0) 25%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
 
       /* Slider controls */
@@ -2945,15 +3028,10 @@
         justify-content: center;
         overflow: hidden;
         cursor: pointer;
-        visibility: visible;
-        transition:
-          opacity 0.5s 0.75s ease,
-          visibility 0s 1.25s;
       }
       #splash.sp-exit {
-        opacity: 0;
-        visibility: hidden;
         pointer-events: none;
+        background: transparent;
       }
 
       /* ── Rising columns field ────────────────────────────────── */
@@ -2965,27 +3043,18 @@
         align-items: flex-start;
         justify-content: center;
         padding: 0 16px;
+        opacity: 0.3;
       }
       .sp-col {
         flex: 0 0 176px;
         display: flex;
         flex-direction: column;
         gap: 14px;
-        animation: sp-rise var(--dur, 24s) var(--dly, 0s) linear infinite;
         will-change: transform;
-      }
-      @keyframes sp-rise {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-50%);
-        }
       }
       #splash.sp-exit .sp-col {
         opacity: 0;
-        transition: opacity 0.5s ease;
-        animation-duration: 1s !important;
+        transition: opacity 0.3s ease;
       }
 
       /* ── Card ────────────────────────────────────────────────── */
@@ -3019,91 +3088,54 @@
         align-items: center;
         gap: 20px;
         opacity: 0;
-        transform: translateY(20px) scale(0.95);
-        filter: blur(14px);
+        transform: translateY(16px) scale(0.97);
         transition:
-          opacity 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 1.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-          filter 1.2s 0.3s ease;
+          opacity 0.55s 0.1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.65s 0.1s cubic-bezier(0.16, 1, 0.3, 1);
       }
       #splash.sp-ready .sp-logo-frame {
         opacity: 1;
         transform: translateY(0) scale(1);
-        filter: none;
       }
       #splash.sp-exit .sp-logo-frame {
         opacity: 0;
-        transform: scale(1.04) translateY(-8px);
-        filter: blur(8px);
+        transform: scale(1.03) translateY(-6px);
         transition:
-          opacity 0.5s ease,
-          transform 0.6s cubic-bezier(0.4, 0, 1, 1),
-          filter 0.5s ease;
+          opacity 0.4s ease,
+          transform 0.5s cubic-bezier(0.4, 0, 1, 1);
       }
 
-      /* Glyph-level shadow: light halo so dark logo reads over dark cards */
-      .sp-logo-svg {
-        width: clamp(220px, 36vw, 360px);
-        filter: drop-shadow(0 0 1px rgba(247, 247, 247, 1))
-          drop-shadow(0 0 4px rgba(247, 247, 247, 1))
-          drop-shadow(0 0 12px rgba(247, 247, 247, 0.9))
-          drop-shadow(0 0 28px rgba(247, 247, 247, 0.65))
-          drop-shadow(0 0 56px rgba(247, 247, 247, 0.35));
-      }
-
-      /* Red rule */
-      .sp-redline {
-        width: clamp(64px, 11vw, 120px);
-        height: 2px;
-        background: #d30201;
-        transform-origin: left center;
-        transform: scaleX(0);
-        filter: drop-shadow(0 0 4px rgba(211, 2, 1, 0.6));
-        transition: transform 0.9s 1.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      #splash.sp-ready .sp-redline {
-        transform: scaleX(1);
-      }
-
-      /* Tagline */
-      .sp-sub {
-        font-family: "Archivo", system-ui, sans-serif;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(35, 31, 32, 0.82);
-        text-align: center;
-        text-shadow:
-          0 0 2px rgba(242, 237, 230, 1),
-          0 0 6px rgba(242, 237, 230, 1),
-          0 0 16px rgba(242, 237, 230, 0.95),
-          0 0 32px rgba(242, 237, 230, 0.7);
-        opacity: 0;
-        transition: opacity 0.9s 1.6s ease;
-      }
-      #splash.sp-ready .sp-sub {
-        opacity: 1;
-      }
-
-      /* Skip hint */
-      .sp-skip {
+      /* ── Split panels — fade in together, slide apart on exit ── */
+      .sp-panel {
         position: absolute;
-        bottom: 28px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: "Archivo", system-ui, sans-serif;
-        font-size: 0.6rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(35, 31, 32, 0.22);
-        user-select: none;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        background: #fff;
+        z-index: 1;
+        pointer-events: none;
         opacity: 0;
-        transition: opacity 0.8s 2.2s ease;
-        white-space: nowrap;
+        transition: opacity 1s ease;
       }
-      #splash.sp-ready .sp-skip {
+      .sp-panel-l { left: 0; }
+      .sp-panel-r { right: 0; }
+      #splash.sp-ready .sp-panel {
         opacity: 1;
+      }
+      #splash.sp-exit .sp-panel {
+        opacity: 1;
+        transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+      }
+      #splash.sp-exit .sp-panel-l {
+        transform: translateX(-100%);
+      }
+      #splash.sp-exit .sp-panel-r {
+        transform: translateX(100%);
+      }
+
+      .sp-logo-svg {
+        width: clamp(280px, 50vw, 560px);
+        display: block;
       }
 
       /* ── Responsive ──────────────────────────────────────────── */
@@ -3132,9 +3164,7 @@
           animation: none !important;
           transform: translateY(-50%);
         }
-        .sp-logo-frame,
-        .sp-redline,
-        .sp-sub {
+        .sp-logo-frame {
           transition-duration: 0.2s !important;
         }
       }
@@ -3145,12 +3175,16 @@
     <div id="splash" role="presentation" aria-hidden="true">
       <!-- Five rising columns (JS populates the cards) -->
       <div class="sp-field">
-        <div class="sp-col" style="--dur: 7s; --dly: -2s"></div>
-        <div class="sp-col" style="--dur: 9s; --dly: -5s"></div>
-        <div class="sp-col" style="--dur: 6.5s; --dly: -1s"></div>
-        <div class="sp-col" style="--dur: 10s; --dly: -7s"></div>
-        <div class="sp-col" style="--dur: 8s; --dly: -3.5s"></div>
+        <div class="sp-col" style="--dur: 2.5s; --dly: -1s"></div>
+        <div class="sp-col" style="--dur: 2.5s; --dly: -2.5s"></div>
+        <div class="sp-col" style="--dur: 2.5s; --dly: -0.5s"></div>
+        <div class="sp-col" style="--dur: 2.5s; --dly: -3s"></div>
+        <div class="sp-col" style="--dur: 2.5s; --dly: -1.5s"></div>
       </div>
+
+      <!-- Split panels: fade in over columns, slide apart to reveal home -->
+      <div class="sp-panel sp-panel-l"></div>
+      <div class="sp-panel sp-panel-r"></div>
 
       <!-- Center: vignette + logo -->
       <div class="sp-stage">
@@ -3203,14 +3237,9 @@
               fill="#231F20"
             />
           </svg>
-          <div class="sp-redline"></div>
-          <div class="sp-sub">
-            Premium Real Estate &nbsp;&middot;&nbsp; Akar Town
-          </div>
         </div>
       </div>
 
-      <span class="sp-skip" aria-hidden="true">Click anywhere to skip</span>
     </div>
 
     <!-- Splash JS — runs before page content for instant activation -->
@@ -3272,22 +3301,61 @@
           col.innerHTML = html + html;
         });
 
-        /* Reveal logo (two rAF to ensure layout is ready) */
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            splash.classList.add("sp-ready");
-          });
+        /* JS-driven scroll — owns translateY directly, no CSS animation */
+        var spCols = Array.from(document.querySelectorAll(".sp-col"));
+        /* Initial progress (0-1) derived from original --dly / --dur stagger */
+        var prog = [0.4, 0.0, 0.2, 0.2, 0.6];
+        var slowCps = 1 / 2.5; /* cycles per second at start */
+        var fastCps = 1 / 0.65; /* cycles per second at full speed */
+        var rampMs = 1400;
+        var tickStart = null,
+          lastTs = null,
+          rafId;
+
+        /* Set initial positions before first paint to avoid snap */
+        spCols.forEach(function (col, i) {
+          col.style.transform =
+            "translateY(" + (-prog[i] * 50).toFixed(2) + "%)";
         });
 
-        /* Exit */
-        var exitTimer = setTimeout(doExit, 3200);
+        function tick(ts) {
+          if (!tickStart) {
+            tickStart = ts;
+            lastTs = ts;
+          }
+          var dt = Math.min(
+            (ts - lastTs) / 1000,
+            0.05,
+          ); /* cap to avoid jump on tab restore */
+          lastTs = ts;
+          var t = Math.min((ts - tickStart) / rampMs, 1);
+          var ease = t * t * (3 - 2 * t); /* smoothstep */
+          var cps = slowCps + (fastCps - slowCps) * ease;
+          spCols.forEach(function (col, i) {
+            prog[i] = (prog[i] + cps * dt) % 1;
+            col.style.transform =
+              "translateY(" + (-prog[i] * 50).toFixed(2) + "%)";
+          });
+          rafId = requestAnimationFrame(tick);
+        }
+        rafId = requestAnimationFrame(tick);
+
+        /* After 2 s: reveal white bg + logo over 1 s */
+        var readyTimer = setTimeout(function () {
+          splash.classList.add("sp-ready");
+        }, 2000);
+
+        /* After 3.3 s: white bg is fully opaque — hide splash */
+        var exitTimer = setTimeout(doExit, 3300);
 
         function doExit() {
+          clearTimeout(readyTimer);
           clearTimeout(exitTimer);
+          cancelAnimationFrame(rafId);
           splash.classList.add("sp-exit");
           setTimeout(function () {
             splash.style.display = "none";
-          }, 1300);
+          }, 720);
         }
 
         /* Skip on click / Esc / Space */
@@ -4070,11 +4138,35 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.residential"
+                          >Residential</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.studio_apt">Studio<br />Apartment</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.studio_apt"
+                      >
+                        Studio<br />Apartment
+                      </div>
                       <p class="props-card-location">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                          />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
                         New Cairo, Cairo
                       </p>
                       <div class="props-card-price-row">
@@ -4088,7 +4180,22 @@
                       </div>
                       <div class="props-card-footer-row">
                         <span class="props-card-delivery">Ready Now</span>
-                        <span class="props-card-view">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="props-card-view"
+                          >View
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        ></span>
                       </div>
                     </div>
                   </a>
@@ -4106,11 +4213,35 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.residential">Residential</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.residential"
+                          >Residential</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.1br_apt">1BR<br />Apartment</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.1br_apt"
+                      >
+                        1BR<br />Apartment
+                      </div>
                       <p class="props-card-location">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                          />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
                         New Capital, Egypt
                       </p>
                       <div class="props-card-price-row">
@@ -4124,7 +4255,22 @@
                       </div>
                       <div class="props-card-footer-row">
                         <span class="props-card-delivery soon">Q2 2025</span>
-                        <span class="props-card-view">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="props-card-view"
+                          >View
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        ></span>
                       </div>
                     </div>
                   </a>
@@ -4142,11 +4288,35 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.premium">Premium</span>
+                        <span
+                          class="props-card-cat"
+                          data-i18n="prop.cat.premium"
+                          >Premium</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.2br_pent">2BR<br />Penthouse</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.2br_pent"
+                      >
+                        2BR<br />Penthouse
+                      </div>
                       <p class="props-card-location">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                          />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
                         Sheikh Zayed, Giza
                       </p>
                       <div class="props-card-price-row">
@@ -4160,7 +4330,22 @@
                       </div>
                       <div class="props-card-footer-row">
                         <span class="props-card-delivery">Ready Now</span>
-                        <span class="props-card-view">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="props-card-view"
+                          >View
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        ></span>
                       </div>
                     </div>
                   </a>
@@ -4178,11 +4363,33 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.villa">Villa</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.villa"
+                          >Villa</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.3br_villa">3BR<br />Garden Villa</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.3br_villa"
+                      >
+                        3BR<br />Garden Villa
+                      </div>
                       <p class="props-card-location">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                          />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
                         October City, Giza
                       </p>
                       <div class="props-card-price-row">
@@ -4196,7 +4403,22 @@
                       </div>
                       <div class="props-card-footer-row">
                         <span class="props-card-delivery soon">Q4 2026</span>
-                        <span class="props-card-view">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="props-card-view"
+                          >View
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        ></span>
                       </div>
                     </div>
                   </a>
@@ -4214,11 +4436,33 @@
                     <div class="props-card-body">
                       <div class="props-card-eyebrow">
                         <div class="slab props-card-slab"></div>
-                        <span class="props-card-cat" data-i18n="prop.cat.ultra">Ultra-Premium</span>
+                        <span class="props-card-cat" data-i18n="prop.cat.ultra"
+                          >Ultra-Premium</span
+                        >
                       </div>
-                      <div class="props-card-label" data-i18n-html="prop.card.sky_villa">Sky<br />Villa</div>
+                      <div
+                        class="props-card-label"
+                        data-i18n-html="prop.card.sky_villa"
+                      >
+                        Sky<br />Villa
+                      </div>
                       <p class="props-card-location">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                          />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
                         Ain Sokhna, Suez
                       </p>
                       <div class="props-card-price-row">
@@ -4232,7 +4476,22 @@
                       </div>
                       <div class="props-card-footer-row">
                         <span class="props-card-delivery">Ready Now</span>
-                        <span class="props-card-view">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="props-card-view"
+                          >View
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        ></span>
                       </div>
                     </div>
                   </a>
@@ -4253,23 +4512,35 @@
             <div class="props-det-divider"></div>
             <div class="props-det-table" id="propsDetTable">
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.living_space">Living Space</span>
+                <span class="props-det-key" data-i18n="props.det.living_space"
+                  >Living Space</span
+                >
                 <span class="props-det-val" id="propsDetArea">45 m²</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.bedrooms">Bedrooms</span>
+                <span class="props-det-key" data-i18n="props.det.bedrooms"
+                  >Bedrooms</span
+                >
                 <span class="props-det-val" id="propsDetBeds">Studio</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.bathrooms">Bathrooms</span>
+                <span class="props-det-key" data-i18n="props.det.bathrooms"
+                  >Bathrooms</span
+                >
                 <span class="props-det-val" id="propsDetBaths">1</span>
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.down_payment">Down Payment</span>
-                <span class="props-det-val accent" id="propsDetDownPayment">10%</span>
+                <span class="props-det-key" data-i18n="props.det.down_payment"
+                  >Down Payment</span
+                >
+                <span class="props-det-val accent" id="propsDetDownPayment"
+                  >10%</span
+                >
               </div>
               <div class="props-det-row">
-                <span class="props-det-key" data-i18n="props.det.payment_plan">Payment Plan</span>
+                <span class="props-det-key" data-i18n="props.det.payment_plan"
+                  >Payment Plan</span
+                >
                 <span class="props-det-val" id="propsDetPlan">6 Years</span>
               </div>
             </div>
@@ -6135,8 +6406,11 @@
             document.getElementById("propsDetArea").textContent = d.area;
             document.getElementById("propsDetBeds").textContent = t(d.beds);
             document.getElementById("propsDetBaths").textContent = d.baths;
-            document.getElementById("propsDetDownPayment").textContent = d.downPayment;
-            document.getElementById("propsDetPlan").textContent = t(d.paymentPlan);
+            document.getElementById("propsDetDownPayment").textContent =
+              d.downPayment;
+            document.getElementById("propsDetPlan").textContent = t(
+              d.paymentPlan,
+            );
             document.getElementById("propsDetCta").href = d.href;
             gsap.fromTo(
               els,

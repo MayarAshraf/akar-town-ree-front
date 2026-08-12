@@ -200,15 +200,33 @@
       .btn-ghost {
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        color: rgba(255, 255, 255, 0.75);
+        color: #fff;
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0 color-mix(in oklab, var(--n-0) 15%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
       }
       .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(255, 255, 255, 0.35);
-        color: #fff;
+        transform: translateY(-1px);
       }
       .btn-accent {
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         color: var(--n-0);
       }
       .btn-accent:hover {
@@ -2015,7 +2033,7 @@
         background: rgba(35, 31, 32, 0.75);
         backdrop-filter: blur(8px);
         color: var(--n-0);
-        border: 1px solid rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       .prop-save-btn {
         position: relative;
@@ -2478,7 +2496,23 @@
       .sec-cta-btn {
         display: flex;
         align-items: center;
-        background: var(--accent-fill);
+        background:
+          linear-gradient(
+            calc(90deg - 39.5deg),
+            color-mix(in oklab, var(--n-0) 42%, transparent) 0%,
+            color-mix(in oklab, var(--n-0) 8%, transparent) 45%,
+            transparent 70%
+          ),
+          color-mix(in oklab, var(--accent-fill) 52%, transparent);
+        backdrop-filter: blur(80px) saturate(280%) brightness(1.18)
+          contrast(1.05);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 70%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 30%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 18%, transparent),
+          0 4px 16px rgba(0, 0, 0, 0.35),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
         color: var(--n-0);
         text-decoration: none;
         border-radius: 100px;
@@ -2486,10 +2520,20 @@
         width: 45px;
         overflow: hidden;
         will-change: width;
-        transition: transform 0.25s ease;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
       }
       .sec-cta-btn:hover {
         transform: translateY(-2px);
+        box-shadow:
+          inset 0 1.5px 0 color-mix(in oklab, var(--n-0) 80%, transparent),
+          inset 0 -1px 0
+            color-mix(in oklab, var(--accent-fill) 40%, transparent),
+          inset 0 0 0 1px color-mix(in oklab, var(--n-0) 24%, transparent),
+          0 6px 18px -4px
+            color-mix(in oklab, var(--accent-fill) 45%, transparent),
+          0 2px 8px rgba(0, 0, 0, 0.2);
       }
       .sec-cta-icon {
         display: flex;
